@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import control.Conexión;
+import venta.entity.NoExisteVenta;
 import venta.entity.Venta;
 import view.InputTypes;
 
@@ -45,7 +46,7 @@ public class Ventas {
 		}
 	}
 	
-	public void update() throws SQLException {
+	public void update() throws SQLException, NoExisteVenta {
 		ResultSet resultSet;
 		Venta venta=null;
 		String fecha;
@@ -65,7 +66,7 @@ public class Ventas {
 			numVenta = resultSet.getInt("numVenta");
 			venta = new Venta(numVenta, fecha, codEnvío, codCliente, codEmpleado);
 		} else {
-			//throw new NoExisteProducto();
+			throw new NoExisteVenta();
 		}
 
 		System.out.println(venta);

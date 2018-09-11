@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import control.Conexión;
 import empleado.entity.Empleado;
+import empleado.entity.NoExisteEmpleado;
 import view.InputTypes;
 
 public class Empleados {
@@ -47,7 +48,7 @@ public class Empleados {
 		}
 	}
 	
-	public void update() throws SQLException {
+	public void update() throws SQLException, NoExisteEmpleado {
 		ResultSet resultSet;
 		Empleado empleado=null;
 		String nombre;
@@ -71,7 +72,7 @@ public class Empleados {
 			codEmpleado = resultSet.getInt("codEmpleado");
 			empleado = new Empleado(codEmpleado, nombre, cI, teléfono, celular, dirección, cargo);
 		} else {
-			//throw new NoExisteProducto();
+			throw new NoExisteEmpleado();
 		}
 
 		System.out.println(empleado);

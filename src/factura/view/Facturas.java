@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import control.Conexión;
 import factura.entity.Factura;
+import factura.entity.NoExisteFactura;
 import view.InputTypes;
 
 public class Facturas {
@@ -44,7 +45,7 @@ public class Facturas {
 		}
 	}
 	
-	public void update() throws SQLException {
+	public void update() throws SQLException, NoExisteFactura {
 		ResultSet resultSet;
 		Factura factura=null;
 		int nit;
@@ -62,7 +63,7 @@ public class Facturas {
 			numVenta = resultSet.getInt("numVenta");
 			factura = new Factura(numVenta, nit, nombre, descripción);
 		} else {
-			//throw new NoExisteProducto();
+			throw new NoExisteFactura();
 		}
 
 		System.out.println(factura);

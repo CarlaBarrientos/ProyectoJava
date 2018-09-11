@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import cliente.entity.Cliente;
+import cliente.entity.NoExisteCliente;
 import control.Conexión;
 import view.InputTypes;
 
@@ -48,7 +49,7 @@ public class Clientes {
 		}
 	}
 	
-	public void update() throws SQLException {
+	public void update() throws SQLException, NoExisteCliente {
 		ResultSet resultSet;
 		Cliente cliente = null;
 		String nombre;
@@ -72,7 +73,7 @@ public class Clientes {
 			codCliente = resultSet.getInt("codCliente");
 			cliente = new Cliente(codCliente, nombre, cI, teléfono, celular, dirección, puntos);
 		} else {
-			//throw new NoExisteProducto();
+			throw new NoExisteCliente();
 		}
 
 		System.out.println(cliente);
