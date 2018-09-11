@@ -92,30 +92,5 @@ public class RegistroIngredientes {
 		}
 	}
 	
-	public void listIngrediente() throws NoExisteIngrediente, SQLException {
-		ResultSet resultSet;
-		Ingrediente ingrediente;
-		String descripción;
-		int costo;
-		int numAlmacén;
-		int cantidad;
-		int codIngrediente = InputTypes.readInt("Código del Ingrediente: ", scanner);
-		String sql = "select * from categoría where código = ?";
-		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, codIngrediente);
-		resultSet = conexión.resultado();
-		if (resultSet.next()) {
-			descripción = resultSet.getString("descripción");
-			costo = resultSet.getInt("costo");
-			numAlmacén = resultSet.getInt("numAlmacén");
-			cantidad = resultSet.getInt("cantidad");
-			ingrediente = new Ingrediente(codIngrediente, descripción, costo, numAlmacén, cantidad);
-		} else {
-			throw new NoExisteIngrediente();
-		}
-		System.out.println(ingrediente);
-
-		}
-
 	}
 

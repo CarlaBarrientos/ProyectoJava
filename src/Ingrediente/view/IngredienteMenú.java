@@ -9,9 +9,7 @@ import view.InputTypes;
 
 
 public class IngredienteMenú {
-	/****************************
-	 * Encabezado del menú *
-	 ****************************/
+	
 
 	private static int encabezado(Scanner scanner) {
 		int opcion;
@@ -34,10 +32,7 @@ public class IngredienteMenú {
 		}
 	}
 
-	/****************************
-	 * Opciones del menú 
-	 * @throws SQLException *
-	 ****************************/
+	
 
 	public static void menú(Scanner scanner, RegistroIngredientes ingredienteView) throws SQLException {
 		boolean salir = false;
@@ -70,23 +65,12 @@ public class IngredienteMenú {
 				break;
 
 			case 5:
-				try {
-					ingredienteView.listIngrediente();;
-				} catch (NoExisteIngrediente e) {
-					System.out.println("No existe ingrediente");
-				}
 				break;
 			}
 		}
 	}
 
-	/*****
-	 * nuevo
-	 */
-
-	/****************************
-	 * Encabezado del menú *
-	 ****************************/
+	
 
 	private static int encabezadoModificar(Scanner scanner) {
 		int opcion;
@@ -109,9 +93,7 @@ public class IngredienteMenú {
 		}
 	}
 
-	/****************************
-	 * Opciones del modificar *
-	 ****************************/
+	
 
 	public static void menúModificar(Scanner scanner, Ingrediente ingrediente) {
 		boolean salir = false;
