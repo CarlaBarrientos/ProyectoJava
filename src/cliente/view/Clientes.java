@@ -26,7 +26,7 @@ public class Clientes {
 			conexión.getSentencia().setInt(1, cliente.getCodCliente());
 			conexión.getSentencia().setString(2, cliente.getNombre());
 			conexión.getSentencia().setInt(3, cliente.getCI());
-			conexión.getSentencia().setInt(4, cliente.getTléfono());
+			conexión.getSentencia().setInt(4, cliente.getTeléfono());
 			conexión.getSentencia().setInt(5, cliente.getCelular());
 			conexión.getSentencia().setString(6, cliente.getDirección());
 			conexión.getSentencia().setInt(7, cliente.getPuntos());
@@ -50,7 +50,7 @@ public class Clientes {
 	
 	public void update() throws SQLException {
 		ResultSet resultSet;
-		Cliente cliente;
+		Cliente cliente = null;
 		String nombre;
 		int cI;
 	    int teléfono;
@@ -62,7 +62,6 @@ public class Clientes {
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codCliente);
 		resultSet = conexión.resultado();
-		//Cliente cliente=null;
 		if (resultSet.next()) {
 			nombre = resultSet.getString("nombre");
 			cI = resultSet.getInt("CI");
@@ -79,17 +78,29 @@ public class Clientes {
 		System.out.println(cliente);
 		//Menú.menúModificar(scanner, producto);
 
-		sql = "update producto set nombre = ?, CI = ?, teléfono = ?, celular = ?, dirección = ?, puntos = ?  where codCliente = ?";
+		sql = "update cliente set nombre = ?, CI = ?, teléfono = ?, celular = ?, dirección = ?, puntos = ?  where codCliente = ?";
 
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, cliente.getCodCliente());
 		conexión.getSentencia().setString(2, cliente.getNombre());
 		conexión.getSentencia().setInt(3, cliente.getCI());
-		conexión.getSentencia().setInt(4, cliente.getTléfono());
+		conexión.getSentencia().setInt(4, cliente.getTeléfono());
 		conexión.getSentencia().setInt(5, cliente.getCelular());
 		conexión.getSentencia().setString(6, cliente.getDirección());
 		conexión.getSentencia().setInt(7, cliente.getPuntos());
 		conexión.modificacion();
+	}
+	public void list() throws SQLException {
+		Cliente cliente;
+		String sql = "select * from cliente ";
+		conexión.consulta(sql);
+		ResultSet resultSet = conexión.resultado();
+		while (resultSet.next()) {
+			cliente = new Cliente(resultSet.getInt("codCliente"), resultSet.getString("nombre"), resultSet.getInt("CI"),
+					resultSet.getInt("teléfono"), resultSet.getInt("celular"), resultSet.getString("dirección"),
+					resultSet.getInt("puntos"));
+			System.out.println(cliente);
+		}
 	}
 	
 }

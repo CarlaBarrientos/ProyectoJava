@@ -4,16 +4,16 @@ public class Cliente {
 	private int codCliente;
 	private String nombre;
 	private int cI;
-	private int tléfono;
+	private int teléfono;
 	private int celular;
 	private String dirección;
 	private int puntos;
-	public Cliente(int codCliente, String nombre, int cI, int tléfono, int celular, String dirección, int puntos) {
+	public Cliente(int codCliente, String nombre, int cI, int teléfono, int celular, String dirección, int puntos) {
 		super();
 		this.codCliente = codCliente;
 		this.nombre = nombre;
 		this.cI= cI;
-		this.tléfono = tléfono;
+		this.teléfono = teléfono;
 		this.celular = celular;
 		this.dirección = dirección;
 		this.puntos = puntos;
@@ -36,11 +36,11 @@ public class Cliente {
 	public void setCI(int cI) {
 		this.cI = cI;
 	}
-	public int getTléfono() {
-		return tléfono;
+	public int getTeléfono() {
+		return teléfono;
 	}
-	public void setTléfono(int tléfono) {
-		this.tléfono = tléfono;
+	public void setTeléfono(int teléfono) {
+		this.teléfono = teléfono;
 	}
 	public int getCelular() {
 		return celular;
@@ -62,7 +62,7 @@ public class Cliente {
 	}
 	@Override
 	public String toString() {
-		return "Cliente [codCliente=" + codCliente + ", nombre=" + nombre + ", CI=" + cI + ", tléfono=" + tléfono
+		return "Cliente [codCliente=" + codCliente + ", nombre=" + nombre + ", CI=" + cI + ", tléfono=" + teléfono
 				+ ", celular=" + celular + ", dirección=" + dirección + ", puntos=" + puntos + "]";
 	}
 }

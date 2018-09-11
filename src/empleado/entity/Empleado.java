@@ -1,16 +1,16 @@
 package empleado.entity;
 
 public class Empleado {
-	private int codEMpleado;
+	private int codEmpleado;
 	private String nombre;
 	private int cI;
 	private int teléfono;
 	private int celular;
 	private String dirección;
 	private String cargo;
-	public Empleado(int codEMpleado, String nombre, int cI, int teléfono, int celular, String dirección, String cargo) {
+	public Empleado(int codEmpleado, String nombre, int cI, int teléfono, int celular, String dirección, String cargo) {
 		super();
-		this.codEMpleado = codEMpleado;
+		this.codEmpleado = codEmpleado;
 		this.nombre = nombre;
 		this.cI = cI;
 		this.teléfono = teléfono;
@@ -18,11 +18,11 @@ public class Empleado {
 		this.dirección = dirección;
 		this.cargo = cargo;
 	}
-	public int getCodEMpleado() {
-		return codEMpleado;
+	public int getCodEmpleado() {
+		return codEmpleado;
 	}
-	public void setCodEMpleado(int codEMpleado) {
-		this.codEMpleado = codEMpleado;
+	public void setCodEmpleado(int codEMpleado) {
+		this.codEmpleado = codEMpleado;
 	}
 	public String getNombre() {
 		return nombre;
@@ -62,7 +62,7 @@ public class Empleado {
 	}
 	@Override
 	public String toString() {
-		return "Empleado [codEMpleado=" + codEMpleado + ", nombre=" + nombre + ", cI=" + cI + ", teléfono=" + teléfono
+		return "Empleado [codEMpleado=" + codEmpleado + ", nombre=" + nombre + ", cI=" + cI + ", teléfono=" + teléfono
 				+ ", celular=" + celular + ", dirección=" + dirección + ", cargo=" + cargo + "]";
 	}
 	
