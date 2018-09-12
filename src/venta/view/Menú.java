@@ -121,7 +121,7 @@ public class Menú {
 					salir = true;
 					break;
 				case 1:
-					venta.setFecha(InputTypes.readString("Ingrese la fecha a modificar: ", scanner));
+					venta.setFecha(InputTypes.readDate("Ingrese la fecha a modificar: ", scanner));
 					break;
 				case 2:
 					venta.setCodEnvío(InputTypes.readInt("Ingrese el nuevo código de envío: ", scanner));

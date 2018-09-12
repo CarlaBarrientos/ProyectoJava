@@ -76,13 +76,13 @@ public class Empleados {
 		sql = "update empleado set nombre = ?, CI = ?, teléfono = ?, celular = ?, dirección = ?, cargo = ?  where codEmpleado = ?";
 
 		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, empleado.getCodEmpleado());
-		conexión.getSentencia().setString(2, empleado.getNombre());
-		conexión.getSentencia().setInt(3, empleado.getcI());
-		conexión.getSentencia().setInt(4, empleado.getTeléfono());
-		conexión.getSentencia().setInt(5, empleado.getCelular());
-		conexión.getSentencia().setString(6, empleado.getDirección());
-		conexión.getSentencia().setString(7, empleado.getCargo());
+		conexión.getSentencia().setInt(7, empleado.getCodEmpleado());
+		conexión.getSentencia().setString(1, empleado.getNombre());
+		conexión.getSentencia().setInt(2, empleado.getcI());
+		conexión.getSentencia().setInt(3, empleado.getTeléfono());
+		conexión.getSentencia().setInt(4, empleado.getCelular());
+		conexión.getSentencia().setString(5, empleado.getDirección());
+		conexión.getSentencia().setString(6, empleado.getCargo());
 		conexión.modificacion();
 	}
 	public void list() throws SQLException {

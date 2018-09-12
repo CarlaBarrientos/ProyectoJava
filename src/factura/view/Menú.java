@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import factura.entity.Factura;
-import factura.entity.NoExisteFactura;
+import venta.entity.NoExisteVenta;
 import view.InputTypes;
 
 public class Menú {
@@ -46,7 +46,7 @@ public class Menú {
 				case 2:
 					try {
 						facturas.delete();
-					} catch (NoExisteFactura e1) {
+					} catch (NoExisteVenta e1) {
 						e1.printStackTrace();
 					}
 					break;
@@ -55,7 +55,7 @@ public class Menú {
 						facturas.update();
 					} catch (SQLException e1) {
 						e1.printStackTrace();
-					} catch (NoExisteFactura e1) {
+					} catch (NoExisteVenta e1) {
 						e1.printStackTrace();
 					}
 					break;

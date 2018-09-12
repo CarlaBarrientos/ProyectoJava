@@ -50,6 +50,7 @@ public class Menú {
 				break;
 			case 1:
 				empleado.view.Menú.menú(scanner, empleados);
+				break;
 			case 2:
 				cliente.view.Menú.menú(scanner, clientes);
 				break;

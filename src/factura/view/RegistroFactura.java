@@ -8,8 +8,7 @@ import view.InputTypes;
 public class RegistroFactura {
 
 public static Factura ingresar(Scanner scanner){
-		
-		int numVenta = InputTypes.readInt("Ingrese el número de venta: ", scanner);
+		int numVenta = InputTypes.readInt("Número de venta: ", scanner);
 		int nit = InputTypes.readInt("NIT: ", scanner);
 		String nombre = InputTypes.readString("Nombre: ", scanner);
 		String descripción = InputTypes.readString("Descripción: ", scanner);

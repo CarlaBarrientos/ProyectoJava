@@ -26,7 +26,7 @@ public class Envíos {
 			conexión.getSentencia().setInt(1, envío.getCodEnvío());
 			conexión.getSentencia().setString(2, envío.getDestinatario());
 			conexión.getSentencia().setInt(3, envío.getTeléfono());
-			conexión.getSentencia().setDouble(3, envío.getCostoAdicional());
+			conexión.getSentencia().setDouble(4, envío.getCostoAdicional());
 			conexión.modificacion();
 	}
 	public void delete() throws NoExisteEnvío{
@@ -57,7 +57,7 @@ public class Envíos {
 			codEnvío = resultSet.getInt("codEnvío");
 			teléfono = resultSet.getInt("teléfono");
 			costoAdicional = resultSet.getDouble("costoAdicional");
-			envío = new Envío(codEnvío, destinatario, teléfono, costoAdicional);
+			envío = new Envío(destinatario, teléfono, costoAdicional);
 		} else {
 			throw new NoExisteEnvío();
 		}
@@ -80,7 +80,7 @@ public class Envíos {
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
-			envío = new Envío(resultSet.getInt("codEvío"), resultSet.getString("destinatario"), resultSet.getInt("teléfono"),
+			envío = new Envío(resultSet.getString("destinatario"), resultSet.getInt("teléfono"),
 					resultSet.getDouble("costoAdicional"));
 			System.out.println(envío);
 		}

@@ -1,5 +1,8 @@
 package view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class InputTypes {
@@ -42,10 +45,26 @@ public class InputTypes {
 
 	public static String readString(String msg, Scanner scanner) {
 		String cadena = "";
-		
+
 		System.out.print(msg);
 		System.out.print(" ");
 		cadena = scanner.nextLine();
 		return cadena;
+	}
+	public static Date readDate(String msg, Scanner scanner) {
+		Date fecha=null;
+		
+		while(true) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+			try {
+				System.out.print(msg);
+				System.out.print(" ");
+
+				fecha = sdf.parse(scanner.nextLine());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			return fecha;
+		}
 	}
 }

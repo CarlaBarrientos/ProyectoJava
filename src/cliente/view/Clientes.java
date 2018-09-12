@@ -46,7 +46,7 @@ public class Clientes {
 	
 	public void update() throws SQLException, NoExisteCliente {
 		ResultSet resultSet;
-		Cliente cliente = null;
+		Cliente cliente;
 		String nombre;
 		int cI;
 	    int teléfono;
@@ -77,13 +77,13 @@ public class Clientes {
 		sql = "update cliente set nombre = ?, CI = ?, teléfono = ?, celular = ?, dirección = ?, puntos = ?  where codCliente = ?";
 
 		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, cliente.getCodCliente());
-		conexión.getSentencia().setString(2, cliente.getNombre());
-		conexión.getSentencia().setInt(3, cliente.getCI());
-		conexión.getSentencia().setInt(4, cliente.getTeléfono());
-		conexión.getSentencia().setInt(5, cliente.getCelular());
-		conexión.getSentencia().setString(6, cliente.getDirección());
-		conexión.getSentencia().setInt(7, cliente.getPuntos());
+		conexión.getSentencia().setInt(7, cliente.getCodCliente());
+		conexión.getSentencia().setString(1, cliente.getNombre());
+		conexión.getSentencia().setInt(2, cliente.getCI());
+		conexión.getSentencia().setInt(3, cliente.getTeléfono());
+		conexión.getSentencia().setInt(4, cliente.getCelular());
+		conexión.getSentencia().setString(5, cliente.getDirección());
+		conexión.getSentencia().setInt(6, cliente.getPuntos());
 		conexión.modificacion();
 	}
 	public void list() throws SQLException {

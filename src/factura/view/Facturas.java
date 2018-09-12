@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import control.Conexión;
 import factura.entity.Factura;
-import factura.entity.NoExisteFactura;
+import venta.entity.NoExisteVenta;
 import view.InputTypes;
 
 public class Facturas {
@@ -28,7 +28,7 @@ public class Facturas {
 			conexión.getSentencia().setString(4, factura.getDescripción());
 			conexión.modificacion();
 	}
-	public void delete() throws NoExisteFactura {
+	public void delete() throws NoExisteVenta {
 		int numVenta = InputTypes.readInt("Número de venta: ", scanner);
 		String sql = "delete from factura where numVenta = ?";
 		try {
@@ -40,7 +40,7 @@ public class Facturas {
 		}
 	}
 	
-	public void update() throws SQLException, NoExisteFactura {
+	public void update() throws SQLException, NoExisteVenta {
 		ResultSet resultSet;
 		Factura factura=null;
 		int nit;
@@ -58,7 +58,7 @@ public class Facturas {
 			numVenta = resultSet.getInt("numVenta");
 			factura = new Factura(numVenta, nit, nombre, descripción);
 		} else {
-			throw new NoExisteFactura();
+			throw new NoExisteVenta();
 		}
 
 		System.out.println(factura);

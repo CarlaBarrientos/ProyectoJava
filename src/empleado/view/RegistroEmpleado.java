@@ -8,8 +8,7 @@ import view.InputTypes;
 public class RegistroEmpleado {
 
 public static Empleado ingresar(Scanner scanner){
-		
-		int codEmpleado = InputTypes.readInt("Ingrese el código del empleado: ", scanner);
+		int codEmpleado=0;
 		String nombreEmpleado = InputTypes.readString("Nombre: ", scanner);
 		int cI = InputTypes.readInt("CI: ", scanner);
 		int teléfono = InputTypes.readInt("Teléfono: ", scanner);

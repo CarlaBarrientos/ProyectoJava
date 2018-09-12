@@ -1,5 +1,6 @@
 package venta.view;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -26,7 +27,7 @@ public class Ventas {
 		String sql = "Insert into Venta (numVenta, fecha, codEnvío, codCliente, codEmpleado) values(?,?,?,?,?)";
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, venta.getNumVenta());
-			conexión.getSentencia().setString(2, venta.getFecha());
+			conexión.getSentencia().setDate(2, new java.sql.Date(venta.getFecha().getTime()));
 			conexión.getSentencia().setInt(3, venta.getCodEnvío());
 			conexión.getSentencia().setInt(4, venta.getCodCliente());
 			conexión.getSentencia().setInt(5, venta.getCodEmpleado());
@@ -47,7 +48,7 @@ public class Ventas {
 	public void update() throws SQLException, NoExisteVenta, NoExisteCliente, NoExisteEmpleado, NoExisteEnvío {
 		ResultSet resultSet;
 		Venta venta=null;
-		String fecha;
+		Date fecha;
 		int codEnvío;
 		int codCliente;
 		int codEmpleado;
@@ -57,12 +58,12 @@ public class Ventas {
 		conexión.getSentencia().setInt(1, numVenta);
 		resultSet = conexión.resultado();
 		if (resultSet.next()) {
-			fecha = resultSet.getString("fecha");
+			fecha = resultSet.getDate("fecha");
 			codEnvío = resultSet.getInt("codEnvío");
 			codCliente = resultSet.getInt("codCliente");
 			codEmpleado = resultSet.getInt("codEmpleado");
 			numVenta = resultSet.getInt("numVenta");
-			venta = new Venta(numVenta, fecha, codEnvío, codCliente, codEmpleado);
+			venta = new Venta(fecha, codEnvío, codCliente, codEmpleado);
 		} else {
 			throw new NoExisteVenta();
 		}
@@ -74,7 +75,7 @@ public class Ventas {
 
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, venta.getNumVenta());
-		conexión.getSentencia().setString(2, venta.getFecha());
+		conexión.getSentencia().setDate(2,new java.sql.Date(venta.getFecha().getTime()));
 		conexión.getSentencia().setInt(3, venta.getCodEnvío());
 		conexión.getSentencia().setInt(4, venta.getCodCliente());
 		conexión.getSentencia().setInt(5, venta.getCodEmpleado());
@@ -86,7 +87,7 @@ public class Ventas {
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
-			venta = new Venta(resultSet.getInt("numVenta"), resultSet.getString("fecha"), resultSet.getInt("codEnvío"),
+			venta = new Venta(resultSet.getDate("fecha"), resultSet.getInt("codEnvío"),
 					resultSet.getInt("codCliente"), resultSet.getInt("codEmpleado"));
 			System.out.println(venta);
 		}

@@ -8,8 +8,7 @@ import view.InputTypes;
 public class RegistroCliente {
 
 	public static Cliente ingresar(Scanner scanner){
-		
-		int codCliente = InputTypes.readInt("Ingrese el código del cliente: ", scanner);
+		int codCliente=0;
 		String nombreCliente = InputTypes.readString("Nombre: ", scanner);
 		int cI = InputTypes.readInt("CI: ", scanner);
 		int teléfono = InputTypes.readInt("Teléfono: ", scanner);

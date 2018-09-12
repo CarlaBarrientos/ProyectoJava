@@ -1,15 +1,15 @@
 package venta.entity;
 
+import java.util.Date;
 
 public class Venta {
 	private int numVenta;
-	private String fecha;
+	private Date fecha;
 	private int codEnvío;
 	private int codCliente;
 	private int codEmpleado;
-	public Venta(int numVenta, String fecha, int codEnvío2, int codCliente2, int codEmpleado2) {
+	public Venta(Date fecha, int codEnvío2, int codCliente2, int codEmpleado2) {
 		super();
-		this.numVenta = numVenta;
 		this.fecha = fecha;
 		this.codEnvío = codEnvío2;
 		this.codCliente = codCliente2;
@@ -21,10 +21,10 @@ public class Venta {
 	public void setNumVenta(int numVenta) {
 		this.numVenta = numVenta;
 	}
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 	public int getCodEnvío() {
