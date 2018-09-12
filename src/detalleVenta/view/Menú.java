@@ -103,12 +103,9 @@ public class Menú {
 				salir = true;
 				break;
 			case 1:
-				detalleVenta.setNumVenta(InputTypes.readInt("Ingrese el nuevo número de venta: ", scanner));
-				break;
-			case 2:
 				detalleVenta.setCodProducto(InputTypes.readInt("Ingrese el nuevo código del producto: ", scanner));
 				break;
-			case 3:
+			case 2:
 				detalleVenta.setCantidad(InputTypes.readInt("Ingrese la nueva cantidad: ", scanner));
 				break;
 			}

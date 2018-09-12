@@ -2,24 +2,14 @@ package detalleVenta.entity;
 
 public class DetalleVenta {
 
-	private int codVenta;
 	private int numVenta;
 	private int codProducto;
 	private int cantidad;
 	
-	public DetalleVenta(int codVenta, int numVenta, int codProducto, int cantidad) {
-		this.codVenta = codVenta;
+	public DetalleVenta(int numVenta, int codProducto, int cantidad) {
 		this.numVenta = numVenta;
 		this.codProducto = codProducto;
 		this.cantidad = cantidad;
-	}
-	
-	public int getCodVenta() {
-		return codVenta;
-	}
-	
-	public void setCodVenta(int codVenta) {
-		this.codVenta = codVenta;
 	}
 	
 	public int getNumVenta() {
@@ -48,7 +38,7 @@ public class DetalleVenta {
 	
 	@Override
 	public String toString() {
-		return "DetalleVenta [codVenta=" + codVenta + ", numVenta=" + numVenta + ", codProducto=" + codProducto
+		return "DetalleVenta [numVenta=" + numVenta + ", codProducto=" + codProducto
 				+ ", cantidad=" + cantidad + "]";
 	}
 }

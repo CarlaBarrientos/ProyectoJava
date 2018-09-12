@@ -13,8 +13,6 @@ public class RegistroDetalleVenta {
 	 ****************************/
 	
 	public static DetalleVenta ingresar(Scanner scanner) {
-		int codVenta = 
-				InputTypes.readInt("Ingrese el código de venta: ", scanner);
 		int numVenta = 
 				InputTypes.readInt("Ingrese el número de venta: ", scanner);
 		int codProducto =
@@ -22,7 +20,6 @@ public class RegistroDetalleVenta {
 		int cantidad = 
 				InputTypes.readInt("Ingrese las cantidad: ", scanner);
 		return new 
-				DetalleVenta(codVenta, numVenta, codProducto, cantidad);
-		
+				DetalleVenta(numVenta, codProducto, cantidad);
 	}
 }

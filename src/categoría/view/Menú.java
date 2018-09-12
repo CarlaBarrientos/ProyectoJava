@@ -23,7 +23,7 @@ public class Menú {
 			System.out.println("2. Listar Categorías ");
 			System.out.println("3. Eliminar Categoría ");
 			System.out.println("4. Modificar Categoría ");
-			System.out.println("5. Productos por Categoría ");
+			System.out.println("5. Listar Productos por Categoría ");
 			System.out.println("0. Salir");
 			System.out.println();
 

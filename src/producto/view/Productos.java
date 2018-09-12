@@ -30,7 +30,7 @@ public class Productos {
 
 	public void add() throws NoExisteCategoría {
 		Producto producto = RegistroProducto.ingresar(scanner);
-		String sql = "Insert into Producto (nombre, descripción, precio, códigoCategoría, codIngrediente) values(?,?,?,?,?)";
+		String sql = "Insert into Producto (nombre, descripción, precio, codCategoría, codIngrediente) values(?,?,?,?,?)";
 		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setString(1, producto.getNombre());
@@ -51,7 +51,7 @@ public class Productos {
 
 	public void delete() {
 		int codProducto = InputTypes.readInt("Código de producto: ", scanner);
-		String sql = "delete from producto where código = ?";
+		String sql = "delete from producto where codProducto = ?";
 		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, codProducto);
@@ -72,13 +72,13 @@ public class Productos {
 		ResultSet resultSet;
 		Producto producto;
 		String nombre;
-		double precio;
 		String descripción;
+		double precio;
 		int códigoCategoría;
 		int códigoIngrediente;
 		int código;
 		int codProducto = InputTypes.readInt("Código de producto: ", scanner);
-		String sql = "select * from producto where código = ?";
+		String sql = "select * from producto where codProducto = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codProducto);
 		resultSet = conexión.resultado();
@@ -86,9 +86,9 @@ public class Productos {
 			nombre = resultSet.getString("nombre");
 			descripción = resultSet.getString("descripción");
 			precio = resultSet.getDouble("precio");
-			códigoCategoría = resultSet.getInt("códigoCategoría");
-			códigoIngrediente = resultSet.getInt("códigoIngredeinte");
-			código = resultSet.getInt("código");
+			códigoCategoría = resultSet.getInt("codCategoría");
+			códigoIngrediente = resultSet.getInt("codIngredeinte");
+			código = resultSet.getInt("codProducto");
 			producto = new Producto(código, nombre, descripción, precio, códigoCategoría, códigoIngrediente);
 		} else {
 			throw new NoExisteProducto();
@@ -97,7 +97,7 @@ public class Productos {
 		System.out.println(producto);
 		Menú.menúModificar(scanner, producto);
 
-		sql = "update producto set nombre = ?, descripción = ?, precio = ?, códigoCategoría = ?, códigoIngrediente = ?  where código = ?";
+		sql = "update producto set nombre = ?, descripción = ?, precio = ?, codCategoría = ?, codIngrediente = ?  where codProducto = ?";
 
 		conexión.consulta(sql);
 		conexión.getSentencia().setString(1, producto.getNombre());
@@ -119,9 +119,9 @@ public class Productos {
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
-			producto = new Producto(resultSet.getInt("código"), resultSet.getString("nombre"),
+			producto = new Producto(resultSet.getInt("codProducto"), resultSet.getString("nombre"),
 					resultSet.getString("descripción"), resultSet.getDouble("precio"),
-					resultSet.getInt("CódigoCategoría"), resultSet.getInt("CódigoIngrediente"));
+					resultSet.getInt("codCategoría"), resultSet.getInt("codIngrediente"));
 			System.out.println(producto);
 		}
 	}
@@ -131,11 +131,11 @@ public class Productos {
 		Producto producto;
 		String nombre;
 		String descripción;
-		Double precio;
+		double precio;
 		int códigoCategoría;
 		int códigoIngrediente;
 		int código = InputTypes.readInt("Código de producto: ", scanner);
-		String sql = "select * from producto where código = ?";
+		String sql = "select * from producto where codProducto = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, código);
 		resultSet = conexión.resultado();
@@ -145,7 +145,7 @@ public class Productos {
 			precio = resultSet.getDouble("precio");
 			códigoCategoría = resultSet.getInt("códigoCategoría");
 			códigoIngrediente = resultSet.getInt("códigoIngrediente");
-			producto = new Producto(código,nombre, descripción, precio, códigoCategoría, códigoIngrediente);
+			producto = new Producto(código, nombre, descripción, precio, códigoCategoría, códigoIngrediente);
 		} else {
 			throw new NoExisteProducto();
 		}
@@ -153,12 +153,12 @@ public class Productos {
 
 		Categoría categoría;
 
-		sql = "select * from categoría where código = ?";
+		sql = "select * from categoría where codCategoría = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, códigoCategoría);
 		resultSet = conexión.resultado();
 		if (resultSet.next()) {
-			código = resultSet.getInt("código");
+			código = resultSet.getInt("codCategoría");
 			nombre = resultSet.getString("nombre");
 			descripción = resultSet.getString("descripción");
 			categoría = new Categoría(código, nombre, descripción);
@@ -166,6 +166,5 @@ public class Productos {
 		} else {
 			throw new NoExisteCategoría();
 		}
-
 	}
 }

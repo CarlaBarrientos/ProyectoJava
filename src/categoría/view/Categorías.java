@@ -51,7 +51,7 @@ public class Categorías {
 
 	public void delete() throws SQLException {
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
-		String sql = "delete " + "from categoría " + "where código = ?";
+		String sql = "delete from categoría where coCatgoría = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codCategoría);
 		conexión.modificacion();
@@ -69,7 +69,7 @@ public class Categorías {
 		String nombre;
 		String descripción;
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
-		String sql = "select * from categoría where código = ?";
+		String sql = "select * from categoría where codCategoría = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codCategoría);
 		resultSet = conexión.resultado();
@@ -84,7 +84,7 @@ public class Categorías {
 		System.out.println(categoría);
 		Menú.menúModificar(scanner, categoría);
 
-		sql = "update categoría set nombre = ?, descripción = ? where código = ?";
+		sql = "update categoría set nombre = ?, descripción = ? where codCategoría = ?";
 
 		conexión.consulta(sql);
 		conexión.getSentencia().setString(1, categoría.getNombre());
@@ -123,7 +123,7 @@ public class Categorías {
 		String nombre;
 		String descripción;
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
-		String sql = "select * from categoría where código = ?";
+		String sql = "select * from categoría where codCategoría = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codCategoría);
 		resultSet = conexión.resultado();
@@ -141,16 +141,16 @@ public class Categorías {
 		int codProducto;
 		int codIngrediente;
 
-		sql = "select * from producto where códigoCategoría = ?";
+		sql = "select * from producto where codCategoría = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codCategoría);
 		resultSet = conexión.resultado();
 		if (resultSet.next()) {
-			codProducto = resultSet.getInt("código");
+			codProducto = resultSet.getInt("codProducto");
 			nombre = resultSet.getString("nombre");
 			descripción = resultSet.getString("descripción");
 			precio = resultSet.getDouble("precio");
-			codIngrediente = resultSet.getInt("CódigoIngrediente");
+			codIngrediente = resultSet.getInt("codIngrediente");
 			producto = new Producto(codProducto, nombre, descripción, precio, codCategoría, codIngrediente);
 			System.out.println(producto);
 		} else {
