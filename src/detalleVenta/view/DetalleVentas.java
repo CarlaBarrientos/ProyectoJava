@@ -55,8 +55,8 @@ public class DetalleVentas {
 		} else {
 			throw new NoExisteDetalleVenta();
 		}
-
 		System.out.println(detalleVenta);
+		
 		Menú.menúModificar(scanner, detalleVenta);
 
 		sql = "update detalleVenta set codProducto = ?, cantidad = ? where numVenta = ?";

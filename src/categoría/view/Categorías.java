@@ -13,20 +13,10 @@ public class Categorías {
 	private Conexión conexión;
 	private Scanner scanner;
 
-	/****************************
-	 * Constructor
-	 * 
-	 * @param productos *
-	 ****************************/
-
 	public Categorías(Conexión conexión, Scanner scanner) {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-
-	/****************************
-	 * Agregar categorías *
-	 ****************************/
 
 	public void add() {
 		Categoría categoría = RegistroCategoría.ingresar(scanner);
@@ -41,14 +31,6 @@ public class Categorías {
 		}
 	}
 
-	/****************************
-	 * Eliminar categorías
-	 * 
-	 * @throws SQLException
-	 * 
-	 * @throws NoExisteCategoría *
-	 ****************************/
-
 	public void delete() throws SQLException {
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
 		String sql = "delete from categoría where coCatgoría = ?";
@@ -56,12 +38,6 @@ public class Categorías {
 		conexión.getSentencia().setInt(1, codCategoría);
 		conexión.modificacion();
 	}
-
-	/****************************
-	 * Modificar categorías
-	 * 
-	 * @throws SQLException *
-	 ****************************/
 
 	public void update() throws NoExisteCategoría, SQLException {
 		ResultSet resultSet;
@@ -93,29 +69,17 @@ public class Categorías {
 		conexión.modificacion();
 	}
 
-	/****************************
-	 * Listar categorías
-	 * 
-	 ****************************/
-
 	public void list() throws SQLException {
 		Categoría categoría;
 		String sql = "select * from categoría ";
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
-			categoría = new Categoría(resultSet.getInt("código"), resultSet.getString("nombre"),
+			categoría = new Categoría(resultSet.getInt("codCategoría"), resultSet.getString("nombre"),
 					resultSet.getString("descripción"));
 			System.out.println(categoría);
 		}
 	}
-
-	/****************************
-	 * Listar categorías .
-	 * 
-	 * @throws NoExisteCategoría
-	 * @throws SQLException *
-	 ****************************/
 
 	public void listProducts() throws NoExisteCategoría, SQLException {
 		ResultSet resultSet;
@@ -137,7 +101,7 @@ public class Categorías {
 		System.out.println(categoría);
 
 		Producto producto;
-		Double precio;
+		double precio;
 		int codProducto;
 		int codIngrediente;
 
@@ -156,7 +120,5 @@ public class Categorías {
 		} else {
 			throw new NoExisteCategoría();
 		}
-
 	}
-
 }

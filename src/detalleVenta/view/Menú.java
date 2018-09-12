@@ -27,11 +27,6 @@ public class Menú {
 		}
 	}
 
-	/****************************
-	 * Opciones del menú 
-	 * @throws SQLException *
-	 ****************************/
-
 	public static void menú(Scanner scanner, DetalleVentas detalleVentasView) throws SQLException {
 		boolean salir = false;
 
@@ -62,14 +57,6 @@ public class Menú {
 		}
 	}
 
-	/*****
-	 * nuevo
-	 */
-
-	/****************************
-	 * Encabezado del menú *
-	 ****************************/
-
 	private static int encabezadoModificar(Scanner scanner) {
 		int opcion;
 
@@ -89,10 +76,6 @@ public class Menú {
 			}
 		}
 	}
-
-	/****************************
-	 * Opciones del modificar *
-	 ****************************/
 
 	public static void menúModificar(Scanner scanner, DetalleVenta detalleVenta) {
 		boolean salir = false;

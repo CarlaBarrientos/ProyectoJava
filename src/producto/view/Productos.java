@@ -15,18 +15,10 @@ public class Productos {
 	private Conexión conexión;
 	private Scanner scanner;
 
-	/****************************
-	 * Constructor *
-	 ****************************/
-
 	public Productos(Conexión conexión, Scanner scanner) {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-
-	/****************************
-	 * Agregar productos
-	 ****************************/
 
 	public void add() throws NoExisteCategoría {
 		Producto producto = RegistroProducto.ingresar(scanner);
@@ -45,10 +37,6 @@ public class Productos {
 
 	}
 
-	/****************************
-	 * Eliminar productos *
-	 ****************************/
-
 	public void delete() {
 		int codProducto = InputTypes.readInt("Código de producto: ", scanner);
 		String sql = "delete from producto where codProducto = ?";
@@ -60,13 +48,6 @@ public class Productos {
 			System.out.println(e.getSQLState());
 		}
 	}
-
-	/****************************
-	 * Modificar categorías
-	 * 
-	 * @throws SQLException
-	 * @throws NoExisteProducto *
-	 ****************************/
 
 	public void update() throws NoExisteCategoría, SQLException, NoExisteProducto {
 		ResultSet resultSet;
@@ -107,11 +88,6 @@ public class Productos {
 		conexión.getSentencia().setInt(5, producto.getCodIngrediente());
 		conexión.modificacion();
 	}
-
-	/****************************
-	 * Listar productos 
-	 * @throws SQLException *
-	 ****************************/
 
 	public void list() throws SQLException {
 		Producto producto;

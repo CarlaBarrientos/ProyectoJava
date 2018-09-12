@@ -16,7 +16,7 @@ public class RegistroProducto {
 
 	public static Producto ingresar(Scanner scanner) throws NoExisteCategoría {
 				
-		int codProducto = InputTypes.readInt("Ingrese el código del producto", scanner);
+		int codProducto = 0;
 		String nombreProducto = InputTypes.readString("Nombre: ", scanner);
 		String descripción = InputTypes.readString("Descripción: ", scanner);
 		double precio = InputTypes.readDouble("Precio: ", scanner);

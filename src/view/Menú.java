@@ -3,12 +3,10 @@ package view;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import cliente.view.Clientes;
+import categoría.view.Categorías;
 import control.Conexión;
-import empleado.view.Empleados;
-import envio.view.Envíos;
-import factura.view.Facturas;
-import venta.view.Ventas;
+import detalleVenta.view.DetalleVentas;
+import producto.view.Productos;
 
 public class Menú {
 
@@ -18,17 +16,15 @@ public class Menú {
 		while (true) {
 			System.out.println("Ingrese una opción: ");
 			System.out.println("------------------- ");
-			System.out.println("1. Empleado");
-			System.out.println("2. Cliente");
-			System.out.println("3. Envío");
-			System.out.println("4. Venta");
-			System.out.println("5. Factura");
+			System.out.println("1. Categorìa");
+			System.out.println("2. Producto");
+			System.out.println("3. Detale de Venta");
 			System.out.println("0. Salir");
 			System.out.println();
 
 			opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-			if (opcion >= 0 && opcion <= 5) {
+			if (opcion >= 0 && opcion <= 3) {
 				return opcion;
 			}
 		}
@@ -37,11 +33,9 @@ public class Menú {
 		boolean salir = false;
 		
 		Conexión conexión = new Conexión("root","","Fábricachocolates");
-		Clientes clientes = new Clientes(conexión, scanner);
-		Empleados empleados = new Empleados(conexión, scanner);
-		Envíos envíos = new Envíos(conexión, scanner);
-		Ventas ventas = new Ventas(conexión, scanner);
-		Facturas facturas = new Facturas(conexión, scanner);
+		Categorías categorìas = new Categorías(conexión, scanner);
+		Productos productos = new Productos(conexión, scanner);
+		DetalleVentas detalleVentas = new DetalleVentas(conexión, scanner);
 		
 		while (!salir) {
 			switch (encabezado(scanner)) {
@@ -49,20 +43,16 @@ public class Menú {
 				salir = true;
 				break;
 			case 1:
-				empleado.view.Menú.menú(scanner, empleados);
+				categoría.view.Menú.menú(scanner, categorìas);
+				break;
 			case 2:
-				cliente.view.Menú.menú(scanner, clientes);
+				producto.view.Menú.menú(scanner, productos);
 				break;
 			case 3:
-				envio.view.Menú.menú(scanner, envíos);
-				break;
-			case 4:
-				venta.view.Menú.menú(scanner, ventas);
-				break;
-			case 5:
-				factura.view.Menú.menú(scanner, facturas);
+				detalleVenta.view.Menú.menú(scanner, detalleVentas);
 				break;
 			}
+			
 		}
 		conexión.close();
 	}

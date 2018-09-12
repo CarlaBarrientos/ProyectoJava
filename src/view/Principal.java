@@ -15,7 +15,6 @@ public class Principal {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		scanner.close();
 	}
 }

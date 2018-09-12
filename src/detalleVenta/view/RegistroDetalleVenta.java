@@ -6,19 +6,11 @@ import detalleVenta.entity.DetalleVenta;
 import view.InputTypes;
 
 public class RegistroDetalleVenta {
-
-	
-	/****************************
-	 * Registro de detalleVenta    *
-	 ****************************/
 	
 	public static DetalleVenta ingresar(Scanner scanner) {
-		int numVenta = 
-				InputTypes.readInt("Ingrese el número de venta: ", scanner);
-		int codProducto =
-				InputTypes.readInt("Ingrese el codigo del producto: ", scanner);
-		int cantidad = 
-				InputTypes.readInt("Ingrese las cantidad: ", scanner);
+		int numVenta = 0;
+		int codProducto = InputTypes.readInt("Ingrese el codigo del producto: ", scanner);
+		int cantidad = InputTypes.readInt("Ingrese la cantidad: ", scanner);
 		return new 
 				DetalleVenta(numVenta, codProducto, cantidad);
 	}

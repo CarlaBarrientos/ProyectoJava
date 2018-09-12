@@ -2,16 +2,11 @@ package categoría.view;
 
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import categoría.entity.Categoría;
 import categoría.entity.NoExisteCategoría;
 import view.InputTypes;
 
 public class Menú {
-
-	/****************************
-	 * Encabezado del menú *
-	 ****************************/
 
 	private static int encabezado(Scanner scanner) {
 		int opcion;
@@ -34,11 +29,6 @@ public class Menú {
 			}
 		}
 	}
-
-	/****************************
-	 * Opciones del menú 
-	 * @throws SQLException *
-	 ****************************/
 
 	public static void menú(Scanner scanner, Categorías categoríasView) throws SQLException {
 		boolean salir = false;
@@ -81,14 +71,6 @@ public class Menú {
 		}
 	}
 
-	/*****
-	 * nuevo
-	 */
-
-	/****************************
-	 * Encabezado del menú *
-	 ****************************/
-
 	private static int encabezadoModificar(Scanner scanner) {
 		int opcion;
 
@@ -107,10 +89,6 @@ public class Menú {
 			}
 		}
 	}
-
-	/****************************
-	 * Opciones del modificar *
-	 ****************************/
 
 	public static void menúModificar(Scanner scanner, Categoría categoría) {
 		boolean salir = false;

@@ -8,10 +8,6 @@ import view.InputTypes;
 
 public class Menú {
 
-	/****************************
-	 * Encabezado del menú *
-	 ****************************/
-
 	public static int encabezado(Scanner scanner) {
 		int opcion;
 
@@ -19,8 +15,8 @@ public class Menú {
 			System.out.println("Ingrese una opcion: ");
 			System.out.println("------------------- ");
 			System.out.println("1. Ingresar Producto");
-			System.out.println("2. Listar Productos ");
-			System.out.println("3. Eliminar Producto ");
+			System.out.println("2. Listar Productos");
+			System.out.println("3. Eliminar Producto");
 			System.out.println("0. Salir");
 			System.out.println();
 
@@ -31,10 +27,6 @@ public class Menú {
 			}
 		}
 	}
-
-	/****************************
-	 * Opciones del menú *
-	 ****************************/
 
 	public static void menú(Scanner scanner, Productos productosIO) {
 		boolean salir = false;
@@ -67,13 +59,6 @@ public class Menú {
 			}
 		}
 	}
-	/*****
-	 * nuevo
-	 */
-
-	/****************************
-	 * Encabezado del menú *
-	 ****************************/
 
 	private static int encabezadoModificar(Scanner scanner) {
 		int opcion;
@@ -96,10 +81,6 @@ public class Menú {
 			}
 		}
 	}
-
-	/****************************
-	 * Opciones del modificar *
-	 ****************************/
 
 	public static void menúModificar(Scanner scanner, Producto producto) {
 		boolean salir = false;
