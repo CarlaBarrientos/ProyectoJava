@@ -1,13 +1,13 @@
-package CompraIngrediente.view;
+package compraIngrediente.view;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import CompraIngrediente.entity.CompraIngrediente;
-import CompraIngrediente.entity.NoExisteCompraIngrediente;
-import Ingrediente.entity.Ingrediente;
-import Ingrediente.entity.NoExisteIngrediente;
-import Ingrediente.view.RegistroIngredientes;
+import compraIngrediente.entity.CompraIngrediente;
+import compraIngrediente.entity.NoExisteCompraIngrediente;
+import ingrediente.entity.Ingrediente;
+import ingrediente.entity.NoExisteIngrediente;
+import ingrediente.view.RegistroIngredientes;
 import view.InputTypes;
 
 public class CompraIngredienteMenú {
@@ -60,12 +60,11 @@ public class CompraIngredienteMenú {
 				try {
 					compraIngredienteView.update();
 				} catch (NoExisteCompraIngrediente e) {
-					System.out.println("No existe ingrediente");
+					System.out.println("No existe compra de ingrediente");
 				}
 				break;
 
-			case 5:
-				break;
+			
 			}
 		}
 	}

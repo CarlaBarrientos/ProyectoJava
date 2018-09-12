@@ -1,4 +1,4 @@
-package Ingrediente.entity;
+package ingrediente.entity;
 
 public class NoExisteIngrediente extends Exception {
 	private static final long serialVersionUID = 1L;

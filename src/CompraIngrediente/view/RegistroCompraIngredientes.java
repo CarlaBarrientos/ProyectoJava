@@ -1,15 +1,15 @@
-package CompraIngrediente.view;
+package compraIngrediente.view;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import CompraIngrediente.entity.CompraIngrediente;
-import CompraIngrediente.entity.NoExisteCompraIngrediente;
-import Ingrediente.entity.Ingrediente;
-import Ingrediente.entity.NoExisteIngrediente;
-import Ingrediente.view.IngredienteMenú;
+import compraIngrediente.entity.CompraIngrediente;
+import compraIngrediente.entity.NoExisteCompraIngrediente;
 import control.Conexión;
+import ingrediente.entity.Ingrediente;
+import ingrediente.entity.NoExisteIngrediente;
+import ingrediente.view.IngredienteMenú;
 import view.InputTypes;
 
 public class RegistroCompraIngredientes {
@@ -22,7 +22,7 @@ public class RegistroCompraIngredientes {
 	}
   public void add() {
 	  CompraIngrediente compraIngrediente = RegistroCompraIngrediente.Ingresar(scanner);
-	  String sql = "Insert into Ingrediente (codCompraIngrediente, nombre, cantidad, proveedor, factura) " + "values(?,?,?,?,?)";
+	  String sql = "Insert into compraingrediente (codCompraIng, nombre, cantidad, factura, provedor) " + "values(?,?,?,?,?)";
 		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, compraIngrediente.getCodCompraIngrediente());
@@ -33,13 +33,14 @@ public class RegistroCompraIngredientes {
 			conexión.modificacion();
 		} catch (SQLException e) {
 			System.out.println(e.getSQLState());
+		  
 		}
   }
   
   
   public void delete() throws SQLException {
 		int codCompraIngrediente = InputTypes.readInt("Código de la compra del Ingrediente: ", scanner);
-		String sql = "delete " + "from compraIngrediente " + "where código = ?";
+		String sql = "delete " + "from compraingrediente " + "where codCompraIng = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codCompraIngrediente);
 		conexión.modificacion();
@@ -52,7 +53,7 @@ public class RegistroCompraIngredientes {
 		int factura;
 		String proveedor;
 		int codCompraIngrediente = InputTypes.readInt("Código de la compra del Ingrediente: ", scanner);
-		String sql = "select * from compraIngrediente where código = ?";
+		String sql = "select * from compraingrediente where codCompraIng = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codCompraIngrediente);
 		resultSet = conexión.resultado();
@@ -69,7 +70,7 @@ public class RegistroCompraIngredientes {
 		System.out.println(compraIngrediente);
 		CompraIngredienteMenú.menúModificar(scanner, compraIngrediente);
 
-		sql = "update ingrediente set nombre = ?, descripción = ? where código = ?";
+		sql = "update compraingrediente set nombre = ?, cantidad = ?, factura = ?, proveedor = ? where codCompraIng = ?";
 
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, compraIngrediente.getCodCompraIngrediente());
@@ -83,11 +84,11 @@ public class RegistroCompraIngredientes {
 	
 	public void list() throws SQLException {
 		CompraIngrediente compraIngrediente;
-		String sql = "select * from compraIngrediente ";
+		String sql = "select * from compraingrediente ";
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
-			compraIngrediente = new CompraIngrediente(resultSet.getInt("código"), resultSet.getString("nombre"),
+			compraIngrediente = new CompraIngrediente(resultSet.getInt("codCompraIng"), resultSet.getString("nombre"),
 					resultSet.getInt("cantidad"), resultSet.getInt("factura"), resultSet.getString("proveedor"));
 			System.out.println(compraIngrediente);
 		}

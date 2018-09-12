@@ -1,4 +1,4 @@
-package Ingrediente.entity;
+package ingrediente.entity;
 
 
 

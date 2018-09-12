@@ -1,4 +1,4 @@
-package CompraIngrediente.entity;
+package compraIngrediente.entity;
 
 
 

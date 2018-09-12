@@ -1,8 +1,8 @@
-package Ingrediente.view;
+package ingrediente.view;
 
 import java.util.Scanner;
 
-import Ingrediente.entity.Ingrediente;
+import ingrediente.entity.Ingrediente;
 import view.InputTypes;
 
 

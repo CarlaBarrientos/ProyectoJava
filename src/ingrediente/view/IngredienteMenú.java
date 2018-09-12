@@ -1,10 +1,10 @@
-package Ingrediente.view;
+package ingrediente.view;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import Ingrediente.entity.Ingrediente;
-import Ingrediente.entity.NoExisteIngrediente;
+import ingrediente.entity.Ingrediente;
+import ingrediente.entity.NoExisteIngrediente;
 import view.InputTypes;
 
 
@@ -64,8 +64,6 @@ public class IngredienteMenú {
 				}
 				break;
 
-			case 5:
-				break;
 			}
 		}
 	}
