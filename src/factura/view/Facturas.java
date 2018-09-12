@@ -18,22 +18,17 @@ public class Facturas {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-	public void add() {
+	public void add() throws SQLException{
 		Factura factura = RegistroFactura.ingresar(scanner);
 		String sql = "Insert into Factura (numVenta, NIT, nombre, descripción) values(?,?,?,?)";
-		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, factura.getNumVenta());
 			conexión.getSentencia().setInt(2, factura.getNit());
 			conexión.getSentencia().setString(3, factura.getNombre());
 			conexión.getSentencia().setString(4, factura.getDescripción());
 			conexión.modificacion();
-		} catch (SQLException e) {
-			//throw new NoExisteCategoría();
-		}
-
 	}
-	public void delete() {
+	public void delete() throws NoExisteFactura {
 		int numVenta = InputTypes.readInt("Número de venta: ", scanner);
 		String sql = "delete from factura where numVenta = ?";
 		try {
@@ -67,7 +62,7 @@ public class Facturas {
 		}
 
 		System.out.println(factura);
-		//Menú.menúModificar(scanner, producto);
+		Menú.menúModificar(scanner, factura);
 
 		sql = "update factura set NIT=?, nombre = ?, descripción = ?  where numVenta = ?";
 

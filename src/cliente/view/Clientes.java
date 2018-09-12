@@ -19,10 +19,9 @@ public class Clientes {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-	public void add() {
+	public void add() throws SQLException{
 		Cliente cliente = RegistroCliente.ingresar(scanner);
 		String sql = "Insert into Cliente (codCliente, nombre, cI, teléfono, celular, dirección, puntos) values(?,?,?,?,?,?,?)";
-		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, cliente.getCodCliente());
 			conexión.getSentencia().setString(2, cliente.getNombre());
@@ -32,12 +31,8 @@ public class Clientes {
 			conexión.getSentencia().setString(6, cliente.getDirección());
 			conexión.getSentencia().setInt(7, cliente.getPuntos());
 			conexión.modificacion();
-		} catch (SQLException e) {
-			//throw new NoExisteCategoría();
-		}
-
 	}
-	public void delete() {
+	public void delete() throws NoExisteCliente{
 		int codCliente = InputTypes.readInt("Código del cliente: ", scanner);
 		String sql = "delete from cliente where codCliente = ?";
 		try {
@@ -77,7 +72,7 @@ public class Clientes {
 		}
 
 		System.out.println(cliente);
-		//Menú.menúModificar(scanner, producto);
+		Menú.menúModificar(scanner, cliente);
 
 		sql = "update cliente set nombre = ?, CI = ?, teléfono = ?, celular = ?, dirección = ?, puntos = ?  where codCliente = ?";
 

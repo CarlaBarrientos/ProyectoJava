@@ -1,24 +1,23 @@
-package cliente.view;
+package factura.view;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import cliente.entity.Cliente;
-import cliente.entity.NoExisteCliente;
+import factura.entity.Factura;
+import factura.entity.NoExisteFactura;
 import view.InputTypes;
 
 public class Menú {
-
 	public static int encabezado(Scanner scanner) {
 		int opcion;
 
 		while (true) {
 			System.out.println("Ingrese una opcion: ");
 			System.out.println("------------------- ");
-			System.out.println("1. Ingresar Cliente: ");
-			System.out.println("2. Eliminar Cliente: ");
-			System.out.println("3. Actualizar Cliente: ");
-			System.out.println("4. Listar Clientes: ");
+			System.out.println("1. Registrar factura: ");
+			System.out.println("2. Eliminar factura: ");
+			System.out.println("3. Actualizar factura: ");
+			System.out.println("4. Listar facturas: ");
 			System.out.println("0. Salir");
 			System.out.println();
 
@@ -29,7 +28,7 @@ public class Menú {
 			}
 		}
 	}
-		public static void menú(Scanner scanner, Clientes clientes) {
+		public static void menú(Scanner scanner, Facturas facturas) {
 			boolean salir = false;
 
 			while (!salir) {
@@ -39,30 +38,30 @@ public class Menú {
 					break;
 				case 1:
 					try {
-						clientes.add();
+						facturas.add();
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 					break;
 				case 2:
 					try {
-						clientes.delete();
-					} catch (NoExisteCliente e1) {
+						facturas.delete();
+					} catch (NoExisteFactura e1) {
 						e1.printStackTrace();
 					}
 					break;
 				case 3:
 					try {
-						clientes.update();
+						facturas.update();
 					} catch (SQLException e1) {
 						e1.printStackTrace();
-					} catch (NoExisteCliente e1) {
+					} catch (NoExisteFactura e1) {
 						e1.printStackTrace();
 					}
 					break;
 				case 4:
 					try {
-						clientes.list();
+						facturas.list();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -77,24 +76,21 @@ public class Menú {
 			while (true) {
 				System.out.println("Ingrese una opcion: ");
 				System.out.println("------------------- ");
-				System.out.println("1. Modificar nombre: ");
-				System.out.println("2. Modificar CI: ");
-				System.out.println("3. Modificar teléfono: ");
-				System.out.println("4. Modificar celular: ");
-				System.out.println("5. Modificar dirección: ");
-				System.out.println("6. Modificar puntos: ");
+				System.out.println("1. Modificar NIT: ");
+				System.out.println("2. Modificar nombre: ");
+				System.out.println("3. Modificar descripción: ");
 				System.out.println("0. Salir");
 				System.out.println();
 
 				opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-				if (opcion >= 0 && opcion <= 6) {
+				if (opcion >= 0 && opcion <= 3) {
 					return opcion;
 				}
 			}
 		}
 
-		public static void menúModificar(Scanner scanner, Cliente cliente) {
+		public static void menúModificar(Scanner scanner, Factura factura) {
 			boolean salir = false;
 
 			while (!salir) {
@@ -103,24 +99,17 @@ public class Menú {
 					salir = true;
 					break;
 				case 1:
-					cliente.setNombre(InputTypes.readString("Ingrese el nuevo nombre: ", scanner));
+					factura.setNit(InputTypes.readInt("Ingrese el nuevo NIT: ", scanner));
 					break;
 				case 2:
-					cliente.setCI(InputTypes.readInt("Ingrese el nuevo CI: ", scanner));
+					factura.setNombre(InputTypes.readString("Ingrese el nuevo nombre: ", scanner));
 					break;
 				case 3:
-					cliente.setTeléfono(InputTypes.readInt("Ingrese el nuevo teléfono: ", scanner));
+					factura.setDescripción(InputTypes.readString("Ingrese la nueva descripción: ", scanner));
 					break;
-				case 4:
-					cliente.setCelular(InputTypes.readInt("Ingrese el nuevo celular: ", scanner));
-					break;
-				case 5:
-					cliente.setDirección(InputTypes.readString("Ingrese la nueva dirección: ", scanner));
-					break;
-				case 6:
-					cliente.setPuntos(InputTypes.readInt("Ingrese la nueva cantidad de puntos: ", scanner));
-					break;
+
 				}
 			}
 		}
-	}
+
+}

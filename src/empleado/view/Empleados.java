@@ -18,10 +18,9 @@ public class Empleados {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-	public void add() {
+	public void add() throws SQLException {
 		Empleado empleado = RegistroEmpleado.ingresar(scanner);
 		String sql = "Insert into Empleado (codEmpleado, nombre, cI, teléfono, celular, dirección, cargo) values(?,?,?,?,?,?,?)";
-		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, empleado.getCodEmpleado());
 			conexión.getSentencia().setString(2, empleado.getNombre());
@@ -31,12 +30,8 @@ public class Empleados {
 			conexión.getSentencia().setString(6, empleado.getDirección());
 			conexión.getSentencia().setString(7, empleado.getCargo());
 			conexión.modificacion();
-		} catch (SQLException e) {
-			//throw new NoExisteCategoría();
-		}
-
 	}
-	public void delete() {
+	public void delete() throws NoExisteEmpleado {
 		int codEmpleado = InputTypes.readInt("Código del empleado: ", scanner);
 		String sql = "delete from empleado where codEmpleado = ?";
 		try {
@@ -76,7 +71,7 @@ public class Empleados {
 		}
 
 		System.out.println(empleado);
-		//Menú.menúModificar(scanner, producto);
+		Menú.menúModificar(scanner, empleado);
 
 		sql = "update empleado set nombre = ?, CI = ?, teléfono = ?, celular = ?, dirección = ?, cargo = ?  where codEmpleado = ?";
 

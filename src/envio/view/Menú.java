@@ -1,24 +1,24 @@
-package cliente.view;
+package envio.view;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import cliente.entity.Cliente;
-import cliente.entity.NoExisteCliente;
+import envio.entity.Envío;
+import envio.entity.NoExisteEnvío;
 import view.InputTypes;
 
 public class Menú {
-
+	
 	public static int encabezado(Scanner scanner) {
 		int opcion;
 
 		while (true) {
 			System.out.println("Ingrese una opcion: ");
 			System.out.println("------------------- ");
-			System.out.println("1. Ingresar Cliente: ");
-			System.out.println("2. Eliminar Cliente: ");
-			System.out.println("3. Actualizar Cliente: ");
-			System.out.println("4. Listar Clientes: ");
+			System.out.println("1. Registrar envío: ");
+			System.out.println("2. Eliminar envío: ");
+			System.out.println("3. Actualizar envío: ");
+			System.out.println("4. Listar envíos: ");
 			System.out.println("0. Salir");
 			System.out.println();
 
@@ -29,7 +29,7 @@ public class Menú {
 			}
 		}
 	}
-		public static void menú(Scanner scanner, Clientes clientes) {
+		public static void menú(Scanner scanner, Envíos envíos) {
 			boolean salir = false;
 
 			while (!salir) {
@@ -39,30 +39,30 @@ public class Menú {
 					break;
 				case 1:
 					try {
-						clientes.add();
+						envíos.add();
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 					break;
 				case 2:
 					try {
-						clientes.delete();
-					} catch (NoExisteCliente e1) {
+						envíos.delete();
+					} catch (NoExisteEnvío e1) {
 						e1.printStackTrace();
 					}
 					break;
 				case 3:
 					try {
-						clientes.update();
+						envíos.update();
 					} catch (SQLException e1) {
 						e1.printStackTrace();
-					} catch (NoExisteCliente e1) {
+					} catch (NoExisteEnvío e1) {
 						e1.printStackTrace();
 					}
 					break;
 				case 4:
 					try {
-						clientes.list();
+						envíos.list();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -77,24 +77,21 @@ public class Menú {
 			while (true) {
 				System.out.println("Ingrese una opcion: ");
 				System.out.println("------------------- ");
-				System.out.println("1. Modificar nombre: ");
-				System.out.println("2. Modificar CI: ");
-				System.out.println("3. Modificar teléfono: ");
-				System.out.println("4. Modificar celular: ");
-				System.out.println("5. Modificar dirección: ");
-				System.out.println("6. Modificar puntos: ");
+				System.out.println("1. Modificar destinatario: ");
+				System.out.println("2. Modificar teléfono: ");
+				System.out.println("3. Modificar costo adicional: ");
 				System.out.println("0. Salir");
 				System.out.println();
 
 				opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-				if (opcion >= 0 && opcion <= 6) {
+				if (opcion >= 0 && opcion <= 3) {
 					return opcion;
 				}
 			}
 		}
 
-		public static void menúModificar(Scanner scanner, Cliente cliente) {
+		public static void menúModificar(Scanner scanner, Envío envío) {
 			boolean salir = false;
 
 			while (!salir) {
@@ -103,24 +100,16 @@ public class Menú {
 					salir = true;
 					break;
 				case 1:
-					cliente.setNombre(InputTypes.readString("Ingrese el nuevo nombre: ", scanner));
+					envío.setDestinatario(InputTypes.readString("Ingrese el nuevo destinatario: ", scanner));
 					break;
 				case 2:
-					cliente.setCI(InputTypes.readInt("Ingrese el nuevo CI: ", scanner));
+					envío.setTeléfono(InputTypes.readInt("Ingrese el nuevo teléfono: ", scanner));
 					break;
 				case 3:
-					cliente.setTeléfono(InputTypes.readInt("Ingrese el nuevo teléfono: ", scanner));
+					envío.setCostoAdicional(InputTypes.readDouble("Ingrese el nuevo costo adicional: ", scanner));
 					break;
-				case 4:
-					cliente.setCelular(InputTypes.readInt("Ingrese el nuevo celular: ", scanner));
-					break;
-				case 5:
-					cliente.setDirección(InputTypes.readString("Ingrese la nueva dirección: ", scanner));
-					break;
-				case 6:
-					cliente.setPuntos(InputTypes.readInt("Ingrese la nueva cantidad de puntos: ", scanner));
-					break;
+
 				}
 			}
 		}
-	}
+}

@@ -19,22 +19,17 @@ public class Envíos {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-	public void add() throws NoExisteEnvío {
+	public void add() throws SQLException{
 		Envío envío = RegistroEnvío.ingresar(scanner);
 		String sql = "Insert into Envío (codEnvío, destinatario, teléfono, costoAdicional) values(?,?,?,?)";
-		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, envío.getCodEnvío());
 			conexión.getSentencia().setString(2, envío.getDestinatario());
 			conexión.getSentencia().setInt(3, envío.getTeléfono());
 			conexión.getSentencia().setDouble(3, envío.getCostoAdicional());
 			conexión.modificacion();
-		} catch (SQLException e) {
-			throw new NoExisteEnvío();
-		}
-
 	}
-	public void delete() {
+	public void delete() throws NoExisteEnvío{
 		int codEnvío= InputTypes.readInt("Código del envío: ", scanner);
 		String sql = "delete from envío where codEnvío = ?";
 		try {
@@ -68,7 +63,7 @@ public class Envíos {
 		}
 
 		System.out.println(envío);
-		//Menú.menúModificar(scanner, producto);
+		Menú.menúModificar(scanner, envío);
 
 		sql = "update envío set destinatario = ?, teléfono = ?, costoAdicional = ? where codEnvío = ?";
 

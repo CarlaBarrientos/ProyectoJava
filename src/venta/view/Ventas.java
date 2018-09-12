@@ -4,7 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import cliente.entity.NoExisteCliente;
 import control.Conexión;
+import empleado.entity.NoExisteEmpleado;
+import envio.entity.NoExisteEnvío;
 import venta.entity.NoExisteVenta;
 import venta.entity.Venta;
 import view.InputTypes;
@@ -18,10 +21,9 @@ public class Ventas {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-	public void add() {
+	public void add() throws NoExisteCliente, NoExisteEmpleado, NoExisteEnvío, SQLException{
 		Venta venta = RegistroVenta.ingresar(scanner);
 		String sql = "Insert into Venta (numVenta, fecha, codEnvío, codCliente, codEmpleado) values(?,?,?,?,?)";
-		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, venta.getNumVenta());
 			conexión.getSentencia().setString(2, venta.getFecha());
@@ -29,12 +31,8 @@ public class Ventas {
 			conexión.getSentencia().setInt(4, venta.getCodCliente());
 			conexión.getSentencia().setInt(5, venta.getCodEmpleado());
 			conexión.modificacion();
-		} catch (SQLException e) {
-			//throw new NoExisteCategoría();
-		}
-
 	}
-	public void delete() {
+	public void delete() throws NoExisteCliente, NoExisteEmpleado, NoExisteEnvío, NoExisteVenta{
 		int numVenta = InputTypes.readInt("Número de venta: ", scanner);
 		String sql = "delete from venta where numVenta = ?";
 		try {
@@ -46,7 +44,7 @@ public class Ventas {
 		}
 	}
 	
-	public void update() throws SQLException, NoExisteVenta {
+	public void update() throws SQLException, NoExisteVenta, NoExisteCliente, NoExisteEmpleado, NoExisteEnvío {
 		ResultSet resultSet;
 		Venta venta=null;
 		String fecha;

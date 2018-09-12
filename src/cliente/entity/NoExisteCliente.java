@@ -5,6 +5,6 @@ public class NoExisteCliente extends Exception{
 	private static final long serialVersionUID = 1L;
 
 	public NoExisteCliente() {
-		super("No existe el cliente");
+		super("El cliente del código ingresado no existe!");
 	}
 }

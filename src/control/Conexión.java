@@ -14,7 +14,7 @@ public class Conexión {
 
 	public Conexión(String user, String password, String dataBase) throws ClassNotFoundException, SQLException {
 			Class.forName(JDBC_DRIVER);
-			System.out.println("Conectado..");
+			System.out.println("Conectado...");
 			DB_URL = DB_URL + dataBase;
 			connection = DriverManager.getConnection(DB_URL, user, password);
 
