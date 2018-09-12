@@ -63,11 +63,11 @@ public class RegistroCompraIngredientes {
 			proveedor = resultSet.getString("proveedor");
 			compraIngrediente = new CompraIngrediente(codCompraIngrediente,nombre , cantidad, factura, proveedor);
 		} else {
-			throw new NoExisteIngrediente();
+			throw new NoExisteCompraIngrediente();
 		}
 
 		System.out.println(compraIngrediente);
-		IngredienteMenú.menúModificar(scanner, compraIngrediente);
+		CompraIngredienteMenú.menúModificar(scanner, compraIngrediente);
 
 		sql = "update ingrediente set nombre = ?, descripción = ? where código = ?";
 
