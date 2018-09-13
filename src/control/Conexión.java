@@ -30,7 +30,6 @@ public class Conexión {
 	
 	public int modificacion() throws SQLException {
 		return sentencia.executeUpdate();
-		
 	}
 	
 	public void close() throws SQLException  {

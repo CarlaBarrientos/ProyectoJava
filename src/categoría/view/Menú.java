@@ -30,7 +30,7 @@ public class Menú {
 		}
 	}
 
-	public static void menú(Scanner scanner, Categorías categoríasView) throws SQLException {
+	public static void menú(Scanner scanner, Categorías categorías) throws SQLException {
 		boolean salir = false;
 
 		while (!salir) {
@@ -39,30 +39,28 @@ public class Menú {
 				salir = true;
 				break;
 			case 1:
-				categoríasView.add();
+				categorías.add();
 				break;
 			case 2:
-				categoríasView.list();
+				categorías.list();
 				break;
 			case 3:
 				try {
-					categoríasView.delete();
+					categorías.delete();
 				} catch (SQLException e) {
 					System.out.println("No existe categoría!");
 				}
 				break;
-
 			case 4:
 				try {
-					categoríasView.update();
+					categorías.update();
 				} catch (NoExisteCategoría e) {
 					System.out.println("No existe categoría!");
 				}
 				break;
-
 			case 5:
 				try {
-					categoríasView.listProducts();
+					categorías.listProducts();
 				} catch (NoExisteCategoría e) {
 					System.out.println("No existe categoría!");
 				}
@@ -107,5 +105,4 @@ public class Menú {
 			}
 		}
 	}
-
 }

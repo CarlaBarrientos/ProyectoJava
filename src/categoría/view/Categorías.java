@@ -33,12 +33,12 @@ public class Categorías {
 
 	public void delete() throws SQLException {
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
-		String sql = "delete from categoría where coCatgoría = ?";
-		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, codCategoría);
-		conexión.modificacion();
+		String sql = "delete from categoría where codCatgoría = ?";
+			conexión.consulta(sql);
+			conexión.getSentencia().setInt(1, codCategoría);
+			conexión.modificacion();
 	}
-
+	
 	public void update() throws NoExisteCategoría, SQLException {
 		ResultSet resultSet;
 		Categoría categoría;
@@ -80,6 +80,8 @@ public class Categorías {
 			System.out.println(categoría);
 		}
 	}
+	
+	// Solo lista el primer producto
 
 	public void listProducts() throws NoExisteCategoría, SQLException {
 		ResultSet resultSet;

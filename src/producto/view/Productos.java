@@ -48,6 +48,8 @@ public class Productos {
 			System.out.println(e.getSQLState());
 		}
 	}
+	
+	// errores solucionados pero aun se puede cambiar de categoría a una que no existe
 
 	public void update() throws NoExisteCategoría, SQLException, NoExisteProducto {
 		ResultSet resultSet;
@@ -58,7 +60,7 @@ public class Productos {
 		int códigoCategoría;
 		int códigoIngrediente;
 		int código;
-		int codProducto = InputTypes.readInt("Código de producto: ", scanner);
+		int codProducto = InputTypes.readInt("Código del producto: ", scanner);
 		String sql = "select * from producto where codProducto = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codProducto);
@@ -68,7 +70,7 @@ public class Productos {
 			descripción = resultSet.getString("descripción");
 			precio = resultSet.getDouble("precio");
 			códigoCategoría = resultSet.getInt("codCategoría");
-			códigoIngrediente = resultSet.getInt("codIngredeinte");
+			códigoIngrediente = resultSet.getInt("codIngrediente");
 			código = resultSet.getInt("codProducto");
 			producto = new Producto(código, nombre, descripción, precio, códigoCategoría, códigoIngrediente);
 		} else {
@@ -86,12 +88,13 @@ public class Productos {
 		conexión.getSentencia().setDouble(3, producto.getPrecio());
 		conexión.getSentencia().setInt(4, producto.getCodCategoría());
 		conexión.getSentencia().setInt(5, producto.getCodIngrediente());
+		conexión.getSentencia().setInt(6, producto.getCodProducto());
 		conexión.modificacion();
 	}
 
 	public void list() throws SQLException {
 		Producto producto;
-		String sql = "select * from producto ";
+		String sql = "select * from producto";
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
