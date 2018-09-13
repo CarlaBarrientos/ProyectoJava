@@ -5,8 +5,9 @@ public class Envío {
 	private String destinatario;
 	private int teléfono;
 	private double costoAdicional;
-	public Envío(String destinatario, int teléfono, double costoAdicional) {
+	public Envío(int codEnvío, String destinatario, int teléfono, double costoAdicional) {
 		super();
+		this.codEnvío = codEnvío;
 		this.destinatario = destinatario;
 		this.teléfono = teléfono;
 		this.costoAdicional = costoAdicional;

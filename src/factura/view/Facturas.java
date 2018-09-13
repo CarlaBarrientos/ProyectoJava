@@ -67,10 +67,10 @@ public class Facturas {
 		sql = "update factura set NIT=?, nombre = ?, descripción = ?  where numVenta = ?";
 
 		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, factura.getNumVenta());
-		conexión.getSentencia().setInt(2, factura.getNit());
-		conexión.getSentencia().setString(3, factura.getNombre());
-		conexión.getSentencia().setString(4, factura.getDescripción());
+		conexión.getSentencia().setInt(4, factura.getNumVenta());
+		conexión.getSentencia().setInt(1, factura.getNit());
+		conexión.getSentencia().setString(2, factura.getNombre());
+		conexión.getSentencia().setString(3, factura.getDescripción());
 		conexión.modificacion();
 	}
 	public void list() throws SQLException {

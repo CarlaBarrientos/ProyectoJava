@@ -43,7 +43,7 @@ public class Conexión {
 		}
 	}
 
-	public PreparedStatement getSentencia() {
+	public PreparedStatement getSentencia(){
 		return sentencia;
 	}
 

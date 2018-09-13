@@ -59,6 +59,7 @@ public class Menú {
 				break;
 			case 4:
 				venta.view.Menú.menú(scanner, ventas);
+				
 				break;
 			case 5:
 				factura.view.Menú.menú(scanner, facturas);

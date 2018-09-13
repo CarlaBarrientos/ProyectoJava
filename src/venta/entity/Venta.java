@@ -2,23 +2,25 @@ package venta.entity;
 
 import java.util.Date;
 
+
 public class Venta {
 	private int numVenta;
 	private Date fecha;
 	private int codEnvío;
 	private int codCliente;
 	private int codEmpleado;
-	public Venta(Date fecha, int codEnvío2, int codCliente2, int codEmpleado2) {
+	public Venta(int numVenta, Date fecha, int codEnvío, int codCliente, int codEmpleado) {
 		super();
+		this.numVenta = numVenta;
 		this.fecha = fecha;
-		this.codEnvío = codEnvío2;
-		this.codCliente = codCliente2;
-		this.codEmpleado = codEmpleado2;
+		this.codEnvío = codEnvío;
+		this.codCliente = codCliente;
+		this.codEmpleado = codEmpleado;
 	}
 	public int getNumVenta() {
 		return numVenta;
 	}
-	public void setNumVenta(int numVenta) {
+	public void setNumVenta(int numVenta){
 		this.numVenta = numVenta;
 	}
 	public Date getFecha() {
@@ -30,19 +32,19 @@ public class Venta {
 	public int getCodEnvío() {
 		return codEnvío;
 	}
-	public void setCodEnvío(int codEnvío) {
+	public void setCodEnvío(int codEnvío){
 		this.codEnvío = codEnvío;
 	}
 	public int getCodCliente() {
 		return codCliente;
 	}
-	public void setCodCliente(int codCliente) {
+	public void setCodCliente(int codCliente){
 		this.codCliente = codCliente;
 	}
 	public int getCodEmpleado() {
 		return codEmpleado;
 	}
-	public void setCodEmpleado(int codEmpleado) {
+	public void setCodEmpleado(int codEmpleado){
 		this.codEmpleado = codEmpleado;
 	}
 	@Override

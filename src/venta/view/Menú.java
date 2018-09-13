@@ -31,7 +31,7 @@ public class Menú {
 			}
 		}
 	}
-		public static void menú(Scanner scanner, Ventas ventas) {
+		public static void menú(Scanner scanner, Ventas ventas){
 			boolean salir = false;
 
 			while (!salir) {
@@ -41,43 +41,48 @@ public class Menú {
 					break;
 				case 1:
 					try {
-						ventas.add();
+						System.out.println("11");
+				      ventas.add();
+				      System.out.println("222");
 					} catch (NoExisteCliente e) {
-						e.printStackTrace();
+						System.out.println();
+						System.out.println("No existe el cliente!");
+						System.out.println();
 					} catch (NoExisteEmpleado e) {
-						e.printStackTrace();
+						System.out.println();
+						System.out.println("No existe el empleado!");
+						System.out.println();
 					} catch (NoExisteEnvío e) {
-						e.printStackTrace();
-					} catch (SQLException e) {
-						e.printStackTrace();
+						System.out.println();
+						System.out.println("No existe el envío!");
+						System.out.println();
 					}
 					break;
 				case 2:
-					try {
 						ventas.delete();
-					} catch (NoExisteCliente e) {
-						e.printStackTrace();
-					} catch (NoExisteEmpleado e) {
-						e.printStackTrace();
-					} catch (NoExisteEnvío e) {
-						e.printStackTrace();
-					} catch (NoExisteVenta e) {
-						e.printStackTrace();
-					}
 					break;
 				case 3:
+
 					try {
 						ventas.update();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					} catch (NoExisteVenta e) {
-						e.printStackTrace();
-					} catch (NoExisteCliente e) {
-						e.printStackTrace();
-					} catch (NoExisteEmpleado e) {
-						e.printStackTrace();
-					} catch (NoExisteEnvío e) {
-						e.printStackTrace();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					} catch (NoExisteVenta e1) {
+						System.out.println();
+						System.out.println("No existe la venta!");
+						System.out.println();
+					} catch (NoExisteCliente e1) {
+						System.out.println();
+						System.out.println("No existe el cliente!");
+						System.out.println();
+					} catch (NoExisteEmpleado e1) {
+						System.out.println();
+						System.out.println("No existe el empleado!");
+						System.out.println();
+					} catch (NoExisteEnvío e1) {
+						System.out.println();
+						System.out.println("No existe el envío!");
+						System.out.println();
 					}
 					break;
 				case 4:
@@ -112,7 +117,7 @@ public class Menú {
 			}
 		}
 
-		public static void menúModificar(Scanner scanner, Venta venta) {
+		public static void menúModificar(Scanner scanner, Venta venta)throws NoExisteVenta, NoExisteCliente, NoExisteEnvío, NoExisteEmpleado{
 			boolean salir = false;
 
 			while (!salir) {
@@ -124,13 +129,13 @@ public class Menú {
 					venta.setFecha(InputTypes.readDate("Ingrese la fecha a modificar: ", scanner));
 					break;
 				case 2:
-					venta.setCodEnvío(InputTypes.readInt("Ingrese el nuevo código de envío: ", scanner));
+						venta.setCodEnvío(InputTypes.readInt("Ingrese el nuevo código de envío: ", scanner));
 					break;
 				case 3:
-					venta.setCodCliente(InputTypes.readInt("Ingrese el nuevo código del cliente: ", scanner));
+						venta.setCodCliente(InputTypes.readInt("Ingrese el nuevo código del cliente: ", scanner));
 					break;
 				case 4:
-					venta.setCodEmpleado(InputTypes.readInt("Ingrese el nuevo códigp del empleado: ", scanner));
+						venta.setCodEmpleado(InputTypes.readInt("Ingrese el nuevo código del empleado: ", scanner));
 					break;
 				}
 			}
