@@ -22,7 +22,7 @@ public class RegistroCompraIngredientes {
 	}
   public void add() {
 	  CompraIngrediente compraIngrediente = RegistroCompraIngrediente.Ingresar(scanner);
-	  String sql = "Insert into compraingrediente (codCompraIng, nombre, cantidad, factura, provedor) " + "values(?,?,?,?,?)";
+	  String sql = "INSERT INTO compraingrediente (codCompraIng, nombre, cantidad, factura, provedor) VALUES,?,?,?,?)";
 		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, compraIngrediente.getCodCompraIngrediente());
@@ -30,10 +30,9 @@ public class RegistroCompraIngredientes {
 			conexión.getSentencia().setInt(3, compraIngrediente.getCantidad());
 			conexión.getSentencia().setString(4, compraIngrediente.getProveedor());
 			conexión.getSentencia().setInt(5, compraIngrediente.getCantidad());
-			conexión.modificacion();
+			conexión.modificacion();			
 		} catch (SQLException e) {
-			System.out.println(e.getSQLState());
-		  
+			System.out.println(e.getSQLState());	  
 		}
   }
   

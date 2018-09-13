@@ -20,7 +20,7 @@ public class RegistroIngredientes {
 	}
 	public void add() {
 		Ingrediente ingrediente = RegistroIngrediente.Ingresar(scanner);
-		String sql = "Insert into Ingrediente (codIngrediente, descripción, costo, numAlmacén, cantidad) " + "values(?,?,?,?,?)";
+		String sql = "INSERT INTO ingredientes (codIngrediente, descripción, costo, numAlmacén, cantidad) VALUES (?,?,?,?,?)";
 		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, ingrediente.getCodIngrediente());
@@ -36,7 +36,7 @@ public class RegistroIngredientes {
 
 	public void delete() throws SQLException {
 		int codIngrediente = InputTypes.readInt("Código del Ingrediente: ", scanner);
-		String sql = "delete " + "from ingrediente " + "where código = ?";
+		String sql = "delete " + "from ingredientes " + "where codIngrediente = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codIngrediente);
 		conexión.modificacion();
@@ -49,7 +49,7 @@ public class RegistroIngredientes {
 		int costo;
 		int numAlmacén;
 		int cantidad;
-		int codIngrediente = InputTypes.readInt("Código del Ingrediente: ", scanner);
+		int codIngrediente = InputTypes.readInt("Código de Ingrediente: ", scanner);
 		String sql = "select * from ingredientes where codIngrediente = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codIngrediente);

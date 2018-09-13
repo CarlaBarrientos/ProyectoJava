@@ -37,6 +37,7 @@ public class Ingrediente {
  }
  public int getNumAlmacén() {
 	return numAlmacén;
+	
  }
  public void setNumAlmacén(int numAlmacén) {
 	this.numAlmacén = numAlmacén;
