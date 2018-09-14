@@ -31,7 +31,7 @@ public class Menú {
 
 	
 
-	public static void menú(Scanner scanner, CompraIngredientes compraIngredienteView) throws SQLException {
+	public static void menú(Scanner scanner, CompraIngredientes compraIngredientes) throws SQLException {
 		boolean salir = false;
 
 		while (!salir) {
@@ -40,14 +40,14 @@ public class Menú {
 				salir = true;
 				break;
 			case 1:
-				compraIngredienteView.add();
+				compraIngredientes.add();
 				break;
 			case 2:
-				compraIngredienteView.list();
+				compraIngredientes.list();
 				break;
 			case 3:
 				try {
-					compraIngredienteView.delete();
+					compraIngredientes.delete();
 				} catch (SQLException e) {
 					System.out.println("No existe ingrediente");
 				}
@@ -55,7 +55,7 @@ public class Menú {
 
 			case 4:
 				try {
-					compraIngredienteView.update();
+					compraIngredientes.update();
 				} catch (NoExisteCompraIngrediente e) {
 					System.out.println("No existe compra de ingrediente");
 				}

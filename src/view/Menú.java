@@ -55,8 +55,8 @@ public class Menú {
 		Categorías categorìas = new Categorías(conexión, scanner);
 		Productos productos = new Productos(conexión, scanner);
 		DetalleVentas detalleVentas = new DetalleVentas(conexión, scanner);
-		Ingredientes ingredienteView = new Ingredientes(conexión, scanner);
-		CompraIngredientes compraIngredienteView = new CompraIngredientes(conexión, scanner);
+		Ingredientes ingredientes = new Ingredientes(conexión, scanner);
+		CompraIngredientes compraIngredientes = new CompraIngredientes(conexión, scanner);
 
 		while (!salir) {
 			switch (encabezado(scanner)) {
@@ -92,13 +92,13 @@ public class Menú {
 			case 9:
 				try {
 
-					ingrediente.view.Menú.menú(scanner, ingredienteView);
+					ingrediente.view.Menú.menú(scanner, ingredientes);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 				break;
 			case 10:
-				compraIngrediente.view.Menú.menú(scanner, compraIngredienteView);
+				compraIngrediente.view.Menú.menú(scanner, compraIngredientes);
 				break;
 
 			}
