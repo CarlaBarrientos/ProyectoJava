@@ -34,11 +34,11 @@ public class Categorías {
 	public void delete() throws SQLException {
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
 		String sql = "delete from categoría where codCatgoría = ?";
-			conexión.consulta(sql);
-			conexión.getSentencia().setInt(1, codCategoría);
-			conexión.modificacion();
+		conexión.consulta(sql);
+		conexión.getSentencia().setInt(1, codCategoría);
+		conexión.modificacion();
 	}
-	
+
 	public void update() throws NoExisteCategoría, SQLException {
 		ResultSet resultSet;
 		Categoría categoría;
@@ -80,7 +80,7 @@ public class Categorías {
 			System.out.println(categoría);
 		}
 	}
-	
+
 	// Solo lista el primer producto
 
 	public void listProducts() throws NoExisteCategoría, SQLException {
@@ -112,13 +112,15 @@ public class Categorías {
 		conexión.getSentencia().setInt(1, codCategoría);
 		resultSet = conexión.resultado();
 		if (resultSet.next()) {
-			codProducto = resultSet.getInt("codProducto");
-			nombre = resultSet.getString("nombre");
-			descripción = resultSet.getString("descripción");
-			precio = resultSet.getDouble("precio");
-			codIngrediente = resultSet.getInt("codIngrediente");
-			producto = new Producto(codProducto, nombre, descripción, precio, codCategoría, codIngrediente);
-			System.out.println(producto);
+			while (resultSet.next()) {
+				codProducto = resultSet.getInt("codProducto");
+				nombre = resultSet.getString("nombre");
+				descripción = resultSet.getString("descripción");
+				precio = resultSet.getDouble("precio");
+				codIngrediente = resultSet.getInt("codIngrediente");
+				producto = new Producto(codProducto, nombre, descripción, precio, codCategoría, codIngrediente);
+				System.out.println(producto);
+			}
 		} else {
 			throw new NoExisteCategoría();
 		}
