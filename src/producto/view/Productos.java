@@ -85,16 +85,20 @@ public class Productos {
 		conexión.modificacion();
 	}
 
-	public void list() throws SQLException {
+	public void list() throws SQLException, NoExisteProducto {
 		Producto producto;
 		String sql = "select * from producto";
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
-		while (resultSet.next()) {
-			producto = new Producto(resultSet.getInt("codProducto"), resultSet.getString("nombre"),
-					resultSet.getString("descripción"), resultSet.getDouble("precio"),
-					resultSet.getInt("codCategoría"));
-			System.out.println(producto);
+		if (resultSet.next()) {
+			while (resultSet.next()) {
+				producto = new Producto(resultSet.getInt("codProducto"), resultSet.getString("nombre"),
+						resultSet.getString("descripción"), resultSet.getDouble("precio"),
+						resultSet.getInt("codCategoría"));
+				System.out.println(producto);
+			}
+		} else {
+			throw new NoExisteProducto();
 		}
 	}
 }

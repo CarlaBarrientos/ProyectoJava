@@ -42,7 +42,9 @@ public class Menú {
 				try {
 					productos.add();
 				} catch (NoExisteCategoría e) {
+					System.out.println();
 					System.out.println("No existe la categoría!");
+					System.out.println();
 				}
 				break;
 			case 2:
@@ -50,6 +52,10 @@ public class Menú {
 					productos.list();
 				} catch (SQLException e) {
 					e.printStackTrace();
+				} catch (NoExisteProducto e) {
+					System.out.println();
+					System.out.println("No existen productos");
+					System.out.println();
 				}
 				break;
 			case 3:
