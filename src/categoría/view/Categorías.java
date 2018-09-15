@@ -6,6 +6,7 @@ import java.util.Scanner;
 import categoría.entity.Categoría;
 import categoría.entity.NoExisteCategoría;
 import control.Conexión;
+import producto.entity.NoExisteProducto;
 import producto.entity.Producto;
 import view.InputTypes;
 
@@ -31,12 +32,20 @@ public class Categorías {
 		}
 	}
 
-	public void delete() throws SQLException {
+	public void delete() throws NoExisteCategoría, SQLException {
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
-		String sql = "delete from categoría where codCatgoría = ?";
-		conexión.consulta(sql);
+		String sql1 = "delete from producto where codCategoría = ?";
+		conexión.consulta(sql1);
+		conexión.getSentencia().setInt(1, codCategoría);
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			String sql2 = "delete from categoría where codCategoría = ?";
+		conexión.consulta(sql2);
 		conexión.getSentencia().setInt(1, codCategoría);
 		conexión.modificacion();
+		} else {
+			throw new NoExisteCategoría();
+		}
 	}
 
 	public void update() throws NoExisteCategoría, SQLException {
@@ -81,9 +90,7 @@ public class Categorías {
 		}
 	}
 
-	// Solo lista el primer producto
-
-	public void listProducts() throws NoExisteCategoría, SQLException {
+	public void listProducts() throws NoExisteCategoría, SQLException, NoExisteProducto {
 		ResultSet resultSet;
 		Categoría categoría;
 		String nombre;
@@ -105,7 +112,6 @@ public class Categorías {
 		Producto producto;
 		double precio;
 		int codProducto;
-		int codIngrediente;
 
 		sql = "select * from producto where codCategoría = ?";
 		conexión.consulta(sql);
@@ -117,12 +123,11 @@ public class Categorías {
 				nombre = resultSet.getString("nombre");
 				descripción = resultSet.getString("descripción");
 				precio = resultSet.getDouble("precio");
-				codIngrediente = resultSet.getInt("codIngrediente");
-				producto = new Producto(codProducto, nombre, descripción, precio, codCategoría, codIngrediente);
+				producto = new Producto(codProducto, nombre, descripción, precio, codCategoría);
 				System.out.println(producto);
 			}
 		} else {
-			throw new NoExisteCategoría();
+			throw new NoExisteProducto();
 		}
 	}
 }

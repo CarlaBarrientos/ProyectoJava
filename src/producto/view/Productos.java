@@ -3,8 +3,6 @@ package producto.view;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-
-import categoría.entity.Categoría;
 import categoría.entity.NoExisteCategoría;
 import control.Conexión;
 import producto.entity.NoExisteProducto;
@@ -22,19 +20,17 @@ public class Productos {
 
 	public void add() throws NoExisteCategoría {
 		Producto producto = RegistroProducto.ingresar(scanner);
-		String sql = "Insert into Producto (nombre, descripción, precio, codCategoría, codIngrediente) values(?,?,?,?,?)";
+		String sql = "Insert into Producto (nombre, descripción, precio, codCategoría) values(?,?,?,?)";
 		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setString(1, producto.getNombre());
 			conexión.getSentencia().setString(2, producto.getDescripción());
 			conexión.getSentencia().setDouble(3, producto.getPrecio());
 			conexión.getSentencia().setInt(4, producto.getCodCategoría());
-			conexión.getSentencia().setInt(5, producto.getCodIngrediente());
 			conexión.modificacion();
 		} catch (SQLException e) {
 			throw new NoExisteCategoría();
 		}
-
 	}
 
 	public void delete() {
@@ -48,8 +44,8 @@ public class Productos {
 			System.out.println(e.getSQLState());
 		}
 	}
-	
-	// errores solucionados pero aun se puede cambiar de categoría a una que no existe
+
+	// aun se puede cambiar de categoría a una que no existe y un problema con el manejo de errores
 
 	public void update() throws NoExisteCategoría, SQLException, NoExisteProducto {
 		ResultSet resultSet;
@@ -58,7 +54,6 @@ public class Productos {
 		String descripción;
 		double precio;
 		int códigoCategoría;
-		int códigoIngrediente;
 		int código;
 		int codProducto = InputTypes.readInt("Código del producto: ", scanner);
 		String sql = "select * from producto where codProducto = ?";
@@ -70,9 +65,8 @@ public class Productos {
 			descripción = resultSet.getString("descripción");
 			precio = resultSet.getDouble("precio");
 			códigoCategoría = resultSet.getInt("codCategoría");
-			códigoIngrediente = resultSet.getInt("codIngrediente");
 			código = resultSet.getInt("codProducto");
-			producto = new Producto(código, nombre, descripción, precio, códigoCategoría, códigoIngrediente);
+			producto = new Producto(código, nombre, descripción, precio, códigoCategoría);
 		} else {
 			throw new NoExisteProducto();
 		}
@@ -80,15 +74,14 @@ public class Productos {
 		System.out.println(producto);
 		Menú.menúModificar(scanner, producto);
 
-		sql = "update producto set nombre = ?, descripción = ?, precio = ?, codCategoría = ?, codIngrediente = ?  where codProducto = ?";
+		sql = "update producto set nombre = ?, descripción = ?, precio = ?, codCategoría = ? where codProducto = ?";
 
 		conexión.consulta(sql);
 		conexión.getSentencia().setString(1, producto.getNombre());
 		conexión.getSentencia().setString(2, producto.getDescripción());
 		conexión.getSentencia().setDouble(3, producto.getPrecio());
 		conexión.getSentencia().setInt(4, producto.getCodCategoría());
-		conexión.getSentencia().setInt(5, producto.getCodIngrediente());
-		conexión.getSentencia().setInt(6, producto.getCodProducto());
+		conexión.getSentencia().setInt(5, producto.getCodProducto());
 		conexión.modificacion();
 	}
 
@@ -100,50 +93,8 @@ public class Productos {
 		while (resultSet.next()) {
 			producto = new Producto(resultSet.getInt("codProducto"), resultSet.getString("nombre"),
 					resultSet.getString("descripción"), resultSet.getDouble("precio"),
-					resultSet.getInt("codCategoría"), resultSet.getInt("codIngrediente"));
+					resultSet.getInt("codCategoría"));
 			System.out.println(producto);
-		}
-	}
-
-	public void listCatogories() throws NoExisteProducto, SQLException, NoExisteCategoría {
-		ResultSet resultSet;
-		Producto producto;
-		String nombre;
-		String descripción;
-		double precio;
-		int códigoCategoría;
-		int códigoIngrediente;
-		int código = InputTypes.readInt("Código de producto: ", scanner);
-		String sql = "select * from producto where codProducto = ?";
-		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, código);
-		resultSet = conexión.resultado();
-		if (resultSet.next()) {
-			nombre = resultSet.getString("nombre");
-			descripción = resultSet.getString("descripción");
-			precio = resultSet.getDouble("precio");
-			códigoCategoría = resultSet.getInt("códigoCategoría");
-			códigoIngrediente = resultSet.getInt("códigoIngrediente");
-			producto = new Producto(código, nombre, descripción, precio, códigoCategoría, códigoIngrediente);
-		} else {
-			throw new NoExisteProducto();
-		}
-		System.out.println(producto);
-
-		Categoría categoría;
-
-		sql = "select * from categoría where codCategoría = ?";
-		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, códigoCategoría);
-		resultSet = conexión.resultado();
-		if (resultSet.next()) {
-			código = resultSet.getInt("codCategoría");
-			nombre = resultSet.getString("nombre");
-			descripción = resultSet.getString("descripción");
-			categoría = new Categoría(código, nombre, descripción);
-			System.out.println(categoría);
-		} else {
-			throw new NoExisteCategoría();
 		}
 	}
 }
