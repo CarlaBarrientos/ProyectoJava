@@ -33,6 +33,7 @@ public class Categorías {
 	}
 
 	public void delete() throws NoExisteCategoría, SQLException {
+		System.out.println("Se eliminaran tambien todos los productos pertenecientes a la categoría");
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
 		String sql1 = "delete from producto where codCategoría = ?";
 		conexión.consulta(sql1);
@@ -40,9 +41,9 @@ public class Categorías {
 		ResultSet resultSet = conexión.resultado();
 		if (resultSet.next()) {
 			String sql2 = "delete from categoría where codCategoría = ?";
-		conexión.consulta(sql2);
-		conexión.getSentencia().setInt(1, codCategoría);
-		conexión.modificacion();
+			conexión.consulta(sql2);
+			conexión.getSentencia().setInt(1, codCategoría);
+			conexión.modificacion();
 		} else {
 			throw new NoExisteCategoría();
 		}

@@ -33,19 +33,18 @@ public class Productos {
 		}
 	}
 
-	public void delete() {
+	public void delete() throws SQLException, NoExisteProducto {
 		int codProducto = InputTypes.readInt("Código de producto: ", scanner);
 		String sql = "delete from producto where codProducto = ?";
-		try {
-			conexión.consulta(sql);
-			conexión.getSentencia().setInt(1, codProducto);
+		conexión.consulta(sql);
+		conexión.getSentencia().setInt(1, codProducto);
+		ResultSet resultSet = conexión.resultado();
+		if (!resultSet.next()) {
+			throw new NoExisteProducto();
+		} else {
 			conexión.modificacion();
-		} catch (SQLException e) {
-			System.out.println(e.getSQLState());
 		}
 	}
-
-	// aun se puede cambiar de categoría a una que no existe y un problema con el manejo de errores
 
 	public void update() throws NoExisteCategoría, SQLException, NoExisteProducto {
 		ResultSet resultSet;
@@ -82,22 +81,27 @@ public class Productos {
 		conexión.getSentencia().setDouble(3, producto.getPrecio());
 		conexión.getSentencia().setInt(4, producto.getCodCategoría());
 		conexión.getSentencia().setInt(5, producto.getCodProducto());
-		conexión.modificacion();
+		if (resultSet.next()) {
+			conexión.modificacion();
+		} else {
+			throw new NoExisteCategoría();
+		}
+		
 	}
 
-	public void list() throws SQLException, NoExisteProducto {
+	public void list() throws NoExisteProducto {
 		Producto producto;
 		String sql = "select * from producto";
-		conexión.consulta(sql);
-		ResultSet resultSet = conexión.resultado();
-		if (resultSet.next()) {
+		try {
+			conexión.consulta(sql);
+			ResultSet resultSet = conexión.resultado();
 			while (resultSet.next()) {
 				producto = new Producto(resultSet.getInt("codProducto"), resultSet.getString("nombre"),
 						resultSet.getString("descripción"), resultSet.getDouble("precio"),
 						resultSet.getInt("codCategoría"));
 				System.out.println(producto);
-			}
-		} else {
+			} 
+		}catch (SQLException e) {
 			throw new NoExisteProducto();
 		}
 	}

@@ -50,16 +50,24 @@ public class Menú {
 			case 2:
 				try {
 					productos.list();
-				} catch (SQLException e) {
-					e.printStackTrace();
 				} catch (NoExisteProducto e) {
 					System.out.println();
-					System.out.println("No existen productos");
+					System.out.println("No existen productos!");
 					System.out.println();
 				}
 				break;
 			case 3:
-				productos.delete();
+				try {
+					productos.delete();
+				} catch (SQLException e) {
+					System.out.println();
+					System.out.println("No existe producto!");
+					System.out.println();
+				} catch (NoExisteProducto e) {
+					System.out.println();
+					System.out.println("No existe producto!");
+					System.out.println();
+				}
 				break;
 			case 4:
 				try {
@@ -123,6 +131,5 @@ public class Menú {
 				break;
 			}
 		}
-		
 	}
 }
