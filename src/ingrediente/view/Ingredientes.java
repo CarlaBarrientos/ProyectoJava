@@ -12,15 +12,15 @@ import view.InputTypes;
 public class Ingredientes {
 	private Conexión conexión;
 	private Scanner scanner;
-	
+
 	public Ingredientes(Conexión conexión, Scanner scanner) {
 		this.conexión = conexión;
 		this.scanner = scanner;
-		
+
 	}
 	public void add() {
 		Ingrediente ingrediente = RegistroIngrediente.Ingresar(scanner);
-		String sql = "Insert into Ingrediente (codIngrediente, descripción, costo, numAlmacén, cantidad) " + "values(?,?,?,?,?)";
+		String sql = "Insert into Ingredientes (codIngrediente, descripción, costo, numAlmacén, cantidad) values(?,?,?,?,?)";
 		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, ingrediente.getCodIngrediente());
@@ -34,14 +34,19 @@ public class Ingredientes {
 		}
 	}
 
-	public void delete() throws SQLException {
+	public void delete() throws NoExisteIngrediente, SQLException {
 		int codIngrediente = InputTypes.readInt("Código del Ingrediente: ", scanner);
-		String sql = "delete " + "from ingrediente " + "where código = ?";
+		String sql = "delete from ingredientes where codIngrediente = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codIngrediente);
-		conexión.modificacion();
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			conexión.modificacion(); 
+		}else {
+			throw new NoExisteIngrediente();
+		}
 	}
-	
+
 	public void update() throws NoExisteIngrediente, SQLException {
 		ResultSet resultSet;
 		Ingrediente ingrediente;
@@ -78,17 +83,21 @@ public class Ingredientes {
 		conexión.modificacion();
 	}
 
-	
-	public void list() throws SQLException {
+	public void list() throws NoExisteIngrediente, SQLException {
 		Ingrediente ingrediente;
-		String sql = "select * from ingredientes ";
+		String sql = "select * from ingredientes";
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
-		while (resultSet.next()) {
-			ingrediente = new Ingrediente(resultSet.getInt("codIngrediente"), resultSet.getString("descripción"),
-					resultSet.getInt("costo"), resultSet.getInt("numAlmacén"), resultSet.getInt("cantidad"));
-			System.out.println(ingrediente);
+		if(resultSet.next()) {
+			while (resultSet.next()) {
+				ingrediente = new Ingrediente(resultSet.getInt("codIngrediente"), resultSet.getString("descripción"),
+						resultSet.getInt("costo"), resultSet.getInt("numAlmacén"), resultSet.getInt("cantidad"));
+				System.out.println(ingrediente);
+			}
+		} else {
+			throw new NoExisteIngrediente();
 		}
+
+
 	}
-	
-	}
+}
