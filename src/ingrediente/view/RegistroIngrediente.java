@@ -10,7 +10,7 @@ public class RegistroIngrediente {
   
 	public static  Ingrediente Ingresar(Scanner scanner) {
 		
-		int codIngrediente = InputTypes.readInt("Ingrese el código del Ingrediente", scanner);
+		int codIngrediente = 0;
 		String descripción = InputTypes.readString("Descripción: ", scanner);
 		double costo =  InputTypes.readDouble("Costo: ", scanner);
 		int numAlmacén = InputTypes.readInt("Ingrese el número de Almacén", scanner);

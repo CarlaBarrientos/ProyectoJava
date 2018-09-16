@@ -33,10 +33,14 @@ public class Categorías {
 
 	public void delete() throws SQLException {
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
-		String sql = "delete from categoría where codCatgoría = ?";
-			conexión.consulta(sql);
-			conexión.getSentencia().setInt(1, codCategoría);
-			conexión.modificacion();
+		String sql1 = "delete from producto where codCategoría = ?";
+		conexión.consulta(sql1);
+		conexión.getSentencia().setInt(1, codCategoría);
+		conexión.modificacion();
+		String sql2 = "delete from categoría where codCategoría = ?";
+		conexión.consulta(sql2);
+		conexión.getSentencia().setInt(1, codCategoría);
+		conexión.modificacion();
 	}
 	
 	public void update() throws NoExisteCategoría, SQLException {

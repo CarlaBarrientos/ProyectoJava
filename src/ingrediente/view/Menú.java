@@ -9,7 +9,7 @@ import view.InputTypes;
 
 
 public class Menú {
-	
+
 
 	private static int encabezado(Scanner scanner) {
 		int opcion;
@@ -32,7 +32,7 @@ public class Menú {
 		}
 	}
 
-	
+
 
 	public static void menú(Scanner scanner, Ingredientes ingredientes) throws SQLException {
 		boolean salir = false;
@@ -46,16 +46,26 @@ public class Menú {
 				ingredientes.add();
 				break;
 			case 2:
-				ingredientes.list();
+		
+				try {
+					ingredientes.list();
+				} catch (NoExisteIngrediente e1) {
+					System.out.println();
+					System.out.println("No existen ingredientes!");
+					System.out.println();
+				}
 				break;
 			case 3:
 				try {
 					ingredientes.delete();
+				} catch (NoExisteIngrediente e) {
+					System.out.println();
+					System.out.println("No existe ingrediente!");
+					System.out.println();
 				} catch (SQLException e) {
-					System.out.println("No existe ingrediente");
+					e.printStackTrace();	
 				}
 				break;
-
 			case 4:
 				try {
 					ingredientes.update();
@@ -68,7 +78,7 @@ public class Menú {
 		}
 	}
 
-	
+
 
 	private static int encabezadoModificar(Scanner scanner) {
 		int opcion;
@@ -91,7 +101,7 @@ public class Menú {
 		}
 	}
 
-	
+
 
 	public static void menúModificar(Scanner scanner, Ingrediente ingrediente) {
 		boolean salir = false;
