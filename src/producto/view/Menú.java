@@ -50,22 +50,38 @@ public class Menú {
 			case 2:
 				try {
 					productos.list();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (NoExisteProducto e) {
+					System.out.println();
+					System.out.println("No existen productos!");
+					System.out.println();
 				}
 				break;
 			case 3:
-				productos.delete();
+				try {
+					productos.delete();
+				} catch (SQLException e) {
+					System.out.println();
+					System.out.println("No existe producto!");
+					System.out.println();
+				} catch (NoExisteProducto e) {
+					System.out.println();
+					System.out.println("No existe producto!");
+					System.out.println();
+				}
 				break;
 			case 4:
 				try {
 					productos.update();
 				} catch (NoExisteCategoría e) {
-					e.printStackTrace();
+					System.out.println();
+					System.out.println("No existe categoría!");
+					System.out.println();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				} catch (NoExisteProducto e) {
-					e.printStackTrace();
+					System.out.println();
+					System.out.println("No existe producto!");
+					System.out.println();
 				}
 				break;
 			}
@@ -82,13 +98,12 @@ public class Menú {
 			System.out.println("2. Descripciòn");
 			System.out.println("3. Precio");
 			System.out.println("4. Categoría");
-			System.out.println("5. Ingrediente");
 			System.out.println("0. Salir");
 			System.out.println();
 
 			opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-			if (opcion >= 0 && opcion <= 5) {
+			if (opcion >= 0 && opcion <= 4) {
 				return opcion;
 			}
 		}
@@ -114,8 +129,6 @@ public class Menú {
 			case 4:
 				producto.setCodCategoría(InputTypes.readInt("Ingrese el nuevo código de categoría: ", scanner));
 				break;
-			case 5:
-				producto.setCodIngrediente(InputTypes.readInt("Ingrese el nuevo código de ingrediemte: ", scanner));
 			}
 		}
 	}

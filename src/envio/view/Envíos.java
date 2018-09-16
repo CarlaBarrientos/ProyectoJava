@@ -7,7 +7,6 @@ import java.util.Scanner;
 import control.Conexión;
 import envio.entity.Envío;
 import envio.entity.NoExisteEnvío;
-
 import view.InputTypes;
 
 public class Envíos {
@@ -29,16 +28,18 @@ public class Envíos {
 			conexión.getSentencia().setDouble(4, envío.getCostoAdicional());
 			conexión.modificacion();
 	}
-	public void delete() throws NoExisteEnvío{
+	public void delete() throws NoExisteEnvío, SQLException{
 		int codEnvío= InputTypes.readInt("Código del envío: ", scanner);
 		String sql = "delete from envío where codEnvío = ?";
-		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, codEnvío);
-			conexión.modificacion();
-		} catch (SQLException e) {
-			System.out.println(e.getSQLState());
-		}
+			ResultSet resultSet = conexión.resultado();
+			if (resultSet.next()) {
+				conexión.modificacion();
+			} else {
+				throw new NoExisteEnvío();
+			}
+
 	}
 	
 	public void update() throws SQLException, NoExisteEnvío {
@@ -74,15 +75,20 @@ public class Envíos {
 		conexión.getSentencia().setDouble(3, envío.getCostoAdicional());
 		conexión.modificacion();
 	}
-	public void list() throws SQLException {
+	public void list() throws NoExisteEnvío{
 		Envío envío;
 		String sql = "select * from envío ";
-		conexión.consulta(sql);
-		ResultSet resultSet = conexión.resultado();
+		try {
+			conexión.consulta(sql);
+			ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
 			envío = new Envío(resultSet.getInt("codEnvío"), resultSet.getString("destinatario"), resultSet.getInt("teléfono"),
 					resultSet.getDouble("costoAdicional"));
 			System.out.println(envío);
 		}
+		} catch (SQLException e) {
+			throw new NoExisteEnvío();
+		}
+		
 	}
 }

@@ -37,17 +37,25 @@ public class Menú {
 					salir = true;
 					break;
 				case 1:
-					try {
-						facturas.add();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
+						try {
+							facturas.add();
+						} catch (NoExisteVenta e) {
+							System.out.println();
+							System.out.println("No existe el número de venta!");
+							System.out.println();
+						}
 					break;
 				case 2:
 					try {
-						facturas.delete();
+						try {
+							facturas.delete();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
 					} catch (NoExisteVenta e1) {
-						e1.printStackTrace();
+						System.out.println();
+						System.out.println("No existe el número de venta!");
+						System.out.println();
 					}
 					break;
 				case 3:
@@ -56,15 +64,20 @@ public class Menú {
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					} catch (NoExisteVenta e1) {
-						e1.printStackTrace();
+						System.out.println();
+						System.out.println("No existe el número de venta!");
+						System.out.println();
 					}
 					break;
 				case 4:
 					try {
 						facturas.list();
-					} catch (SQLException e) {
-						e.printStackTrace();
+					} catch (NoExisteVenta e) {
+						System.out.println();
+						System.out.println("No existen ventas ni facturas que listar");
+						System.out.println();
 					}
+
 					break;
 
 				}

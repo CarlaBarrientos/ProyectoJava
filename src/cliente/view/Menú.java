@@ -45,10 +45,17 @@ public class Menú {
 					}
 					break;
 				case 2:
-					try {
-						clientes.delete();
-					} catch (NoExisteCliente e1) {
-						e1.printStackTrace();
+
+						try {
+							try {
+								clientes.delete();
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}  catch (NoExisteCliente e1) {
+							System.out.println();
+							System.out.println("No existe el cliente!");
+							System.out.println();
 					}
 					break;
 				case 3:
@@ -57,15 +64,20 @@ public class Menú {
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					} catch (NoExisteCliente e1) {
-						e1.printStackTrace();
+						System.out.println();
+						System.out.println("No existe el cliente!");
+						System.out.println();
 					}
 					break;
 				case 4:
-					try {
-						clientes.list();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
+
+						try {
+							clientes.list();
+						} catch (NoExisteCliente e) {
+							System.out.println();
+							System.out.println("No existen clientes que listar");
+							System.out.println();
+						}
 					break;
 
 				}

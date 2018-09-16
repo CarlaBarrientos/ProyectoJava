@@ -18,26 +18,33 @@ public class Facturas {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-	public void add() throws SQLException{
+	public void add() throws NoExisteVenta{
 		Factura factura = RegistroFactura.ingresar(scanner);
 		String sql = "Insert into Factura (numVenta, NIT, nombre, descripción) values(?,?,?,?)";
-			conexión.consulta(sql);
-			conexión.getSentencia().setInt(1, factura.getNumVenta());
+			try {
+				conexión.consulta(sql);
+				conexión.getSentencia().setInt(1, factura.getNumVenta());
 			conexión.getSentencia().setInt(2, factura.getNit());
 			conexión.getSentencia().setString(3, factura.getNombre());
 			conexión.getSentencia().setString(4, factura.getDescripción());
 			conexión.modificacion();
+			} catch (SQLException e) {
+				throw new NoExisteVenta();
+			}
+			
 	}
-	public void delete() throws NoExisteVenta {
+	public void delete() throws NoExisteVenta, SQLException {
 		int numVenta = InputTypes.readInt("Número de venta: ", scanner);
 		String sql = "delete from factura where numVenta = ?";
-		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, numVenta);
-			conexión.modificacion();
-		} catch (SQLException e) {
-			System.out.println(e.getSQLState());
-		}
+			ResultSet resultSet = conexión.resultado();
+			if (resultSet.next()) {
+				conexión.modificacion();
+			} else {
+				throw new NoExisteVenta();
+			}
+
 	}
 	
 	public void update() throws SQLException, NoExisteVenta {
@@ -73,15 +80,20 @@ public class Facturas {
 		conexión.getSentencia().setString(3, factura.getDescripción());
 		conexión.modificacion();
 	}
-	public void list() throws SQLException {
+	public void list() throws NoExisteVenta {
 		Factura factura;
 		String sql = "select * from factura ";
-		conexión.consulta(sql);
-		ResultSet resultSet = conexión.resultado();
+		try {
+			conexión.consulta(sql);
+			ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
 			factura = new Factura(resultSet.getInt("numVenta"), resultSet.getInt("NIT"), resultSet.getString("nombre"), resultSet.getString("descripción"));
 			System.out.println(factura);
 		}
+		} catch (SQLException e) {
+			throw new NoExisteVenta();
+		}
+		
 	}
 
 }

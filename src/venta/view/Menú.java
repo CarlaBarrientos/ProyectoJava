@@ -44,7 +44,6 @@ public class Menú {
 				      try {
 						ventas.add();
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					} catch (NoExisteCliente e) {
@@ -62,7 +61,18 @@ public class Menú {
 					}
 					break;
 				case 2:
+
+					try {
 						ventas.delete();
+					} catch (NoExisteVenta e2) {
+						System.out.println();
+						System.out.println("No existe la venta!");
+						System.out.println();
+					} catch (SQLException e2) {
+						e2.printStackTrace();
+						System.out.println("defwe");
+					}
+
 					break;
 				case 3:
 
@@ -91,9 +101,12 @@ public class Menú {
 				case 4:
 					try {
 						ventas.list();
-					} catch (SQLException e) {
-						e.printStackTrace();
+					} catch (NoExisteVenta e) {
+						System.out.println();
+						System.out.println("No existen ventas que listar");
+						System.out.println();
 					}
+
 					break;
 
 				}
@@ -106,15 +119,12 @@ public class Menú {
 				System.out.println("Ingrese una opcion: ");
 				System.out.println("------------------- ");
 				System.out.println("1. Modificar fecha: ");
-				System.out.println("2. Modificar código del envío: ");
-				System.out.println("3. Modificar código del cliente: ");
-				System.out.println("4. Modificar código del empleado: ");
 				System.out.println("0. Salir");
 				System.out.println();
 
 				opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-				if (opcion >= 0 && opcion <= 4) {
+				if (opcion >= 0 && opcion <= 1) {
 					return opcion;
 				}
 			}
@@ -130,15 +140,6 @@ public class Menú {
 					break;
 				case 1:
 					venta.setFecha(InputTypes.readDate("Ingrese la fecha a modificar: ", scanner));
-					break;
-				case 2:
-						venta.setCodEnvío(InputTypes.readInt("Ingrese el nuevo código de envío: ", scanner));
-					break;
-				case 3:
-						venta.setCodCliente(InputTypes.readInt("Ingrese el nuevo código del cliente: ", scanner));
-					break;
-				case 4:
-						venta.setCodEmpleado(InputTypes.readInt("Ingrese el nuevo código del empleado: ", scanner));
 					break;
 				}
 			}

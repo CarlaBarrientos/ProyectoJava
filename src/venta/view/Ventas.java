@@ -40,14 +40,14 @@ public class Ventas {
 				conexión.getSentencia().setInt(1, venta.getCodEmpleado());
 				ResultSet resultSetEmp = conexión.resultado();		
 				if(resultSetEmp.next()){
-				String sql = "Insert into Venta (numVenta, fecha, codEnvío, codCliente, codEmpleado) values(?,?,?,?,?)";
-				conexión.consulta(sql);
-				conexión.getSentencia().setInt(1, venta.getNumVenta());
-				conexión.getSentencia().setDate(2, new java.sql.Date(venta.getFecha().getTime()));
-				conexión.getSentencia().setInt(3, venta.getCodEnvío());
-				conexión.getSentencia().setInt(4, venta.getCodCliente());
-				conexión.getSentencia().setInt(5, venta.getCodEmpleado());
-				conexión.modificacion();
+					String sql = "Insert into Venta (numVenta, fecha, codEnvío, codCliente, codEmpleado) values(?,?,?,?,?)";
+					conexión.consulta(sql);
+					conexión.getSentencia().setInt(1, venta.getNumVenta());
+					conexión.getSentencia().setDate(2, new java.sql.Date(venta.getFecha().getTime()));
+					conexión.getSentencia().setInt(3, venta.getCodEnvío());
+					conexión.getSentencia().setInt(4, venta.getCodCliente());
+					conexión.getSentencia().setInt(5, venta.getCodEmpleado());
+					conexión.modificacion();
 				}else {
 					throw new NoExisteEmpleado();
 				}
@@ -59,15 +59,24 @@ public class Ventas {
 		}
 
 	}
-	public void delete(){
+	public void delete()throws NoExisteVenta, SQLException{
 		int numVenta = InputTypes.readInt("Número de venta: ", scanner);
-		String sql = "delete from venta where numVenta = ?";
-		try {
-			conexión.consulta(sql);
-			conexión.getSentencia().setInt(1, numVenta);
+		String sql ="delete from venta where numVenta = ?" ;
+		conexión.consulta(sql);
+		conexión.getSentencia().setInt(1, numVenta);
+		ResultSet resultSet=conexión.resultado();
+		String sql1 ="delete from factura where numVenta = ?" ;
+		conexión.consulta(sql1);
+		conexión.getSentencia().setInt(1, numVenta);
+		ResultSet resultSetf = conexión.resultado();
+		if(resultSet.next()) {
+			if(resultSetf.next()) {
 			conexión.modificacion();
-		} catch (SQLException e) {
-			System.out.println(e.getSQLState());
+			}else {
+				throw new NoExisteVenta();
+			}
+		}else {
+			throw new NoExisteVenta();
 		}
 	}
 
@@ -75,60 +84,79 @@ public class Ventas {
 		ResultSet resultSet;
 		Venta venta=null;
 		Date fecha;
-		int codEnvío;
-		int codCliente;
-		int codEmpleado;
 		int numVenta = InputTypes.readInt("Número de la venta: ", scanner);
 		String sql = "select * from venta where numVenta = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, numVenta);
 		resultSet = conexión.resultado();
-		if (resultSet.next()) {
-			fecha = resultSet.getDate("fecha");
-			codEnvío = resultSet.getInt("codEnvío");
-			codCliente = resultSet.getInt("codCliente");
-			codEmpleado = resultSet.getInt("codEmpleado");
-			numVenta = resultSet.getInt("numVenta");
-			venta = new Venta(numVenta, fecha, codEnvío, codCliente, codEmpleado);
-		} else {
+		if (resultSet.next()) {		
+			String sqlEnvío="Select codEnvío from Envío where codEnvío=?";
+			int codEnvío = InputTypes.readInt("Ingrear el nuevo código de envio: ", scanner);
+			conexión.consulta(sqlEnvío);
+			conexión.getSentencia().setInt(1, codEnvío);
+			ResultSet resultSetEnv = conexión.resultado();
+
+			if(resultSetEnv.next()) {
+				String sqlCliente="Select codCliente from Cliente where codCliente=?";
+				int codCliente = InputTypes.readInt("Ingresar el nuevo código del clente: ", scanner);
+				conexión.consulta(sqlCliente);
+				conexión.getSentencia().setInt(1, codCliente);
+				ResultSet resultSetCli = conexión.resultado();
+				if(resultSetCli.next()) {
+					String sqlEmpleado="Select codEmpleado from Empleado where codEmpleado=?";
+					int codEmpleado = InputTypes.readInt("Ingresar el nuevo código del empleado: ", scanner);
+					conexión.consulta(sqlEmpleado);
+					conexión.getSentencia().setInt(1, codEmpleado);
+					ResultSet resultSetEmp = conexión.resultado();		
+					if(resultSetEmp.next()){
+						fecha = resultSet.getDate("fecha");
+						codEnvío = resultSet.getInt("codEnvío");
+						codCliente = resultSet.getInt("codCliente");
+						codEmpleado = resultSet.getInt("codEmpleado");
+						numVenta = resultSet.getInt("numVenta");
+						venta = new Venta(numVenta, fecha, codEnvío, codCliente, codEmpleado);
+						System.out.println(venta);
+						Menú.menúModificar(scanner, venta);
+
+						sql = "update venta set fecha=?, codEnvío = ?, codCliente = ?, codEmpleado = ?  where numVenta = ?";
+
+						conexión.consulta(sql);
+						conexión.getSentencia().setDate(1,new java.sql.Date(venta.getFecha().getTime()));
+						conexión.getSentencia().setInt(2, venta.getCodEnvío());
+						conexión.getSentencia().setInt(3, venta.getCodCliente());
+						conexión.getSentencia().setInt(4, venta.getCodEmpleado());
+						conexión.getSentencia().setInt(5, venta.getNumVenta());
+						conexión.modificacion();
+					}else {
+						throw new NoExisteEmpleado();
+					}
+				}else {
+					throw new NoExisteCliente();
+				}
+			}else {
+				throw new NoExisteEnvío();
+			}
+		}
+		else {
 			throw new NoExisteVenta();
 		}
 
-		System.out.println(venta);
-		Menú.menúModificar(scanner, venta);
 
-		sql = "update venta set fecha=?, codEnvío = ?, codCliente = ?, codEmpleado = ?  where numVenta = ?";
-
-		conexión.consulta(sql);
-		conexión.getSentencia().setDate(1,new java.sql.Date(venta.getFecha().getTime()));
-		conexión.getSentencia().setInt(2, venta.getCodEnvío());
-		conexión.getSentencia().setInt(3, venta.getCodCliente());
-		conexión.getSentencia().setInt(4, venta.getCodEmpleado());
-		conexión.getSentencia().setInt(5, venta.getNumVenta());
-		conexión.modificacion();
 	}
-	public void list() throws SQLException {
+	public void list() throws NoExisteVenta {
 		Venta venta;
 		String sql = "select * from venta ";
-		conexión.consulta(sql);
-		ResultSet resultSet = conexión.resultado();
-		while (resultSet.next()) {
-			venta = new Venta(resultSet.getInt("numVenta"), resultSet.getDate("fecha"), resultSet.getInt("codEnvío"),
-					resultSet.getInt("codCliente"), resultSet.getInt("codEmpleado"));
-			System.out.println(venta);
+		try {
+			conexión.consulta(sql);
+			ResultSet resultSet = conexión.resultado();
+			while (resultSet.next()) {
+				venta = new Venta(resultSet.getInt("numVenta"), resultSet.getDate("fecha"), resultSet.getInt("codEnvío"),
+						resultSet.getInt("codCliente"), resultSet.getInt("codEmpleado"));
+				System.out.println(venta);
+			}
+		} catch (SQLException e) {
+			throw new NoExisteVenta();
 		}
-	}
-	public boolean compararCodEnvío(int codEnvío) throws NoExisteEnvío, SQLException {
-		boolean valor=false;
-		String sql = "select * from envío where codEnvío=?";
-		conexión.consulta(sql);
-		ResultSet resultSet = conexión.resultado();
-		if(resultSet.getInt("codEnvío")==codEnvío) {
-			valor=!valor;
-		}
-		if(!valor) {
-			throw new NoExisteEnvío();
-		}
-		return valor;
+
 	}
 }

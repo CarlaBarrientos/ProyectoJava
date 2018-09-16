@@ -7,15 +7,13 @@ public class Producto {
 	private String descripción;
 	private double precio;
 	private int codCategoría;
-	private int codIngrediente;
 	
-	public Producto(int codProducto, String nombre, String descripción, double precio, int codCategoría, int codIngrediente) {
+	public Producto(int codProducto, String nombre, String descripción, double precio, int codCategoría) {
 		this.codProducto = codProducto;
 		this.nombre = nombre;
 		this.descripción = descripción;
 		this.precio = precio;
 		this.codCategoría = codCategoría;
-		this.codIngrediente = codIngrediente;
 	}
 
 	public int getCodProducto() {
@@ -58,19 +56,9 @@ public class Producto {
 		this.codCategoría = codCategoría;
 	}
 
-	public int getCodIngrediente() {
-		return codIngrediente;
-	}
-
-	public void setCodIngrediente(int codIngrediente) {
-		this.codIngrediente = codIngrediente;
-	}
-
 	@Override
 	public String toString() {
 		return "Producto [codProducto=" + codProducto + ", nombre=" + nombre + ", descripción=" + descripción
-				+ ", precio=" + precio + ", codCategoría=" + codCategoría + ", codIngrediente=" + codIngrediente + "]";
+				+ ", precio=" + precio + ", codCategoría=" + codCategoría + "]";
 	}
-
-
 }

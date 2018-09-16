@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import categoría.entity.Categoría;
 import categoría.entity.NoExisteCategoría;
+import producto.entity.NoExisteProducto;
 import view.InputTypes;
 
 public class Menú {
@@ -45,24 +46,36 @@ public class Menú {
 				categorías.list();
 				break;
 			case 3:
+
 				try {
 					categorías.delete();
-				} catch (SQLException e) {
+				} catch (NoExisteCategoría e1) {
+					System.out.println();
 					System.out.println("No existe categoría!");
+					System.out.println();
 				}
+		
 				break;
 			case 4:
 				try {
 					categorías.update();
 				} catch (NoExisteCategoría e) {
+					System.out.println();
 					System.out.println("No existe categoría!");
+					System.out.println();
 				}
 				break;
 			case 5:
 				try {
 					categorías.listProducts();
 				} catch (NoExisteCategoría e) {
+					System.out.println();
 					System.out.println("No existe categoría!");
+					System.out.println();
+				} catch (NoExisteProducto e) {
+					System.out.println();
+					System.out.println("No existe productos!");
+					System.out.println();
 				}
 				break;
 			}

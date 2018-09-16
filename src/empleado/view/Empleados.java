@@ -31,16 +31,18 @@ public class Empleados {
 			conexión.getSentencia().setString(7, empleado.getCargo());
 			conexión.modificacion();
 	}
-	public void delete() throws NoExisteEmpleado {
+	public void delete() throws NoExisteEmpleado, SQLException {
 		int codEmpleado = InputTypes.readInt("Código del empleado: ", scanner);
 		String sql = "delete from empleado where codEmpleado = ?";
-		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, codEmpleado);
-			conexión.modificacion();
-		} catch (SQLException e) {
-			System.out.println(e.getSQLState());
-		}
+			ResultSet resultSet = conexión.resultado();
+			if (resultSet.next()) {
+				conexión.modificacion();
+			} else {
+				throw new NoExisteEmpleado();
+			}
+
 	}
 	
 	public void update() throws SQLException, NoExisteEmpleado {
@@ -85,16 +87,22 @@ public class Empleados {
 		conexión.getSentencia().setString(6, empleado.getCargo());
 		conexión.modificacion();
 	}
-	public void list() throws SQLException {
+	public void list() throws NoExisteEmpleado{
 		Empleado empleado;
 		String sql = "select * from empleado ";
-		conexión.consulta(sql);
-		ResultSet resultSet = conexión.resultado();
+		try {
+			conexión.consulta(sql);
+			ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
 			empleado = new Empleado(resultSet.getInt("codEmpleado"), resultSet.getString("nombre"), resultSet.getInt("CI"),
 					resultSet.getInt("teléfono"), resultSet.getInt("celular"), resultSet.getString("dirección"),
 					resultSet.getString("cargo"));
 			System.out.println(empleado);
 		}
+		} catch (SQLException e) {
+			throw new NoExisteEmpleado();
+		}
+		
+		
 	}
 }

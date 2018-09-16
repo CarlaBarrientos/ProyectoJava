@@ -47,9 +47,15 @@ public class Menú {
 				break;
 			case 2:
 				try {
-					empleados.delete();
+					try {
+						empleados.delete();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				} catch (NoExisteEmpleado e1) {
-					e1.printStackTrace();
+					System.out.println();
+					System.out.println("No existe el empleado!");
+					System.out.println();
 				}
 				break;
 			case 3:
@@ -58,15 +64,20 @@ public class Menú {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				} catch (NoExisteEmpleado e1) {
-					e1.printStackTrace();
+					System.out.println();
+					System.out.println("No existe el empleado!");
+					System.out.println();
 				}
 				break;
 			case 4:
 				try {
 					empleados.list();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (NoExisteEmpleado e) {
+					System.out.println();
+					System.out.println("No existen empleados que listar");
+					System.out.println();
 				}
+				
 				break;
 
 			}

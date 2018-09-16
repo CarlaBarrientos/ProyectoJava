@@ -6,6 +6,7 @@ import java.util.Scanner;
 import categoría.entity.Categoría;
 import categoría.entity.NoExisteCategoría;
 import control.Conexión;
+import producto.entity.NoExisteProducto;
 import producto.entity.Producto;
 import view.InputTypes;
 
@@ -31,18 +32,23 @@ public class Categorías {
 		}
 	}
 
-	public void delete() throws SQLException {
+	public void delete() throws NoExisteCategoría, SQLException {
+		System.out.println("Se eliminaran tambien todos los productos pertenecientes a la categoría");
 		int codCategoría = InputTypes.readInt("Código de categoría: ", scanner);
 		String sql1 = "delete from producto where codCategoría = ?";
 		conexión.consulta(sql1);
 		conexión.getSentencia().setInt(1, codCategoría);
-		conexión.modificacion();
-		String sql2 = "delete from categoría where codCategoría = ?";
-		conexión.consulta(sql2);
-		conexión.getSentencia().setInt(1, codCategoría);
-		conexión.modificacion();
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			String sql2 = "delete from categoría where codCategoría = ?";
+			conexión.consulta(sql2);
+			conexión.getSentencia().setInt(1, codCategoría);
+			conexión.modificacion();
+		} else {
+			throw new NoExisteCategoría();
+		}
 	}
-	
+
 	public void update() throws NoExisteCategoría, SQLException {
 		ResultSet resultSet;
 		Categoría categoría;
@@ -84,10 +90,8 @@ public class Categorías {
 			System.out.println(categoría);
 		}
 	}
-	
-	// Solo lista el primer producto
 
-	public void listProducts() throws NoExisteCategoría, SQLException {
+	public void listProducts() throws NoExisteCategoría, SQLException, NoExisteProducto {
 		ResultSet resultSet;
 		Categoría categoría;
 		String nombre;
@@ -109,22 +113,22 @@ public class Categorías {
 		Producto producto;
 		double precio;
 		int codProducto;
-		int codIngrediente;
 
 		sql = "select * from producto where codCategoría = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codCategoría);
 		resultSet = conexión.resultado();
 		if (resultSet.next()) {
-			codProducto = resultSet.getInt("codProducto");
-			nombre = resultSet.getString("nombre");
-			descripción = resultSet.getString("descripción");
-			precio = resultSet.getDouble("precio");
-			codIngrediente = resultSet.getInt("codIngrediente");
-			producto = new Producto(codProducto, nombre, descripción, precio, codCategoría, codIngrediente);
-			System.out.println(producto);
+			while (resultSet.next()) {
+				codProducto = resultSet.getInt("codProducto");
+				nombre = resultSet.getString("nombre");
+				descripción = resultSet.getString("descripción");
+				precio = resultSet.getDouble("precio");
+				producto = new Producto(codProducto, nombre, descripción, precio, codCategoría);
+				System.out.println(producto);
+			}
 		} else {
-			throw new NoExisteCategoría();
+			throw new NoExisteProducto();
 		}
 	}
 }
