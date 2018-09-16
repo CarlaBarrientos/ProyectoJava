@@ -22,49 +22,42 @@ public class Ventas {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-	public void add() throws NoExisteCliente, NoExisteEmpleado, NoExisteEnvío{
+	public void add() throws NoExisteCliente, NoExisteEmpleado, NoExisteEnvío, SQLException{
 		Venta venta = RegistroVenta.ingresar(scanner);
-		System.out.println("333");
-		String sql = "Insert into Venta (numVenta, fecha, codEnvío, codCliente, codEmpleado) values(?,?,?,?,?)";
+		String sqlEnvío="Select codEnvío from Envío where codEnvío=?";
+		conexión.consulta(sqlEnvío);
+		conexión.getSentencia().setInt(1, venta.getCodEnvío());
+		ResultSet resultSetEnv = conexión.resultado();
 
-		try {
-			conexión.consulta(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
-			conexión.getSentencia().setInt(1, venta.getNumVenta());
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		try {
-			conexión.getSentencia().setDate(2, new java.sql.Date(venta.getFecha().getTime()));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
-			conexión.getSentencia().setInt(3, venta.getCodEnvío());
-			System.out.println("daf");
-		} catch (SQLException e) {
-			System.out.println("fgadf");
+		if(resultSetEnv.next()) {
+			String sqlCliente="Select codCliente from Cliente where codCliente=?";
+			conexión.consulta(sqlCliente);
+			conexión.getSentencia().setInt(1, venta.getCodCliente());
+			ResultSet resultSetCli = conexión.resultado();
+			if(resultSetCli.next()) {
+				String sqlEmpleado="Select codEmpleado from Empleado where codEmpleado=?";
+				conexión.consulta(sqlEmpleado);
+				conexión.getSentencia().setInt(1, venta.getCodEmpleado());
+				ResultSet resultSetEmp = conexión.resultado();		
+				if(resultSetEmp.next()){
+				String sql = "Insert into Venta (numVenta, fecha, codEnvío, codCliente, codEmpleado) values(?,?,?,?,?)";
+				conexión.consulta(sql);
+				conexión.getSentencia().setInt(1, venta.getNumVenta());
+				conexión.getSentencia().setDate(2, new java.sql.Date(venta.getFecha().getTime()));
+				conexión.getSentencia().setInt(3, venta.getCodEnvío());
+				conexión.getSentencia().setInt(4, venta.getCodCliente());
+				conexión.getSentencia().setInt(5, venta.getCodEmpleado());
+				conexión.modificacion();
+				}else {
+					throw new NoExisteEmpleado();
+				}
+			}else {
+				throw new NoExisteCliente();
+			}
+		}else{
 			throw new NoExisteEnvío();
+		}
 
-		}
-		try {
-			conexión.getSentencia().setInt(4, venta.getCodCliente());
-		} catch (SQLException e) {
-			throw new NoExisteCliente();
-		}
-		try {
-			conexión.getSentencia().setInt(5, venta.getCodEmpleado());
-		} catch (SQLException e) {
-			throw new NoExisteEmpleado();
-		}
-		try {
-			conexión.modificacion();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	public void delete(){
 		int numVenta = InputTypes.readInt("Número de venta: ", scanner);
@@ -138,5 +131,4 @@ public class Ventas {
 		}
 		return valor;
 	}
-
 }

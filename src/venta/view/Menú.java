@@ -41,9 +41,12 @@ public class Menú {
 					break;
 				case 1:
 					try {
-						System.out.println("11");
-				      ventas.add();
-				      System.out.println("222");
+				      try {
+						ventas.add();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					} catch (NoExisteCliente e) {
 						System.out.println();
 						System.out.println("No existe el cliente!");
