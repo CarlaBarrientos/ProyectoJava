@@ -17,15 +17,14 @@ public class Menú {
 			System.out.println("------------------- ");
 			System.out.println("1. Ingresar Categoría");
 			System.out.println("2. Listar Categorías ");
-			System.out.println("3. Eliminar Categoría ");
-			System.out.println("4. Modificar Categoría ");
-			System.out.println("5. Listar Productos por Categoría ");
+			System.out.println("3. Modificar Categoría ");
+			System.out.println("4. Listar Productos por Categoría ");
 			System.out.println("0. Salir");
 			System.out.println();
 
 			opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-			if (opcion >= 0 && opcion <= 5) {
+			if (opcion >= 0 && opcion <= 4) {
 				return opcion;
 			}
 		}
@@ -46,17 +45,6 @@ public class Menú {
 				categorías.list();
 				break;
 			case 3:
-
-				try {
-					categorías.delete();
-				} catch (NoExisteCategoría e1) {
-					System.out.println();
-					System.out.println("No existe categoría!");
-					System.out.println();
-				}
-		
-				break;
-			case 4:
 				try {
 					categorías.update();
 				} catch (NoExisteCategoría e) {
@@ -65,7 +53,7 @@ public class Menú {
 					System.out.println();
 				}
 				break;
-			case 5:
+			case 4:
 				try {
 					categorías.listProducts();
 				} catch (NoExisteCategoría e) {

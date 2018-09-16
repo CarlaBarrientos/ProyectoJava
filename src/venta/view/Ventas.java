@@ -24,18 +24,17 @@ public class Ventas {
 	}
 	public void add() throws NoExisteCliente, NoExisteEmpleado, NoExisteEnvío, SQLException{
 		Venta venta = RegistroVenta.ingresar(scanner);
-		String sqlEnvío="Select codEnvío from Envío where codEnvío=?";
+		String sqlEnvío="Select codEnvío from Envío where codEnvío = ?";
 		conexión.consulta(sqlEnvío);
 		conexión.getSentencia().setInt(1, venta.getCodEnvío());
 		ResultSet resultSetEnv = conexión.resultado();
-
 		if(resultSetEnv.next()) {
-			String sqlCliente="Select codCliente from Cliente where codCliente=?";
+			String sqlCliente = "Select codCliente from Cliente where codCliente = ?";
 			conexión.consulta(sqlCliente);
 			conexión.getSentencia().setInt(1, venta.getCodCliente());
 			ResultSet resultSetCli = conexión.resultado();
 			if(resultSetCli.next()) {
-				String sqlEmpleado="Select codEmpleado from Empleado where codEmpleado=?";
+				String sqlEmpleado="Select codEmpleado from Empleado where codEmpleado = ?";
 				conexión.consulta(sqlEmpleado);
 				conexión.getSentencia().setInt(1, venta.getCodEmpleado());
 				ResultSet resultSetEmp = conexión.resultado();		
@@ -48,6 +47,10 @@ public class Ventas {
 					conexión.getSentencia().setInt(4, venta.getCodCliente());
 					conexión.getSentencia().setInt(5, venta.getCodEmpleado());
 					conexión.modificacion();
+					String sqlPuntos = "update cliente set puntos = puntos + 10 where codCliente = ?";
+					conexión.consulta(sqlPuntos);
+					conexión.getSentencia().setInt(1, venta.getCodCliente());
+					conexión.modificacion();
 				}else {
 					throw new NoExisteEmpleado();
 				}
@@ -57,24 +60,18 @@ public class Ventas {
 		}else{
 			throw new NoExisteEnvío();
 		}
-
 	}
 	public void delete()throws NoExisteVenta, SQLException{
 		int numVenta = InputTypes.readInt("Número de venta: ", scanner);
-		String sql ="delete from venta where numVenta = ?" ;
+		String sql ="delete from factura where numVenta = ?" ;
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, numVenta);
 		ResultSet resultSet=conexión.resultado();
-		String sql1 ="delete from factura where numVenta = ?" ;
-		conexión.consulta(sql1);
-		conexión.getSentencia().setInt(1, numVenta);
-		ResultSet resultSetf = conexión.resultado();
 		if(resultSet.next()) {
-			if(resultSetf.next()) {
+			String sql1 ="delete from venta where numVenta = ?" ;
+			conexión.consulta(sql1);
+			conexión.getSentencia().setInt(1, numVenta);
 			conexión.modificacion();
-			}else {
-				throw new NoExisteVenta();
-			}
 		}else {
 			throw new NoExisteVenta();
 		}
@@ -95,7 +92,6 @@ public class Ventas {
 			conexión.consulta(sqlEnvío);
 			conexión.getSentencia().setInt(1, codEnvío);
 			ResultSet resultSetEnv = conexión.resultado();
-
 			if(resultSetEnv.next()) {
 				String sqlCliente="Select codCliente from Cliente where codCliente=?";
 				int codCliente = InputTypes.readInt("Ingresar el nuevo código del clente: ", scanner);
@@ -140,8 +136,6 @@ public class Ventas {
 		else {
 			throw new NoExisteVenta();
 		}
-
-
 	}
 	public void list() throws NoExisteVenta {
 		Venta venta;
@@ -157,6 +151,5 @@ public class Ventas {
 		} catch (SQLException e) {
 			throw new NoExisteVenta();
 		}
-
 	}
 }

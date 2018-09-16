@@ -33,19 +33,6 @@ public class Productos {
 		}
 	}
 
-	public void delete() throws SQLException, NoExisteProducto {
-		int codProducto = InputTypes.readInt("Código de producto: ", scanner);
-		String sql = "delete from producto where codProducto = ?";
-		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, codProducto);
-		ResultSet resultSet = conexión.resultado();
-		if (resultSet.next()) {
-			conexión.modificacion();
-		} else {
-			throw new NoExisteProducto();
-		}
-	}
-
 	public void update() throws NoExisteCategoría, SQLException, NoExisteProducto {
 		ResultSet resultSet;
 		Producto producto;
