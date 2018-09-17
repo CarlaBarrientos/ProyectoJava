@@ -17,20 +17,18 @@ public class CompraIngredientes {
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-  public void add() {
+  public void add() throws NoExisteCompraIngrediente {
 	  CompraIngrediente compraIngrediente = RegistroCompraIngrediente.Ingresar(scanner);
 	  String sql = "Insert into compraingrediente (codCompraIng, nombre, cantidad, factura, provedor) " + "values(?,?,?,?,?)";
 		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, compraIngrediente.getCodCompraIngrediente());
-			conexión.getSentencia().setString(2, compraIngrediente.getNombre());
-			conexión.getSentencia().setInt(3, compraIngrediente.getCantidad());
-			conexión.getSentencia().setString(4, compraIngrediente.getProveedor());
-			conexión.getSentencia().setInt(5, compraIngrediente.getCantidad());
+			conexión.getSentencia().setString(2, compraIngrediente.getProveedor());
+			conexión.getSentencia().setInt(3, compraIngrediente.getCodEmpleado());
 			conexión.modificacion();
 		} catch (SQLException e) {
 			System.out.println(e.getSQLState());
-		  
+		  throw new NoExisteCompraIngrediente();
 		}
   }
   
@@ -45,9 +43,7 @@ public class CompraIngredientes {
   public void update() throws NoExisteCompraIngrediente, SQLException {
 		ResultSet resultSet;
 		CompraIngrediente compraIngrediente;
-		String nombre;
-		int cantidad;
-		int factura;
+		int codEmpleado;
 		String proveedor;
 		int codCompraIngrediente = InputTypes.readInt("Código de la compra del Ingrediente: ", scanner);
 		String sql = "select * from compraingrediente where codCompraIng = ?";
@@ -55,11 +51,9 @@ public class CompraIngredientes {
 		conexión.getSentencia().setInt(1, codCompraIngrediente);
 		resultSet = conexión.resultado();
 		if (resultSet.next()) {
-			nombre = resultSet.getString("nombre");
-			cantidad = resultSet.getInt("cantidad");
-			factura = resultSet.getInt("factura");
+			codEmpleado = resultSet.getInt("codEmpleado");
 			proveedor = resultSet.getString("proveedor");
-			compraIngrediente = new CompraIngrediente(codCompraIngrediente,nombre , cantidad, factura, proveedor);
+			compraIngrediente = new CompraIngrediente(codCompraIngrediente, proveedor, codEmpleado);
 		} else {
 			throw new NoExisteCompraIngrediente();
 		}
@@ -71,24 +65,26 @@ public class CompraIngredientes {
 
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, compraIngrediente.getCodCompraIngrediente());
-		conexión.getSentencia().setString(2, compraIngrediente.getNombre());
-		conexión.getSentencia().setInt(3, compraIngrediente.getCantidad());
-		conexión.getSentencia().setInt(4, compraIngrediente.getFactura());
-		conexión.getSentencia().setString(5, compraIngrediente.getProveedor());
+		conexión.getSentencia().setInt(2, compraIngrediente.getCodEmpleado());
+		conexión.getSentencia().setString(3, compraIngrediente.getProveedor());
 		conexión.modificacion();
 	}
 
 	
-	public void list() throws SQLException {
+	public void list() throws NoExisteCompraIngrediente {
 		CompraIngrediente compraIngrediente;
 		String sql = "select * from compraingrediente ";
+		try {
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
 		while (resultSet.next()) {
-			compraIngrediente = new CompraIngrediente(resultSet.getInt("codCompraIng"), resultSet.getString("nombre"),
-					resultSet.getInt("cantidad"), resultSet.getInt("factura"), resultSet.getString("proveedor"));
+			compraIngrediente = new CompraIngrediente(resultSet.getInt("codCompraIng"), resultSet.getString("Proveedor"),
+					resultSet.getInt("codEmpleado"));
+			
 			System.out.println(compraIngrediente);
 		}
+	} catch (SQLException e) {
+		throw new NoExisteCompraIngrediente();
+	 }
 	}
-  
 }

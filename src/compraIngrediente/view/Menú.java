@@ -40,10 +40,19 @@ public class Menú {
 				salir = true;
 				break;
 			case 1:
-				compraIngredientes.add();
+				try {
+					compraIngredientes.add();
+				} catch (NoExisteCompraIngrediente e1) {
+					System.out.println("No existe  compra ingrediente");
+					e1.printStackTrace();
+				}
 				break;
 			case 2:
-				compraIngredientes.list();
+				try {
+					compraIngredientes.list();
+				} catch (NoExisteCompraIngrediente e1) {
+					System.out.println("No existe  compra ingrediente");
+				}
 				break;
 			case 3:
 				try {
@@ -100,17 +109,12 @@ public class Menú {
 			case 0:
 				salir = true;
 				break;
+			
 			case 1:
-				compraIngrediente.setNombre(InputTypes.readString("Ingrese el nuevo nombre: ", scanner));
+				compraIngrediente.setProveedor(InputTypes.readString("Ingrese el nuevo proveedor:", scanner));
 				break;
 			case 2:
-				compraIngrediente.setCantidad(InputTypes.readInt("Ingrese la nueva cantidad:", scanner));
-				break;
-			case 3:
-				compraIngrediente.setFactura(InputTypes.readInt("Ingrese el  nuevo número de factura:", scanner));
-				break;
-			case 4:
-				compraIngrediente.setProveedor(InputTypes.readString("Ingrese el nuevo proveedor:", scanner));
+				compraIngrediente.setCodEmpleado(InputTypes.readInt("Ingrese el  nuevo número de factura:", scanner));
 				break;
 			}
 		}

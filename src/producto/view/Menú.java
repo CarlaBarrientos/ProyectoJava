@@ -17,14 +17,13 @@ public class Menú {
 			System.out.println("------------------- ");
 			System.out.println("1. Ingresar Producto");
 			System.out.println("2. Listar Productos");
-			System.out.println("3. Eliminar Producto");
-			System.out.println("4. Modificar Producto");
+			System.out.println("3. Modificar Producto");
 			System.out.println("0. Salir");
 			System.out.println();
 
 			opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-			if (opcion >= 0 && opcion <= 4) {
+			if (opcion >= 0 && opcion <= 3) {
 				return opcion;
 			}
 		}
@@ -57,19 +56,6 @@ public class Menú {
 				}
 				break;
 			case 3:
-				try {
-					productos.delete();
-				} catch (SQLException e) {
-					System.out.println();
-					System.out.println("No existe producto!");
-					System.out.println();
-				} catch (NoExisteProducto e) {
-					System.out.println();
-					System.out.println("No existe producto!");
-					System.out.println();
-				}
-				break;
-			case 4:
 				try {
 					productos.update();
 				} catch (NoExisteCategoría e) {

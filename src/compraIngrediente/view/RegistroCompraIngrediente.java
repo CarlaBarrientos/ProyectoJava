@@ -8,11 +8,11 @@ import view.InputTypes;
 public class RegistroCompraIngrediente {
 
 	public static CompraIngrediente Ingresar(Scanner scanner) {
-		int codCompraIngrediente = InputTypes.readInt("Ingresar código de compra del ingrediente", scanner);
+		int codCompraIngrediente = 0;
 		String nombre = InputTypes.readString("Ingresar el nombre del ingrediente", scanner);
-		int cantidad = InputTypes.readInt("Ingressar cantidad de ingredientes ", scanner);
-		int factura= InputTypes.readInt("Ingresar número de factura", scanner);
 		String proveedor = InputTypes.readString("Ingresar nombre del proveedor", scanner);
-		return new CompraIngrediente(codCompraIngrediente, nombre, cantidad, factura, proveedor);
+		int codEmpleado = InputTypes.readInt("Ingresar el codigo del empleado", scanner);
+
+		return new CompraIngrediente(codCompraIngrediente, proveedor, codEmpleado);
 	}
 }

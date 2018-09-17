@@ -7,6 +7,7 @@ import categoría.view.Categorías;
 import cliente.view.Clientes;
 import compraIngrediente.view.CompraIngredientes;
 import control.Conexión;
+import detalleCompraIngrediente.view.DetalleCompraIngredientes;
 import detalleVenta.view.DetalleVentas;
 import empleado.view.Empleados;
 import envio.view.Envíos;
@@ -28,17 +29,18 @@ public class Menú {
 			System.out.println("3. Envío");
 			System.out.println("4. Venta");
 			System.out.println("5. Factura");
-			System.out.println("6. Detale de Venta");
+			System.out.println("6. Detalle de Venta");
 			System.out.println("7. Categoría");
 			System.out.println("8. Producto");
 			System.out.println("9. Ingrediente");
 			System.out.println("10. Compra del Ingrediente ");
+			System.out.println("11. Detalle de compra del Ingrediente ");
 			System.out.println("0. Salir");
 			System.out.println();
 
 			opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-			if (opcion >= 0 && opcion <= 10) {
+			if (opcion >= 0 && opcion <= 11) {
 				return opcion;
 			}
 		}
@@ -57,6 +59,7 @@ public class Menú {
 		DetalleVentas detalleVentas = new DetalleVentas(conexión, scanner);
 		Ingredientes ingredientes = new Ingredientes(conexión, scanner);
 		CompraIngredientes compraIngredientes = new CompraIngredientes(conexión, scanner);
+		DetalleCompraIngredientes detalleCompraIngredientes= new DetalleCompraIngredientes(conexión, scanner);
 
 		while (!salir) {
 			switch (encabezado(scanner)) {
@@ -90,15 +93,13 @@ public class Menú {
 				break;
 
 			case 9:
-				try {
-
-					ingrediente.view.Menú.menú(scanner, ingredientes);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				ingrediente.view.Menú.menú(scanner, ingredientes);
 				break;
 			case 10:
 				compraIngrediente.view.Menú.menú(scanner, compraIngredientes);
+				break;
+			case 11:
+				detalleCompraIngrediente.view.Menú.menú(scanner, detalleCompraIngredientes);
 				break;
 
 			}

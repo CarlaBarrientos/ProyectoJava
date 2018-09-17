@@ -5,17 +5,13 @@ package compraIngrediente.entity;
 public class CompraIngrediente {
   
    private int codCompraIngrediente;
-   private String nombre;
-   private int cantidad;
-   private int factura;
    private String proveedor;
+   private int codEmpleado;
   
-   public CompraIngrediente(int codCompraIngrediente, String nombre, int cantidad, int factura, String proveedor) {
+   public CompraIngrediente(int codCompraIngrediente, String proveedor, int codEmpleado) {
 	   this.codCompraIngrediente = codCompraIngrediente;
-	   this.nombre = nombre;
-	   this.cantidad = cantidad;
-	   this.factura = factura;
 	   this.proveedor = proveedor;
+	   this.codEmpleado = codEmpleado;
    }
    
     public int getCodCompraIngrediente() {
@@ -24,24 +20,8 @@ public class CompraIngrediente {
 	public void setCodCompraIngrediente(int codCompraIngrediente) {
 		this.codCompraIngrediente = codCompraIngrediente;
 	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public int getCantidad() {
-		return cantidad;
-	}
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-	public int getFactura() {
-		return factura;
-	}
-	public void setFactura(int factura) {
-		this.factura = factura;
-	}
+	
+	
 
 	public String getProveedor() {
 		return proveedor;
@@ -50,11 +30,17 @@ public class CompraIngrediente {
 	public void setProveedor(String proveedor) {
 		this.proveedor = proveedor;
 	}
+	public int getCodEmpleado() {
+		return codEmpleado ;
+	}
+
+	public void setCodEmpleado(int codEmpleado) {
+		this.codEmpleado = codEmpleado;
+	}
 
 	@Override
 	public String toString() {
-		return "CompraIngrediente [codCompraIngrediente=" + codCompraIngrediente + ", nombre=" + nombre + ", cantidad=" + cantidad + ", factura="
-				+ factura + ", proveedor=" + proveedor + "]";
+		return "CompraIngrediente [codCompraIngrediente=" + codCompraIngrediente + ", proveedor=" + proveedor + ",codEmpleado=" + codEmpleado + "]";
 	}
 	
 }
