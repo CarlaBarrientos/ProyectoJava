@@ -52,12 +52,7 @@ public class DetalleVentas {
 		String sql = "delete from detalleVenta where codDetalle = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, numVenta);
-		ResultSet resultSet = conexión.resultado();
-		if (resultSet.next()) {
-			conexión.modificacion();
-		} else {
-			throw new NoExisteDetalleVenta();
-		}
+		conexión.modificacion();
 	}
 
 	public void update() throws NoExisteDetalleVenta, SQLException, NoExisteVenta, NoExisteProducto {

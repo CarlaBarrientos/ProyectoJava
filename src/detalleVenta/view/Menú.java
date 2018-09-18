@@ -56,8 +56,6 @@ public class Menú {
 				try {
 					detalleVentasView.delete();
 				} catch (SQLException e) {
-					e.printStackTrace();
-				} catch (NoExisteDetalleVenta e) {
 					System.out.println();
 					System.out.println("No existe detalle de venta!");
 					System.out.println();
