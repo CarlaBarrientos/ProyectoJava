@@ -16,15 +16,14 @@ public class Menú {
 			System.out.println("Ingrese una opcion: ");
 			System.out.println("------------------- ");
 			System.out.println("1. Ingresar Cliente: ");
-			System.out.println("2. Eliminar Cliente: ");
-			System.out.println("3. Actualizar Cliente: ");
-			System.out.println("4. Listar Clientes: ");
+			System.out.println("2. Actualizar Cliente: ");
+			System.out.println("3. Listar Clientes: ");
 			System.out.println("0. Salir");
 			System.out.println();
 
 			opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-			if (opcion >= 0 && opcion <= 4) {
+			if (opcion >= 0 && opcion <= 3) {
 				return opcion;
 			}
 		}
@@ -46,19 +45,6 @@ public class Menú {
 					break;
 				case 2:
 
-						try {
-							try {
-								clientes.delete();
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-						}  catch (NoExisteCliente e1) {
-							System.out.println();
-							System.out.println("No existe el cliente!");
-							System.out.println();
-					}
-					break;
-				case 3:
 					try {
 						clientes.update();
 					} catch (SQLException e1) {
@@ -69,7 +55,7 @@ public class Menú {
 						System.out.println();
 					}
 					break;
-				case 4:
+				case 3:
 
 						try {
 							clientes.list();

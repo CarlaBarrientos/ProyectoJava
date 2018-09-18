@@ -18,9 +18,8 @@ public class Menú {
 			System.out.println("Ingrese una opcion: ");
 			System.out.println("------------------- ");
 			System.out.println("1. Ingresar Venta: ");
-			System.out.println("2. Eliminar Venta: ");
-			System.out.println("3. Actualizar Venta: ");
-			System.out.println("4. Listar Ventas: ");
+			System.out.println("2. Actualizar Venta: ");
+			System.out.println("3. Listar Ventas: ");
 			System.out.println("0. Salir");
 			System.out.println();
 
@@ -61,21 +60,6 @@ public class Menú {
 				}
 				break;
 			case 2:
-
-				try {
-					ventas.delete();
-				} catch (NoExisteVenta e2) {
-					System.out.println();
-					System.out.println("No existe la venta!");
-					System.out.println();
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-					System.out.println("defwe");
-				}
-
-				break;
-			case 3:
-
 				try {
 					ventas.update();
 				} catch (SQLException e1) {
@@ -98,7 +82,7 @@ public class Menú {
 					System.out.println();
 				}
 				break;
-			case 4:
+			case 3:
 				try {
 					ventas.list();
 				} catch (NoExisteVenta e) {
@@ -106,46 +90,12 @@ public class Menú {
 					System.out.println("No existen ventas que listar");
 					System.out.println();
 				}
-
 				break;
-
-			}
-		}
-	}
-	private static int encabezadoModificar(Scanner scanner) {
-		int opcion;
-
-		while (true) {
-			System.out.println("Ingrese una opcion: ");
-			System.out.println("------------------- ");
-			System.out.println("1. Modificar fecha: ");
-			System.out.println("0. Salir");
-			System.out.println();
-
-			opcion = InputTypes.readInt("¿Su opción? ", scanner);
-
-			if (opcion >= 0 && opcion <= 1) {
-				return opcion;
 			}
 		}
 	}
 
-	public static void menúModificar(Scanner scanner, Venta venta)throws NoExisteVenta, NoExisteCliente, NoExisteEnvío, NoExisteEmpleado{
-		boolean salir = false;
-
-		while (!salir) {
-			switch (encabezadoModificar(scanner)) {
-			case 0:
-				salir = true;
-				break;
-			case 1:
+	public static void menúModificar(Scanner scanner, Venta venta){
 				venta.setFecha(InputTypes.readDate("Ingrese la fecha a modificar: ", scanner));
-				break;
-			}
-		}
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9252a0f016f25c01536a1a332f4a16d124ebc3b1

@@ -11,8 +11,9 @@ public static Envío ingresar(Scanner scanner){
 		String destinatario = InputTypes.readString("Destinatario: ", scanner);
 		int teléfono = InputTypes.readInt("Teléfono: ", scanner);
 		double costoAdicional = InputTypes.readDouble("El costo adicional es : ", scanner);
+		int numVenta = InputTypes.readInt("El número de venta es: ", scanner);
 		
-		return new Envío(codEnvío, destinatario, teléfono, costoAdicional);
+		return new Envío(codEnvío, destinatario, teléfono, costoAdicional, numVenta);
 
 	}
 

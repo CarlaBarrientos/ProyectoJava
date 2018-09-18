@@ -55,7 +55,7 @@ public class InputTypes {
 		Date fecha=null;
 		
 		while(true) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			try {
 				System.out.print(msg);
 				System.out.print(" ");

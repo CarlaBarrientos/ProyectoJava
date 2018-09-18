@@ -32,20 +32,6 @@ public class Clientes {
 			conexión.getSentencia().setInt(7, cliente.getPuntos());
 			conexión.modificacion();
 	}
-	public void delete() throws NoExisteCliente, SQLException{
-		int codCliente = InputTypes.readInt("Código del cliente: ", scanner);
-		String sql = "delete from cliente where codCliente = ?";
-				conexión.consulta(sql);
-				conexión.getSentencia().setInt(1, codCliente);
-				ResultSet resultSet = conexión.resultado();
-				if (resultSet.next()) {
-					conexión.modificacion();
-				} else {
-					throw new NoExisteCliente();
-				}
-
-			
-	}
 	
 	public void update() throws SQLException, NoExisteCliente {
 		ResultSet resultSet;

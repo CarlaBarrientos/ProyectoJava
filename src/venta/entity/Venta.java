@@ -6,14 +6,12 @@ import java.util.Date;
 public class Venta {
 	private int numVenta;
 	private Date fecha;
-	private int codEnvío;
 	private int codCliente;
 	private int codEmpleado;
-	public Venta(int numVenta, Date fecha, int codEnvío, int codCliente, int codEmpleado) {
+	public Venta(int numVenta, Date fecha, int codCliente, int codEmpleado) {
 		super();
 		this.numVenta = numVenta;
 		this.fecha = fecha;
-		this.codEnvío = codEnvío;
 		this.codCliente = codCliente;
 		this.codEmpleado = codEmpleado;
 	}
@@ -29,12 +27,6 @@ public class Venta {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	public int getCodEnvío() {
-		return codEnvío;
-	}
-	public void setCodEnvío(int codEnvío){
-		this.codEnvío = codEnvío;
-	}
 	public int getCodCliente() {
 		return codCliente;
 	}
@@ -49,7 +41,7 @@ public class Venta {
 	}
 	@Override
 	public String toString() {
-		return "Venta [numVenta=" + numVenta + ", fecha=" + fecha + ", codEnvío=" + codEnvío + ", codCliente="
+		return "Venta [numVenta=" + numVenta + ", fecha=" + fecha + ", codCliente="
 				+ codCliente + ", codEmpleado=" + codEmpleado + "]";
 	}
 	

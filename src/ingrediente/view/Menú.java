@@ -86,16 +86,16 @@ public class Menú {
 		while (true) {
 			System.out.println("Ingrese una opcion: ");
 			System.out.println("------------------- ");
-			System.out.println("1. Modificar ingrediente");
-			System.out.println("2. Modificar descripción ");
-			System.out.println("3. Modificar costo");
-			System.out.println("4. Modificar cantidad");
+			System.out.println("1. Modificar descripción: ");
+			System.out.println("2. Modificar costo: ");
+			System.out.println("3. Modificar número de almacén: ");
+			System.out.println("4. Modificar cantidad: ");
 			System.out.println("0. Salir");
 			System.out.println();
 
 			opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-			if (opcion >= 0 && opcion <= 2) {
+			if (opcion >= 0 && opcion <= 4) {
 				return opcion;
 			}
 		}

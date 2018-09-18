@@ -46,13 +46,10 @@ public class Menú {
 						}
 					break;
 				case 2:
+
 					try {
-						try {
-							facturas.delete();
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-					} catch (NoExisteVenta e1) {
+						facturas.delete();
+					} catch (SQLException e2) {
 						System.out.println();
 						System.out.println("No existe el número de venta!");
 						System.out.println();

@@ -5,12 +5,14 @@ public class Envío {
 	private String destinatario;
 	private int teléfono;
 	private double costoAdicional;
-	public Envío(int codEnvío, String destinatario, int teléfono, double costoAdicional) {
+	private int numVenta;
+	public Envío(int codEnvío, String destinatario, int teléfono, double costoAdicional, int numVenta) {
 		super();
 		this.codEnvío = codEnvío;
 		this.destinatario = destinatario;
 		this.teléfono = teléfono;
 		this.costoAdicional = costoAdicional;
+		this.numVenta = numVenta;
 	}
 	public int getCodEnvío() {
 		return codEnvío;
@@ -36,10 +38,17 @@ public class Envío {
 	public void setCostoAdicional(double costoAdicional) {
 		this.costoAdicional = costoAdicional;
 	}
+	public int getNumVenta() {
+		return numVenta;
+	}
+	public void setNumVenta(int numVenta) {
+		this.numVenta = numVenta;
+	}
 	@Override
 	public String toString() {
 		return "Envío [codEnvío=" + codEnvío + ", destinatario=" + destinatario + ", teléfono=" + teléfono
-				+ ", costoAdicional=" + costoAdicional + "]";
+				+ ", costoAdicional=" + costoAdicional + ", numVenta=" + numVenta + "]";
 	}
+	
 	
 }

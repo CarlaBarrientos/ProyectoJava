@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import envio.entity.Envío;
 import envio.entity.NoExisteEnvío;
+import venta.entity.NoExisteVenta;
 import view.InputTypes;
 
 public class Menú {
@@ -39,27 +40,33 @@ public class Menú {
 					break;
 				case 1:
 					try {
-						envíos.add();
+						try {
+							envíos.add();
+						} catch (NoExisteVenta e) {
+							System.out.println();
+							System.out.println("No existe la venta!");
+							System.out.println();
+						}
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 					break;
 				case 2:
 					try {
-						try {
 							envíos.delete();
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
-					} catch (NoExisteEnvío e1) {
-						System.out.println();
-						System.out.println("No existe el envío!");
-						System.out.println();
-					}
 					break;
 				case 3:
 					try {
-						envíos.update();
+						try {
+							envíos.update();
+						} catch (NoExisteVenta e) {
+							System.out.println();
+							System.out.println("No existe la venta!");
+							System.out.println();
+						}
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					} catch (NoExisteEnvío e1) {
@@ -119,7 +126,6 @@ public class Menú {
 				case 3:
 					envío.setCostoAdicional(InputTypes.readDouble("Ingrese el nuevo costo adicional: ", scanner));
 					break;
-
 				}
 			}
 		}

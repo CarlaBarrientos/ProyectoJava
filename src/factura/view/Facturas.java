@@ -33,17 +33,12 @@ public class Facturas {
 			}
 			
 	}
-	public void delete() throws NoExisteVenta, SQLException {
+	public void delete() throws  SQLException {
 		int numVenta = InputTypes.readInt("Número de venta: ", scanner);
 		String sql = "delete from factura where numVenta = ?";
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, numVenta);
-			ResultSet resultSet = conexión.resultado();
-			if (resultSet.next()) {
-				conexión.modificacion();
-			} else {
-				throw new NoExisteVenta();
-			}
+			conexión.modificacion();
 
 	}
 	

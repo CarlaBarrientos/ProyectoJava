@@ -31,19 +31,6 @@ public class Empleados {
 			conexión.getSentencia().setString(7, empleado.getCargo());
 			conexión.modificacion();
 	}
-	public void delete() throws NoExisteEmpleado, SQLException {
-		int codEmpleado = InputTypes.readInt("Código del empleado: ", scanner);
-		String sql = "delete from empleado where codEmpleado = ?";
-			conexión.consulta(sql);
-			conexión.getSentencia().setInt(1, codEmpleado);
-			ResultSet resultSet = conexión.resultado();
-			if (resultSet.next()) {
-				conexión.modificacion();
-			} else {
-				throw new NoExisteEmpleado();
-			}
-
-	}
 	
 	public void update() throws SQLException, NoExisteEmpleado {
 		ResultSet resultSet;

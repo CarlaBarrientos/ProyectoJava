@@ -64,6 +64,7 @@ public class Ingredientes {
 			costo = resultSet.getInt("costo");
 			numAlmacén = resultSet.getInt("numAlmacén");
 			cantidad = resultSet.getInt("cantidad");
+			codIngrediente = resultSet.getInt("codIngrediente");
 			ingrediente = new Ingrediente(codIngrediente, descripción, costo, numAlmacén, cantidad);
 		} else {
 			throw new NoExisteIngrediente();
@@ -72,32 +73,31 @@ public class Ingredientes {
 		System.out.println(ingrediente);
 		Menú.menúModificar(scanner, ingrediente);
 
-		sql = "update ingredientes set descripción = ?, costo = ?, numAlmacén = ? where codIngrediente = ?";
+		sql = "update ingredientes set descripción = ?, costo = ?, numAlmacén = ?, cantidad=? where codIngrediente = ?";
 
 		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, ingrediente.getCodIngrediente());
-		conexión.getSentencia().setString(2, ingrediente.getDescripción());
-		conexión.getSentencia().setDouble(3, ingrediente.getCosto());
-		conexión.getSentencia().setInt(4, ingrediente.getNumAlmacén());
-		conexión.getSentencia().setInt(5,ingrediente.getCantidad());
+		conexión.getSentencia().setInt(5, ingrediente.getCodIngrediente());
+		conexión.getSentencia().setString(1, ingrediente.getDescripción());
+		conexión.getSentencia().setDouble(2, ingrediente.getCosto());
+		conexión.getSentencia().setInt(3, ingrediente.getNumAlmacén());
+		conexión.getSentencia().setInt(4,ingrediente.getCantidad());
 		conexión.modificacion();
 	}
 
-	public void list() throws NoExisteIngrediente, SQLException {
+	public void list() throws NoExisteIngrediente {
 		Ingrediente ingrediente;
-		String sql = "select * from ingredientes";
-		conexión.consulta(sql);
-		ResultSet resultSet = conexión.resultado();
-		if(resultSet.next()) {
+		String sql = "select * from ingredientes ";
+		try {
+			conexión.consulta(sql);
+			ResultSet resultSet = conexión.resultado();
 			while (resultSet.next()) {
 				ingrediente = new Ingrediente(resultSet.getInt("codIngrediente"), resultSet.getString("descripción"),
 						resultSet.getInt("costo"), resultSet.getInt("numAlmacén"), resultSet.getInt("cantidad"));
 				System.out.println(ingrediente);
 			}
-		} else {
+		} catch (SQLException e) {
 			throw new NoExisteIngrediente();
 		}
-
-
+		
 	}
 }
