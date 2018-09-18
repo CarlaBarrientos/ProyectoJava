@@ -59,7 +59,7 @@ public class Envíos {
 		conexión.getSentencia().setInt(1, codEnvío);
 		resultSet1 = conexión.resultado();
 		if (resultSet1.next()) {
-			int numVenta = InputTypes.readInt("Número de la venta: ", scanner);
+			int numVenta = InputTypes.readInt("Ingrese el nuevo número de venta: ", scanner);
 			String sql1 = "select * from venta where numVenta = ?";
 			conexión.consulta(sql1);
 			conexión.getSentencia().setInt(1, numVenta);

@@ -89,44 +89,9 @@ public class Menú {
 				}
 			}
 		}
-		private static int encabezadoModificar(Scanner scanner) {
-			int opcion;
-
-			while (true) {
-				System.out.println("Ingrese una opcion: ");
-				System.out.println("------------------- ");
-				System.out.println("1. Modificar destinatario: ");
-				System.out.println("2. Modificar teléfono: ");
-				System.out.println("3. Modificar costo adicional: ");
-				System.out.println("0. Salir");
-				System.out.println();
-
-				opcion = InputTypes.readInt("¿Su opción? ", scanner);
-
-				if (opcion >= 0 && opcion <= 3) {
-					return opcion;
-				}
-			}
-		}
-
 		public static void menúModificar(Scanner scanner, Envío envío) {
-			boolean salir = false;
-
-			while (!salir) {
-				switch (encabezadoModificar(scanner)) {
-				case 0:
-					salir = true;
-					break;
-				case 1:
 					envío.setDestinatario(InputTypes.readString("Ingrese el nuevo destinatario: ", scanner));
-					break;
-				case 2:
 					envío.setTeléfono(InputTypes.readInt("Ingrese el nuevo teléfono: ", scanner));
-					break;
-				case 3:
 					envío.setCostoAdicional(InputTypes.readDouble("Ingrese el nuevo costo adicional: ", scanner));
-					break;
-				}
-			}
 		}
 }
