@@ -2,6 +2,7 @@ package cliente.view;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import cliente.entity.Cliente;
@@ -95,5 +96,30 @@ public class Clientes {
 		} else {
 			throw new NoExisteCliente();
 		}	
+	}
+	
+	public void ganador () throws SQLException, NoExisteCliente {
+		ArrayList<Cliente> sorteados = new ArrayList<Cliente>();
+		Cliente cliente;
+		String sql = "select * from cliente ";
+		conexión.consulta(sql);
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			resultSet.previous();
+			while (resultSet.next()) {
+				cliente = new Cliente(resultSet.getInt("codCliente"), resultSet.getString("nombre"), resultSet.getInt("CI"),
+						resultSet.getInt("teléfono"), resultSet.getInt("celular"), resultSet.getString("dirección"),
+						resultSet.getInt("puntos"));
+				for (int i = 0; i < resultSet.getInt("puntos"); i++) {
+					sorteados.add(cliente);
+				}
+			}
+			int ganador = (int)(Math.random() * sorteados.size()) + 1;
+			System.out.println();
+			System.out.println("El ganador es: " + sorteados.get(ganador).getNombre());
+			System.out.println(sorteados.get(ganador));
+		} else {
+			throw new NoExisteCliente();
+		}
 	}
 }
