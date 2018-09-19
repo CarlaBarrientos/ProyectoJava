@@ -13,14 +13,16 @@ public class Empleados {
 
 	private Conexión conexión;
 	private Scanner scanner;
+
 	public Empleados(Conexión conexión, Scanner scanner) {
-		super();
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-	public void add() throws SQLException {
+
+	public void add() {
 		Empleado empleado = RegistroEmpleado.ingresar(scanner);
 		String sql = "Insert into Empleado (codEmpleado, nombre, cI, teléfono, celular, dirección, cargo) values(?,?,?,?,?,?,?)";
+		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, empleado.getCodEmpleado());
 			conexión.getSentencia().setString(2, empleado.getNombre());
@@ -30,14 +32,17 @@ public class Empleados {
 			conexión.getSentencia().setString(6, empleado.getDirección());
 			conexión.getSentencia().setString(7, empleado.getCargo());
 			conexión.modificacion();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void update() throws SQLException, NoExisteEmpleado {
 		ResultSet resultSet;
 		Empleado empleado=null;
 		String nombre;
 		int cI;
-	    int teléfono;
+		int teléfono;
 		int celular;
 		String dirección;
 		String cargo;
@@ -55,41 +60,41 @@ public class Empleados {
 			cargo = resultSet.getString("cargo");
 			codEmpleado = resultSet.getInt("codEmpleado");
 			empleado = new Empleado(codEmpleado, nombre, cI, teléfono, celular, dirección, cargo);
+
+			System.out.println(empleado);
+			Menú.menúModificar(scanner, empleado);
+
+			sql = "update empleado set nombre = ?, CI = ?, teléfono = ?, celular = ?, dirección = ?, cargo = ?  where codEmpleado = ?";
+
+			conexión.consulta(sql);
+			conexión.getSentencia().setInt(7, empleado.getCodEmpleado());
+			conexión.getSentencia().setString(1, empleado.getNombre());
+			conexión.getSentencia().setInt(2, empleado.getcI());
+			conexión.getSentencia().setInt(3, empleado.getTeléfono());
+			conexión.getSentencia().setInt(4, empleado.getCelular());
+			conexión.getSentencia().setString(5, empleado.getDirección());
+			conexión.getSentencia().setString(6, empleado.getCargo());
+			conexión.modificacion();
+
 		} else {
 			throw new NoExisteEmpleado();
 		}
-
-		System.out.println(empleado);
-		Menú.menúModificar(scanner, empleado);
-
-		sql = "update empleado set nombre = ?, CI = ?, teléfono = ?, celular = ?, dirección = ?, cargo = ?  where codEmpleado = ?";
-
-		conexión.consulta(sql);
-		conexión.getSentencia().setInt(7, empleado.getCodEmpleado());
-		conexión.getSentencia().setString(1, empleado.getNombre());
-		conexión.getSentencia().setInt(2, empleado.getcI());
-		conexión.getSentencia().setInt(3, empleado.getTeléfono());
-		conexión.getSentencia().setInt(4, empleado.getCelular());
-		conexión.getSentencia().setString(5, empleado.getDirección());
-		conexión.getSentencia().setString(6, empleado.getCargo());
-		conexión.modificacion();
 	}
-	public void list() throws NoExisteEmpleado{
+	public void list() throws NoExisteEmpleado, SQLException{
 		Empleado empleado;
 		String sql = "select * from empleado ";
-		try {
-			conexión.consulta(sql);
-			ResultSet resultSet = conexión.resultado();
-		while (resultSet.next()) {
-			empleado = new Empleado(resultSet.getInt("codEmpleado"), resultSet.getString("nombre"), resultSet.getInt("CI"),
-					resultSet.getInt("teléfono"), resultSet.getInt("celular"), resultSet.getString("dirección"),
-					resultSet.getString("cargo"));
-			System.out.println(empleado);
-		}
-		} catch (SQLException e) {
+		conexión.consulta(sql);
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			resultSet.previous();
+			while (resultSet.next()) {
+				empleado = new Empleado(resultSet.getInt("codEmpleado"), resultSet.getString("nombre"), resultSet.getInt("CI"),
+						resultSet.getInt("teléfono"), resultSet.getInt("celular"), resultSet.getString("dirección"),
+						resultSet.getString("cargo"));
+				System.out.println(empleado);
+			}
+		} else {
 			throw new NoExisteEmpleado();
-		}
-		
-		
+		}	
 	}
 }

@@ -2,7 +2,6 @@ package producto.view;
 
 import java.sql.SQLException;
 import java.util.Scanner;
-import categoría.entity.NoExisteCategoría;
 import producto.entity.NoExisteProducto;
 import producto.entity.Producto;
 import view.InputTypes;
@@ -40,9 +39,9 @@ public class Menú {
 			case 1:
 				try {
 					productos.add();
-				} catch (NoExisteCategoría e) {
+				} catch (SQLException e1) {
 					System.out.println();
-					System.out.println("No existe la categoría!");
+					System.out.println("No existe la categoría");
 					System.out.println();
 				}
 				break;
@@ -53,17 +52,17 @@ public class Menú {
 					System.out.println();
 					System.out.println("No existen productos!");
 					System.out.println();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 				break;
 			case 3:
 				try {
 					productos.update();
-				} catch (NoExisteCategoría e) {
+				} catch (SQLException e) {
 					System.out.println();
 					System.out.println("No existe categoría!");
 					System.out.println();
-				} catch (SQLException e) {
-					e.printStackTrace();
 				} catch (NoExisteProducto e) {
 					System.out.println();
 					System.out.println("No existe producto!");
@@ -78,7 +77,7 @@ public class Menú {
 		int opcion;
 
 		while (true) {
-			System.out.println("Que desea modificar: ");
+			System.out.println("¿Que desea modificar?");
 			System.out.println("------------------- ");
 			System.out.println("1. Nombre");
 			System.out.println("2. Descripciòn");

@@ -38,11 +38,7 @@ public class Menú {
 				salir = true;
 				break;
 			case 1:
-				try {
-					empleados.add();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				empleados.add();
 				break;
 			case 2:
 				try {
@@ -62,13 +58,15 @@ public class Menú {
 					System.out.println();
 					System.out.println("No existen empleados que listar");
 					System.out.println();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				
 				break;
-
 			}
 		}
 	}
+	
 	private static int encabezadoModificar(Scanner scanner) {
 		int opcion;
 

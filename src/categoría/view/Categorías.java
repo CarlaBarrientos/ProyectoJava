@@ -28,7 +28,7 @@ public class Categorías {
 			conexión.getSentencia().setString(2, categoría.getDescripción());
 			conexión.modificacion();
 		} catch (SQLException e) {
-			System.out.println(e.getSQLState());
+			e.printStackTrace();
 		}
 	}
 
@@ -49,7 +49,6 @@ public class Categorías {
 		} else {
 			throw new NoExisteCategoría();
 		}
-
 		System.out.println(categoría);
 		Menú.menúModificar(scanner, categoría);
 
@@ -62,15 +61,20 @@ public class Categorías {
 		conexión.modificacion();
 	}
 
-	public void list() throws SQLException {
+	public void list() throws SQLException, NoExisteCategoría {
 		Categoría categoría;
 		String sql = "select * from categoría ";
 		conexión.consulta(sql);
 		ResultSet resultSet = conexión.resultado();
-		while (resultSet.next()) {
-			categoría = new Categoría(resultSet.getInt("codCategoría"), resultSet.getString("nombre"),
-					resultSet.getString("descripción"));
-			System.out.println(categoría);
+		if (resultSet.next()) {
+			resultSet.previous();
+			while (resultSet.next()) {
+				categoría = new Categoría(resultSet.getInt("codCategoría"), resultSet.getString("nombre"),
+						resultSet.getString("descripción"));
+				System.out.println(categoría);
+			}
+		} else {
+			throw new NoExisteCategoría();
 		}
 	}
 
@@ -102,6 +106,7 @@ public class Categorías {
 		conexión.getSentencia().setInt(1, codCategoría);
 		resultSet = conexión.resultado();
 		if (resultSet.next()) {
+			resultSet.previous();
 			while (resultSet.next()) {
 				codProducto = resultSet.getInt("codProducto");
 				nombre = resultSet.getString("nombre");

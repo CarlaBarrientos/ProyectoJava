@@ -13,15 +13,16 @@ public class Clientes {
 
 	private Conexión conexión;
 	private Scanner scanner;
-	
+
 	public Clientes(Conexión conexión, Scanner scanner) {
 		super();
 		this.conexión = conexión;
 		this.scanner = scanner;
 	}
-	public void add() throws SQLException{
+	public void add() {
 		Cliente cliente = RegistroCliente.ingresar(scanner);
 		String sql = "Insert into Cliente (codCliente, nombre, cI, teléfono, celular, dirección, puntos) values(?,?,?,?,?,?,?)";
+		try {
 			conexión.consulta(sql);
 			conexión.getSentencia().setInt(1, cliente.getCodCliente());
 			conexión.getSentencia().setString(2, cliente.getNombre());
@@ -31,14 +32,17 @@ public class Clientes {
 			conexión.getSentencia().setString(6, cliente.getDirección());
 			conexión.getSentencia().setInt(7, cliente.getPuntos());
 			conexión.modificacion();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void update() throws SQLException, NoExisteCliente {
 		ResultSet resultSet;
 		Cliente cliente;
 		String nombre;
 		int cI;
-	    int teléfono;
+		int teléfono;
 		int celular;
 		String dirección;
 		int puntos;
@@ -75,24 +79,21 @@ public class Clientes {
 		conexión.getSentencia().setInt(6, cliente.getPuntos());
 		conexión.modificacion();
 	}
-	public void list() throws NoExisteCliente{
+	public void list() throws NoExisteCliente, SQLException{
 		Cliente cliente;
 		String sql = "select * from cliente ";
-
-			try {
-				conexión.consulta(sql);
-				ResultSet resultSet = conexión.resultado();
-		while (resultSet.next()) {
-			cliente = new Cliente(resultSet.getInt("codCliente"), resultSet.getString("nombre"), resultSet.getInt("CI"),
-					resultSet.getInt("teléfono"), resultSet.getInt("celular"), resultSet.getString("dirección"),
-					resultSet.getInt("puntos"));
-			System.out.println(cliente);
-		
-		}
-			} catch (SQLException e) {
-				throw new NoExisteCliente();
+		conexión.consulta(sql);
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			resultSet.previous();
+			while (resultSet.next()) {
+				cliente = new Cliente(resultSet.getInt("codCliente"), resultSet.getString("nombre"), resultSet.getInt("CI"),
+						resultSet.getInt("teléfono"), resultSet.getInt("celular"), resultSet.getString("dirección"),
+						resultSet.getInt("puntos"));
+				System.out.println(cliente);
 			}
-			
+		} else {
+			throw new NoExisteCliente();
+		}	
 	}
-	
 }

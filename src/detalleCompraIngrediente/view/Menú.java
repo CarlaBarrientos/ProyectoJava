@@ -2,11 +2,8 @@ package detalleCompraIngrediente.view;
 
 import java.sql.SQLException;
 import java.util.Scanner;
-
-import compraIngrediente.entity.NoExisteCompraIngrediente;
 import detalleCompraIngrediente.entity.DetalleCompraIngrediente;
 import detalleCompraIngrediente.entity.NoExisteDetalleCompraIngrediente;
-import ingrediente.entity.NoExisteIngrediente;
 import view.InputTypes;
 
 public class Menú {
@@ -41,29 +38,15 @@ public class Menú {
 			case 1:
 				try {
 					detalleCompraIngredientes.add();
-				} catch (NoExisteCompraIngrediente e1) {
+				} catch (Exception e) {
 					System.out.println();
-					System.out.println("No existe compra de ingrediente!");
+					System.out.println("Alguno de los datos ingresados no existe");
 					System.out.println();
-				} catch (NoExisteIngrediente e1) {
-					System.out.println();
-					System.out.println("No existen ingredientes!");
-					System.out.println();
-				} catch (SQLException e) {
-					e.printStackTrace();
 				}
 				break;
 			case 2:
 				try {
 					detalleCompraIngredientes.update();
-				} catch (NoExisteCompraIngrediente e) {
-					System.out.println();
-					System.out.println("No existe compra de ingrediente!");
-					System.out.println();
-				} catch (NoExisteIngrediente e) {
-					System.out.println();
-					System.out.println("No existe el ingrediente!");
-					System.out.println();
 				} catch (NoExisteDetalleCompraIngrediente e) {
 					System.out.println();
 					System.out.println("No existen detalles de compra del ingrediente!");
@@ -80,16 +63,55 @@ public class Menú {
 					System.out.println("No existen detalles de compras de ingredientes!");
 					System.out.println();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
 			}
 		}
 	}
+	
+	private static int encabezadoModificar(Scanner scanner) {
+		int opcion;
+
+		while (true) {
+			System.out.println("¿Que desea modificar?");
+			System.out.println("------------------- ");
+			System.out.println("1. Código del ingrediente");
+			System.out.println("2. código de compra del ingrediente");
+			System.out.println("3. Cantidad");
+			System.out.println("4. Total de la compra");
+			System.out.println("0. Salir");
+			System.out.println();
+
+			opcion = InputTypes.readInt("¿Su opción? ", scanner);
+
+			if (opcion >= 0 && opcion <= 4) {
+				return opcion;
+			}
+		}
+	}
 
 	public static void menúModificar(Scanner scanner, DetalleCompraIngrediente detalleCompraIngrediente) {
-		detalleCompraIngrediente.setCantidad(InputTypes.readInt("Ingrese la nueva cantidad: ", scanner));
-		detalleCompraIngrediente.setTotalCompra(InputTypes.readDouble("Ingrese el nuevo total: ", scanner));
+		boolean salir = false;
+
+		while (!salir) {
+			switch (encabezadoModificar(scanner)) {
+			case 0:
+				salir = true;
+				break;
+			case 1:
+				detalleCompraIngrediente.setCodIngrediente(InputTypes.readInt("Ingrese el nuevo proveedor: ", scanner));
+				break;
+			case 2:
+				detalleCompraIngrediente.setCodCompraIng(InputTypes.readInt("Ingrese el código del empleado: ", scanner));
+				break;
+			case 3:
+				detalleCompraIngrediente.setCantidad(InputTypes.readInt("Ingrese la nueva cantidad: ", scanner));
+				break;
+			case 4:
+				detalleCompraIngrediente.setTotalCompra(InputTypes.readDouble("Ingrese el nuevo total: ", scanner));
+				break;
+			}
+		}
 	}
 }

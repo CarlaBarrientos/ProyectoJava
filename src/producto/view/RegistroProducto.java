@@ -1,15 +1,12 @@
 package producto.view;
 
 import java.util.Scanner;
-
-import categoría.entity.NoExisteCategoría;
-
 import producto.entity.Producto;
 import view.InputTypes;
 
 public class RegistroProducto {
 
-	public static Producto ingresar(Scanner scanner) throws NoExisteCategoría {
+	public static Producto ingresar(Scanner scanner) {
 				
 		int codProducto = 0;
 		String nombreProducto = InputTypes.readString("Nombre: ", scanner);

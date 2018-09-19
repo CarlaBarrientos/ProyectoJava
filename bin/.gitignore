@@ -1,13 +1,11 @@
 /categoría/
 /cliente/
 /compraIngrediente/
-/control/
 /detalleCompraIngrediente/
-/detalleVenta/
-/empleado/
 /envio/
 /factura/
 /ingrediente/
 /producto/
+/detalleVenta/
 /venta/
-/view/
+/empleado/

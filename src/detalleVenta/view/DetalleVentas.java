@@ -6,8 +6,6 @@ import java.util.Scanner;
 import control.Conexión;
 import detalleVenta.entity.DetalleVenta;
 import detalleVenta.entity.NoExisteDetalleVenta;
-import producto.entity.NoExisteProducto;
-import venta.entity.NoExisteVenta;
 import view.InputTypes;
 
 public class DetalleVentas {
@@ -19,43 +17,34 @@ public class DetalleVentas {
 		this.scanner = scanner;
 	}
 
-	public void add() throws NoExisteVenta, SQLException, NoExisteProducto {
+	public void add() throws SQLException {
 		DetalleVenta detalleVenta = RegistroDetalleVenta.ingresar(scanner);
-		String sqlProducto = "select codProducto from producto where codProducto = ?";
-		conexión.consulta(sqlProducto);
-		conexión.getSentencia().setInt(1, detalleVenta.getCodProducto());
-		ResultSet resultSetProducto = conexión.resultado();
-
-		if (resultSetProducto.next()) {
-			String sqlVenta = "select numVenta form venta where numVenta = ?";
-			conexión.consulta(sqlVenta);
-			conexión.getSentencia().setInt(1, detalleVenta.getNumVenta());
-			ResultSet resultSet1 = conexión.resultado();
-			if (resultSet1.next()) {
-				String sql = "Insert into DetalleVenta (codProducto, cantidad, totalVenta, numVenta) " + "values(?,?,?,?)";
-				conexión.consulta(sql);
-				conexión.getSentencia().setInt(1, detalleVenta.getCodProducto());
-				conexión.getSentencia().setInt(2, detalleVenta.getCantidad());
-				conexión.getSentencia().setDouble(3, detalleVenta.getTotalVenta());
-				conexión.getSentencia().setInt(4, detalleVenta.getNumVenta());
-				conexión.modificacion();
-			} else {
-				throw new NoExisteVenta();
-			}
-		} else {
-			throw new NoExisteProducto();
-		}
-	}
-
-	public void delete() throws SQLException, NoExisteDetalleVenta {
-		int numVenta = InputTypes.readInt("Código del detalle: ", scanner);
-		String sql = "delete from detalleVenta where codDetalle = ?";
+		String sql = "Insert into DetalleVenta (codProducto, cantidad, totalVenta, numVenta) " + "values(?,?,?,?)";
 		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, numVenta);
+		conexión.getSentencia().setInt(1, detalleVenta.getCodProducto());
+		conexión.getSentencia().setInt(2, detalleVenta.getCantidad());
+		conexión.getSentencia().setDouble(3, detalleVenta.getTotalVenta());
+		conexión.getSentencia().setInt(4, detalleVenta.getNumVenta());
 		conexión.modificacion();
 	}
 
-	public void update() throws NoExisteDetalleVenta, SQLException, NoExisteVenta, NoExisteProducto {
+	public void delete() throws SQLException, NoExisteDetalleVenta {
+		int numVenta = InputTypes.readInt("Código del detalle de venta: ", scanner);
+		String sql1 = "select * from detalleVenta where codDetalle = ?";
+		conexión.consulta(sql1);
+		conexión.getSentencia().setInt(1, numVenta);
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			String sql = "delete from detalleVenta where codDetalle = ?";
+			conexión.consulta(sql);
+			conexión.getSentencia().setInt(1, numVenta);
+			conexión.modificacion();
+		} else {
+			throw new NoExisteDetalleVenta();
+		}
+	}
+
+	public void update() throws SQLException, NoExisteDetalleVenta {
 		ResultSet resultSet;
 		DetalleVenta detalleVenta;
 		int codProducto;
@@ -73,29 +62,38 @@ public class DetalleVentas {
 			totalVenta = resultSet.getDouble("totalVenta");
 			numVenta = resultSet.getInt("numVenta");
 			detalleVenta = new DetalleVenta(codDetalle, codProducto, cantidad, totalVenta, numVenta);
-		} else {
-			throw new NoExisteDetalleVenta();
-		}
-		System.out.println(detalleVenta);
 
-		Menú.menúModificar(scanner, detalleVenta);
+			System.out.println(detalleVenta);
+			Menú.menúModificar(scanner, detalleVenta);
 
-		sql = "update detalleVenta set codProducto = ?, cantidad = ?, totalVenta, numVenta where codDetalle = ?";
+			sql = "update detalleVenta set codProducto = ?, cantidad = ?, totalVenta, numVenta where codDetalle = ?";
 
-		conexión.consulta(sql);
-		conexión.getSentencia().setInt(1, detalleVenta.getCodProducto());
-		if (resultSet.next()) {
+			conexión.consulta(sql);
+			conexión.getSentencia().setInt(1, detalleVenta.getCodProducto());
 			conexión.getSentencia().setInt(2, detalleVenta.getCantidad());
 			conexión.getSentencia().setDouble(3, detalleVenta.getTotalVenta());
 			conexión.getSentencia().setInt(4, detalleVenta.getNumVenta());
-			if (resultSet.next()) {
-				conexión.getSentencia().setInt(5, detalleVenta.getCodDetalle());
-				conexión.modificacion();
-			} else {
-				throw new NoExisteVenta();
+			conexión.getSentencia().setInt(5, detalleVenta.getCodDetalle());
+			conexión.modificacion();
+		} else {
+			throw new NoExisteDetalleVenta();
+		}
+	}
+
+	public void list () throws SQLException, NoExisteDetalleVenta {
+		DetalleVenta detalleVenta;
+		String sql = "select * from detalleVenta";
+		conexión.consulta(sql);
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			resultSet.previous();
+			while (resultSet.next()) {
+				detalleVenta = new DetalleVenta(resultSet.getInt("codDetalle"), resultSet.getInt("codProducto"),
+						resultSet.getInt("cantidad"), resultSet.getInt("totalVenta"), resultSet.getInt("numVenta"));
+				System.out.println(detalleVenta);
 			}
 		} else {
-			throw new NoExisteProducto();
+			throw new NoExisteDetalleVenta();
 		}
 	}
 }

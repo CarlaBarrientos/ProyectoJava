@@ -2,11 +2,9 @@ package ingrediente.view;
 
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import ingrediente.entity.Ingrediente;
 import ingrediente.entity.NoExisteIngrediente;
 import view.InputTypes;
-
 
 public class Menú {
 
@@ -32,9 +30,7 @@ public class Menú {
 		}
 	}
 
-
-
-	public static void menú(Scanner scanner, Ingredientes ingredientes) throws SQLException {
+	public static void menú(Scanner scanner, Ingredientes ingredientes) {
 		boolean salir = false;
 
 		while (!salir) {
@@ -46,39 +42,41 @@ public class Menú {
 				ingredientes.add();
 				break;
 			case 2:
-		
 				try {
 					ingredientes.list();
 				} catch (NoExisteIngrediente e1) {
 					System.out.println();
 					System.out.println("No existen ingredientes!");
 					System.out.println();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 				break;
 			case 3:
 				try {
 					ingredientes.delete();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				} catch (NoExisteIngrediente e) {
 					System.out.println();
 					System.out.println("No existe ingrediente!");
-					System.out.println();
-				} catch (SQLException e) {
-					e.printStackTrace();	
+					System.out.println();	
 				}
 				break;
 			case 4:
 				try {
 					ingredientes.update();
 				} catch (NoExisteIngrediente e) {
-					System.out.println("No existe ingrediente");
+					System.out.println();
+					System.out.println("No existe el ingrediente");
+					System.out.println();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 				break;
-
 			}
 		}
 	}
-
-
 
 	private static int encabezadoModificar(Scanner scanner) {
 		int opcion;
@@ -100,8 +98,6 @@ public class Menú {
 			}
 		}
 	}
-
-
 
 	public static void menúModificar(Scanner scanner, Ingrediente ingrediente) {
 		boolean salir = false;
@@ -126,5 +122,4 @@ public class Menú {
 			}
 		}
 	}
-
 }

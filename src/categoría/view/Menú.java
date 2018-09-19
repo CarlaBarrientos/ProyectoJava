@@ -42,7 +42,13 @@ public class Menú {
 				categorías.add();
 				break;
 			case 2:
-				categorías.list();
+				try {
+					categorías.list();
+				} catch (NoExisteCategoría e1) {
+					System.out.println();
+					System.out.println("No existen categorías!");
+					System.out.println();
+				}
 				break;
 			case 3:
 				try {
@@ -62,7 +68,7 @@ public class Menú {
 					System.out.println();
 				} catch (NoExisteProducto e) {
 					System.out.println();
-					System.out.println("No existe productos!");
+					System.out.println("No existen productos en esta categoría!");
 					System.out.println();
 				}
 				break;

@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import detalleVenta.entity.DetalleVenta;
 import detalleVenta.entity.NoExisteDetalleVenta;
-import producto.entity.NoExisteProducto;
-import venta.entity.NoExisteVenta;
 import view.InputTypes;
 
 public class Menú {
@@ -18,12 +16,13 @@ public class Menú {
 			System.out.println("1. Ingresar Detalle de Venta");
 			System.out.println("2. Eliminar Detalle de Venta ");
 			System.out.println("3. Modificar Detalle de Venta ");
+			System.out.println("4. Listar Detalles de Ventas");
 			System.out.println("0. Salir");
 			System.out.println();
 
 			opcion = InputTypes.readInt("¿Su opción? ", scanner);
 
-			if (opcion >= 0 && opcion <= 3) {
+			if (opcion >= 0 && opcion <= 4) {
 				return opcion;
 			}
 		}
@@ -40,15 +39,9 @@ public class Menú {
 			case 1:
 				try {
 					detalleVentasView.add();
-				} catch (NoExisteVenta e1) {
-					System.out.println();
-					System.out.println("No existe la venta!");
-					System.out.println();
 				} catch (SQLException e1) {
-					e1.printStackTrace();
-				} catch (NoExisteProducto e1) {
 					System.out.println();
-					System.out.println("No existe el producto!");
+					System.out.println("Alguno de los datos ingresados no existe");
 					System.out.println();
 				}
 				break;
@@ -56,6 +49,8 @@ public class Menú {
 				try {
 					detalleVentasView.delete();
 				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (NoExisteDetalleVenta e) {
 					System.out.println();
 					System.out.println("No existe detalle de venta!");
 					System.out.println();
@@ -64,19 +59,25 @@ public class Menú {
 			case 3:
 				try {
 					detalleVentasView.update();
-				} catch (NoExisteDetalleVenta e) {
+				} catch (NoExisteDetalleVenta e1) {
 					System.out.println();
-					System.out.println("No existe detalle de venta!");
+					System.out.println("No existe el detalle de venta");
 					System.out.println();
-				} catch (NoExisteVenta e) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
 					System.out.println();
-					System.out.println("No Existe la venta!");
+					System.out.println("Alguno de los datos ingresados no existe");
 					System.out.println();
+				}
+				break;
+			case 4:
+				try {
+					detalleVentasView.list();
 				} catch (SQLException e) {
 					e.printStackTrace();
-				} catch (NoExisteProducto e) {
+				} catch (NoExisteDetalleVenta e) {
 					System.out.println();
-					System.out.println("No existe producto!");
+					System.out.println("No existen detalles de ventas");
 					System.out.println();
 				}
 				break;

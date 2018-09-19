@@ -21,7 +21,7 @@ public class Envíos {
 	}
 	public void add() throws SQLException, NoExisteVenta{
 		Envío envío = RegistroEnvío.ingresar(scanner);
-		String sqlV = "Select numVenta from Venta where numVenta = ?";
+		String sqlV = "Select * numVenta from Venta where numVenta = ?";
 		conexión.consulta(sqlV);
 		conexión.getSentencia().setInt(1, envío.getNumVenta());
 		ResultSet resultSetCli = conexión.resultado();
@@ -38,75 +38,72 @@ public class Envíos {
 			throw new NoExisteVenta();
 		}
 	}
-	public void delete() throws SQLException{
+	public void delete() throws SQLException, NoExisteEnvío  {
 		int codEnvío= InputTypes.readInt("Código del envío: ", scanner);
-		String sql = "delete from envío where codEnvío = ?";
-		conexión.consulta(sql);
+		String sql1 = "select * from envío where codEnvío = ?";
+		conexión.consulta(sql1);
 		conexión.getSentencia().setInt(1, codEnvío);
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			String sql = "delete from envío where codEnvío = ?";
+			conexión.consulta(sql);
+			conexión.getSentencia().setInt(1, codEnvío);
 			conexión.modificacion();
-
+		} else {
+			throw new NoExisteEnvío();
+		}
 	}
 
-	public void update() throws SQLException, NoExisteEnvío, NoExisteVenta {
-		ResultSet resultSet1;
+	public void update() throws SQLException, NoExisteEnvío {
 		Envío envío=null;
 		String destinatario;
 		int teléfono;
 		double costoAdicional;
+		int numVenta;
 		int codEnvío = InputTypes.readInt("Código del envío: ", scanner);
 		String sql = "select * from envío where codEnvío = ?";
 		conexión.consulta(sql);
 		conexión.getSentencia().setInt(1, codEnvío);
-		resultSet1 = conexión.resultado();
-		if (resultSet1.next()) {
-			int numVenta = InputTypes.readInt("Ingrese el nuevo número de venta: ", scanner);
-			String sql1 = "select * from venta where numVenta = ?";
-			conexión.consulta(sql1);
-			conexión.getSentencia().setInt(1, numVenta);
-			ResultSet resultSet = conexión.resultado();
-			if(resultSet.next()) {
-				System.out.println("adcwe");
-				destinatario = resultSet1.getString("destinatario");
-				codEnvío = resultSet1.getInt("codEnvío");
-				teléfono = resultSet1.getInt("teléfono");
-				costoAdicional = resultSet1.getDouble("costoAdicional");
-				numVenta = resultSet1.getInt("numVenta");
-				envío = new Envío(codEnvío, destinatario, teléfono, costoAdicional, numVenta);
-				System.out.println(envío);
-				Menú.menúModificar(scanner, envío);
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			destinatario = resultSet.getString("destinatario");
+			codEnvío = resultSet.getInt("codEnvío");
+			teléfono = resultSet.getInt("teléfono");
+			costoAdicional = resultSet.getDouble("costoAdicional");
+			numVenta = resultSet.getInt("numVenta");
+			envío = new Envío(codEnvío, destinatario, teléfono, costoAdicional, numVenta);
 
-				sql = "update envío set numVenta = ?, destinatario = ?, teléfono = ?, costoAdicional = ?  where codEnvío = ?";
+			System.out.println(envío);
+			Menú.menúModificar(scanner, envío);
 
-				conexión.consulta(sql);
-				conexión.getSentencia().setInt(5, envío.getCodEnvío());
-				conexión.getSentencia().setString(2, envío.getDestinatario());
-				conexión.getSentencia().setInt(3, envío.getTeléfono());
-				conexión.getSentencia().setDouble(4, envío.getCostoAdicional());
-				conexión.getSentencia().setInt(1, envío.getNumVenta());
-				conexión.modificacion();
-			}else {
-				throw new NoExisteVenta();
-			}
+			sql = "update envío set numVenta = ?, destinatario = ?, teléfono = ?, costoAdicional = ?  where codEnvío = ?";
+
+			conexión.consulta(sql);
+			conexión.getSentencia().setInt(5, envío.getCodEnvío());
+			conexión.getSentencia().setString(2, envío.getDestinatario());
+			conexión.getSentencia().setInt(3, envío.getTeléfono());
+			conexión.getSentencia().setDouble(4, envío.getCostoAdicional());
+			conexión.getSentencia().setInt(1, envío.getNumVenta());
+			conexión.modificacion();
 		} else {
 			throw new NoExisteEnvío();
 		}
-
-
 	}
-	public void list() throws NoExisteEnvío{
+
+	public void list() throws NoExisteEnvío, SQLException{
 		Envío envío;
 		String sql = "select * from envío ";
-		try {
-			conexión.consulta(sql);
-			ResultSet resultSet = conexión.resultado();
+		conexión.consulta(sql);
+		ResultSet resultSet = conexión.resultado();
+		if (resultSet.next()) {
+			resultSet.previous();
 			while (resultSet.next()) {
 				envío = new Envío(resultSet.getInt("codEnvío"), resultSet.getString("destinatario"), resultSet.getInt("teléfono"),
 						resultSet.getDouble("costoAdicional"), resultSet.getInt("numVenta"));
 				System.out.println(envío);
 			}
-		} catch (SQLException e) {
+		} else {
 			throw new NoExisteEnvío();
 		}
-
 	}
 }
